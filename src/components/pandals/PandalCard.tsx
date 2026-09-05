@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { PandalResponseDTO } from '../../types/api';
 import { PandalFallbackGraphic } from './PandalFallbackGraphic';
@@ -13,6 +13,7 @@ interface PandalCardProps {
 
 export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = true }) => {
   const navigate = useNavigate();
+  const [imgError, setImgError] = useState(false);
   const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pandal.latitude},${pandal.longitude}`;
 
   const handleCardClick = () => {
@@ -25,24 +26,26 @@ export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = t
       className="group bg-ivory-surface rounded-2xl border border-ivory-border hover:border-terracotta/40 shadow-warm-sm hover:shadow-warm-md transition-all duration-300 flex flex-col overflow-hidden relative cursor-pointer active:scale-[0.99]"
     >
       {/* Media Header */}
-      <div className="relative overflow-hidden">
-        {pandal.imageUrl ? (
-          <img
-            src={pandal.imageUrl}
-            alt={pandal.name}
-            className="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-500"
-            onError={(e) => {
-              // Hide broken image and allow fallback to show
-              (e.target as HTMLElement).style.display = 'none';
-            }}
-          />
+      <div className="relative overflow-hidden h-44 bg-charcoal">
+        {pandal.imageUrl && !imgError ? (
+          <>
+            <img
+              src={pandal.imageUrl}
+              alt={pandal.name}
+              loading="lazy"
+              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 brightness-[0.92]"
+              onError={() => setImgError(true)}
+            />
+            {/* Subtle multi-layer gradient scrim for badge legibility and clean separation */}
+            <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 via-transparent to-black/40 pointer-events-none" />
+          </>
         ) : (
           <PandalFallbackGraphic name={pandal.name} />
         )}
 
         {/* Top Badges Overlay */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none">
-          <span className="bg-ivory-surface/90 backdrop-blur-md text-charcoal font-semibold text-xs px-2.5 py-1 rounded-full shadow-sm border border-ivory-border">
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none z-10">
+          <span className="bg-charcoal/70 backdrop-blur-md text-white font-semibold text-xs px-2.5 py-1 rounded-full shadow-sm border border-white/20">
             {pandal.areaName || 'South Kolkata'}
           </span>
           {pandal.bestTimeToVisit && (
