@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  <!-- Stylized Durga Trinayan (ত্রিনয়ন) with Vermilion and Gold -->
+  <defs>
+    <linearGradient id="eyeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#DC2626" />
+      <stop offset="100%" stop-color="#991B1B" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#B45309" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left Eye -->
+  <path d="M12 50 C22 38, 38 38, 48 50 C38 62, 22 62, 12 50 Z" stroke="#991B1B" stroke-width="2.5" fill="#FAF7F2"/>
+  <ellipse cx="30" cy="50" rx="6" ry="6" fill="#18181B"/>
+  <circle cx="32" cy="48" r="2" fill="#FFFFFF"/>
+  <path d="M10 49 C24 35, 36 35, 50 49" stroke="#991B1B" stroke-width="1.8" stroke-linecap="round"/>
+
+  <!-- Right Eye -->
+  <path d="M52 50 C62 38, 78 38, 88 50 C78 62, 62 62, 52 50 Z" stroke="#991B1B" stroke-width="2.5" fill="#FAF7F2"/>
+  <ellipse cx="70" cy="50" rx="6" ry="6" fill="#18181B"/>
+  <circle cx="72" cy="48" r="2" fill="#FFFFFF"/>
+  <path d="M50 49 C64 35, 76 35, 90 49" stroke="#991B1B" stroke-width="1.8" stroke-linecap="round"/>
+
+  <!-- Third Eye (Trinayan) Center Vertical Eye -->
+  <path d="M50 20 C42 29, 42 37, 50 44 C58 37, 58 29, 50 20 Z" stroke="#DC2626" stroke-width="2" fill="#FAF7F2"/>
+  <ellipse cx="50" cy="32" rx="3.5" ry="4.5" fill="url(#eyeGrad)"/>
+  <circle cx="50" cy="31" r="1.2" fill="#FFFFFF"/>
+
+  <!-- Vermilion Bindi / Tilak -->
+  <circle cx="50" cy="14" r="3" fill="#DC2626"/>
+  <path d="M50 17 L50 22" stroke="url(#goldGrad)" stroke-width="1.5" stroke-linecap="round"/>
+
+  <!-- Traditional Nose Ring (Nath) Accent -->
+  <path d="M56 56 A9 9 0 0 1 45 68" stroke="url(#goldGrad)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+  <circle cx="45" cy="68" r="1.5" fill="#DC2626"/>
+</svg>
+

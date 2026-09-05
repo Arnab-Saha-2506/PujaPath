@@ -1,0 +1,63 @@
+export interface AreaResponseDTO {
+  id: number;
+  name: string;
+}
+
+export interface PandalResponseDTO {
+  id: number;
+  name: string;
+  address: string;
+  description: string;
+  imageUrl: string | null;
+  latitude: number;
+  longitude: number;
+  areaId: number;
+  areaName: string;
+  bestTimeToVisit?: string;
+  distanceKm?: number | null;
+  walkingTimeMinutes?: number | null;
+}
+
+export interface MetroStationResponseDTO {
+  id: number;
+  name: string;
+  line: string;
+  latitude: number;
+  longitude: number;
+  distanceKm?: number | null;
+  walkingTimeMinutes?: number | null;
+}
+
+export interface PandalDetailResponseDTO {
+  id: number;
+  name: string;
+  address: string;
+  description: string;
+  imageUrl: string | null;
+  latitude: number;
+  longitude: number;
+  bestTimeToVisit: string;
+  areaName: string;
+  nearbyMetros: MetroStationResponseDTO[];
+}
+
+export interface LineResponseDTO {
+  name: string;
+}
+
+export interface DistanceResponseDTO {
+  pandalId: number;
+  pandalName: string;
+  userLatitude?: number;
+  userLongitude?: number;
+  distanceInKm: number;
+  walkingTimeMinutes: number;
+}
+
+export interface ApiErrorResponse {
+  timestamp: string;
+  status: number;
+  error: string;
+  message: string;
+}
+

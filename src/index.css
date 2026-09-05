@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-canvas: #FAF7F2;
+    --text-primary: #18181B;
+  }
+
+  body {
+    background-color: #FAF7F2;
+    color: #18181B;
+    overflow-x: hidden;
+  }
+}
+
+/* Subtle Alpana Floral Background Pattern */
+.bg-alpana-pattern {
+  background-color: #FAF7F2;
+  background-image: radial-gradient(circle at 50% 50%, rgba(185, 28, 28, 0.03) 0, rgba(185, 28, 28, 0.03) 3px, transparent 4px),
+    radial-gradient(circle at 0% 100%, rgba(194, 94, 67, 0.04) 0, rgba(194, 94, 67, 0.04) 6px, transparent 7px),
+    radial-gradient(circle at 100% 0%, rgba(217, 119, 6, 0.03) 0, rgba(217, 119, 6, 0.03) 6px, transparent 7px);
+  background-size: 40px 40px, 80px 80px, 80px 80px;
+}
+
+/* Terracotta Border Accent */
+.border-terracotta-subtle {
+  border-color: #F3ECE2;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E8DED1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C25E43;
+}
