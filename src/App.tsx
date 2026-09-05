@@ -5,12 +5,16 @@ import { BottomNavigation } from './components/common/BottomNavigation';
 import { AppRoutes } from './routes/AppRoutes';
 import { DurgaEyeIcon } from './components/common/DurgaEyeIcon';
 import { BengaliSideBorder } from './components/common/BengaliSideBorder';
+import { PageTransition } from './components/common/PageTransition';
 import { Link } from 'react-router-dom';
 
 function App() {
   return (
     <LocationProvider>
       <div className="min-h-screen flex flex-col bg-alpana-pattern text-charcoal relative">
+        {/* Sacred Sankha Page Transition Overlay */}
+        <PageTransition />
+
         {/* Bengali Cultural Side Border Runners (Desktop Only) */}
         <BengaliSideBorder side="left" />
         <BengaliSideBorder side="right" />

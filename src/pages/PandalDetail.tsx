@@ -5,6 +5,7 @@ import { getPandalDetail, getPandalDistance } from '../services/pandalService';
 import { getAllPandals } from '../services/areaService';
 import { useGeolocation } from '../hooks/useGeolocation';
 import { PandalFallbackGraphic } from '../components/pandals/PandalFallbackGraphic';
+import { SankhaLoader } from '../components/common/SankhaLoader';
 import { BestTimeBadge } from '../components/pandals/BestTimeBadge';
 import { PandalCard } from '../components/pandals/PandalCard';
 import { getMetroLineMeta, parseStationLines } from '../utils/metroColors';
@@ -121,6 +122,7 @@ export const PandalDetail: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [distanceLoading, setDistanceLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [imgError, setImgError] = useState(false);
 
   // Load pandal details & all city pandals for walkable circuit
   useEffect(() => {
@@ -129,6 +131,7 @@ export const PandalDetail: React.FC = () => {
       try {
         setLoading(true);
         setError(null);
+        setImgError(false);
         const [data, allPandals] = await Promise.all([
           getPandalDetail(id),
           getAllPandals(),
@@ -197,11 +200,13 @@ export const PandalDetail: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="max-w-7xl xl:max-w-[1360px] 2xl:max-w-[1520px] mx-auto py-10 space-y-6 animate-pulse">
-        <div className="h-8 bg-stone-200 rounded w-1/3" />
-        <div className="h-72 bg-stone-200 rounded-3xl" />
-        <div className="h-32 bg-stone-100 rounded-2xl" />
-        <div className="h-48 bg-stone-100 rounded-2xl" />
+      <div className="min-h-[55vh] flex items-center justify-center py-12">
+        <SankhaLoader
+          variant="inline"
+          size="lg"
+          text="মণ্ডপ বিবরণ প্রস্তুত হচ্ছে..."
+          subtext="শারদোৎসব ২০২৫ • আগমনী বার্তা"
+        />
       </div>
     );
   }
@@ -263,16 +268,27 @@ export const PandalDetail: React.FC = () => {
         </button>
       </div>
 
-      {/* Header Banner with Clean Non-Overlapping Overlay */}
-      <div className="relative rounded-3xl overflow-hidden border border-ivory-border shadow-warm-md min-h-[220px] sm:min-h-[280px] md:min-h-[340px]">
-        {pandal.imageUrl ? (
-          <div className="relative w-full h-56 sm:h-72 md:h-80 lg:h-96">
+      {/* Header Banner with Clean Non-Overlapping Overlay & Ambient Backdrop */}
+      <div className="relative rounded-3xl overflow-hidden border border-ivory-border shadow-warm-md min-h-[240px] sm:min-h-[300px] md:min-h-[360px] bg-charcoal">
+        {pandal.imageUrl && !imgError ? (
+          <div className="relative w-full h-64 sm:h-76 md:h-88 lg:h-96 overflow-hidden">
+            {/* Ambient blurred backdrop fill so aspect ratios fit seamlessly */}
+            <img
+              src={pandal.imageUrl}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-60"
+              aria-hidden="true"
+            />
+            {/* Focused high-resolution banner image */}
             <img
               src={pandal.imageUrl}
               alt={pandal.name}
-              className="w-full h-full object-cover"
+              className="relative w-full h-full object-cover object-center brightness-[0.85] contrast-[1.05]"
+              onError={() => setImgError(true)}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/40 to-transparent" />
+            {/* Multi-layer gradient overlays ensuring white text is 100% readable */}
+            <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/50 via-55% to-charcoal/20 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-r from-charcoal/70 via-charcoal/20 to-transparent pointer-events-none" />
           </div>
         ) : (
           <PandalFallbackGraphic name={pandal.name} variant="banner" />
@@ -280,13 +296,18 @@ export const PandalDetail: React.FC = () => {
 
         {/* Floating Banner Details (Single Source of Text) */}
         <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 lg:p-8 text-white z-10">
-          <div className="flex items-center space-x-2 mb-2">
+          <div className="flex flex-wrap items-center gap-2 mb-2">
             <span className="bg-vermilion text-white font-semibold text-xs px-3 py-1 rounded-full shadow-xs">
               {pandal.areaName || 'South Kolkata'}
             </span>
-            <span className="text-white/80 text-xs font-mono bg-black/30 px-2 py-0.5 rounded">
+            <span className="text-white/90 text-xs font-mono bg-black/40 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/10">
               ID #{pandal.id}
             </span>
+            {pandal.bestTimeToVisit && (
+              <span className="bg-charcoal/70 backdrop-blur-md text-amber-300 text-xs font-medium px-2.5 py-0.5 rounded-full border border-amber-400/25">
+                ⭐ {pandal.bestTimeToVisit}
+              </span>
+            )}
           </div>
 
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight drop-shadow-md text-white">

@@ -97,30 +97,44 @@ export const Home: React.FC = () => {
 
   return (
     <div className="space-y-12 pb-16">
-      {/* 1. Hero Section with Authentic Bengali Aesthetic */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-terracotta-50/70 via-ivory-warm to-ivory rounded-3xl border border-ivory-border p-6 sm:p-10 lg:p-14 shadow-warm-sm">
-        {/* Subtle Alpana Floral Motifs */}
-        <div className="absolute -top-16 -right-16 pointer-events-none opacity-20 text-vermilion">
-          <AlpanaCircle size={320} opacity={0.25} />
+      {/* 1. Hero Section with Authentic Bengali Aesthetic & Festive Backdrop Image */}
+      <section className="relative overflow-hidden rounded-3xl border border-ivory-border p-6 sm:p-10 lg:p-14 shadow-warm-md text-white">
+        {/* Background Image with slight blur & gradient scrim for text readability */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <img
+            src="https://images.pexels.com/photos/27364815/pexels-photo-27364815.jpeg"
+            alt="Durga Puja Kolkata"
+            // className="w-full h-full object-cover object-center scale-105 filter blur-[2.5px] brightness-[0.62] contrast-[1.05]"
+            className="w-full h-full object-cover object-[center_30%] sm:object-[center_45%] lg:object-[center_55%] scale-105 brightness-[0.78] contrast-[1.05] saturate-[1.1]" />
+          {/* Dual-tone gradient scrim for superior text contrast while preserving image aesthetics */}
+          {/* <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-charcoal/70 to-charcoal/90" /> */}
+          {/* <div className="absolute inset-0 bg-gradient-to-tr from-vermilion-deep/25 via-transparent to-amber-950/30 mix-blend-multiply" /> */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-charcoal/30 to-charcoal/55" />
+
         </div>
-        <div className="absolute -bottom-20 -left-20 pointer-events-none opacity-20 text-terracotta">
-          <AlpanaCircle size={300} opacity={0.2} />
+
+        {/* Subtle Alpana Floral Motifs */}
+        <div className="absolute -top-16 -right-16 pointer-events-none opacity-25 text-amber-200 z-1">
+          <AlpanaCircle size={320} opacity={0.3} />
+        </div>
+        <div className="absolute -bottom-20 -left-20 pointer-events-none opacity-20 text-amber-300 z-1">
+          <AlpanaCircle size={300} opacity={0.25} />
         </div>
 
         <div className="relative z-10 max-w-3xl mx-auto text-center space-y-5">
           {/* Bengali Pill Badge */}
-          <div className="inline-flex items-center space-x-2 bg-ivory-surface/90 border border-terracotta/25 px-4 py-1.5 rounded-full shadow-xs">
+          <div className="inline-flex items-center space-x-2 bg-black/45 backdrop-blur-md border border-amber-400/40 px-4 py-1.5 rounded-full shadow-xs">
             <DurgaEyeIcon size={20} />
-            <span className="text-xs sm:text-sm font-bengali font-semibold text-vermilion-dark tracking-wide">
+            <span className="text-xs sm:text-sm font-bengali font-semibold text-amber-300 tracking-wide drop-shadow-xs">
               শারদোৎসব ২০২৫ • পুজোর কলকাতা, আপনার পথে
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-charcoal tracking-tight font-sans">
-            Discover Kolkata's <span className="text-vermilion">Puja</span>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight font-sans drop-shadow-md">
+            Discover Kolkata's <span className="text-amber-400 font-black">Puja</span>
           </h1>
 
-          <p className="text-sm sm:text-base text-charcoal-muted max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base text-stone-200 max-w-2xl mx-auto leading-relaxed drop-shadow-xs">
             Explore heritage & theme pandals, find nearest metro stations, calculate walking
             distances, and navigate your Durga Puja journey with authentic Bengali craftsmanship.
           </p>
@@ -128,18 +142,18 @@ export const Home: React.FC = () => {
           {/* Location CTA Pill */}
           <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
             {status === 'granted' ? (
-              <div className="inline-flex items-center space-x-3 bg-ivory-surface border border-leaf/30 px-4 py-2.5 rounded-2xl shadow-warm-sm">
+              <div className="inline-flex items-center space-x-3 bg-black/55 backdrop-blur-md border border-leaf/40 px-4 py-2.5 rounded-2xl shadow-warm-sm">
                 <span className="relative flex h-3 w-3">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-leaf opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-3 w-3 bg-leaf"></span>
                 </span>
-                <span className="text-xs sm:text-sm font-semibold text-charcoal">
+                <span className="text-xs sm:text-sm font-semibold text-white">
                   📍 Exploring from current location
                 </span>
                 <button
                   onClick={refreshLocation}
                   disabled={isLocating}
-                  className="text-xs font-semibold text-vermilion hover:text-vermilion-deep inline-flex items-center space-x-1 pl-2 border-l border-stone-200"
+                  className="text-xs font-semibold text-amber-300 hover:text-amber-200 inline-flex items-center space-x-1 pl-2 border-l border-white/20"
                 >
                   <RefreshCw className={`w-3.5 h-3.5 ${isLocating ? 'animate-spin' : ''}`} />
                   <span>Refresh</span>
@@ -157,9 +171,9 @@ export const Home: React.FC = () => {
                 </button>
                 <button
                   onClick={simulateKolkataLocation}
-                  className="inline-flex items-center space-x-1.5 bg-ivory-surface hover:bg-terracotta-50 text-terracotta border border-terracotta-200 text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl shadow-xs transition-all active:scale-95"
+                  className="inline-flex items-center space-x-1.5 bg-black/45 hover:bg-black/65 text-amber-200 border border-amber-400/40 text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl backdrop-blur-md shadow-xs transition-all active:scale-95"
                 >
-                  <Sparkles className="w-4 h-4" />
+                  <Sparkles className="w-4 h-4 text-amber-300" />
                   <span>South Kolkata GPS Demo</span>
                 </button>
               </div>
@@ -336,10 +350,10 @@ export const Home: React.FC = () => {
               <span className="text-xs font-bold uppercase tracking-wider text-terracotta">
                 Iconic Highlights
               </span>
-              <span className="text-xs font-bengali text-charcoal-subtle">জনপ্রিয় আকর্ষণ</span>
+              <span className="text-xs font-bengali text-charcoal-subtle">কলকাতা জুড়ে সেরা আকর্ষণ</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-charcoal mt-1">
-              Top Pandals in South Kolkata
+              Iconic Pandals of Kolkata
             </h2>
           </div>
           <Link
