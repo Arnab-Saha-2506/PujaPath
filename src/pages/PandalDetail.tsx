@@ -200,13 +200,19 @@ export const PandalDetail: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-[55vh] flex items-center justify-center py-12">
-        <SankhaLoader
-          variant="inline"
-          size="lg"
-          text="মণ্ডপ বিবরণ প্রস্তুত হচ্ছে..."
-          subtext="শারদোৎসব ২০২৬ • আগমনী বার্তা"
-        />
+      <div className="max-w-7xl xl:max-w-[1360px] 2xl:max-w-[1520px] mx-auto py-10 space-y-6 animate-pulse">
+        <div className="h-8 bg-stone-200 rounded w-1/3" />
+        <div className="h-72 bg-stone-200 rounded-3xl" />
+        <div className="h-32 bg-stone-100 rounded-2xl" />
+        <div className="h-48 bg-stone-100 rounded-2xl" />
+        <div className="min-h-[55vh] flex items-center justify-center py-12">
+          <SankhaLoader
+            variant="inline"
+            size="lg"
+            text="মণ্ডপ বিবরণ প্রস্তুত হচ্ছে..."
+            subtext="শারদোৎসব ২০২৬ • আগমনী বার্তা"
+          />
+        </div>
       </div>
     );
   }
