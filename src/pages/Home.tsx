@@ -126,7 +126,7 @@ export const Home: React.FC = () => {
           <div className="inline-flex items-center space-x-2 bg-black/45 backdrop-blur-md border border-amber-400/40 px-4 py-1.5 rounded-full shadow-xs">
             <DurgaEyeIcon size={20} />
             <span className="text-xs sm:text-sm font-bengali font-semibold text-amber-300 tracking-wide drop-shadow-xs">
-              শারদোৎসব ২০২৫ • পুজোর কলকাতা, আপনার পথে
+              শারদোৎসব ২০২৬ • পুজোর কলকাতা, আপনার পথে
             </span>
           </div>
 

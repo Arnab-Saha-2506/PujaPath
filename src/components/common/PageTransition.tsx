@@ -48,15 +48,14 @@ export const PageTransition: React.FC = () => {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-ivory/90 backdrop-blur-md transition-opacity duration-300 ease-out ${
-        isFading ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'
-      }`}
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-ivory/90 backdrop-blur-md transition-opacity duration-300 ease-out ${isFading ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'
+        }`}
       style={{ willChange: 'opacity' }}
     >
       <SankhaLoader
         variant="inline"
         size="md"
-        text="শারদোৎসব ২০২৫ • আগমনী বার্তা"
+        text="শারদোৎসব ২০২৬ • আগমনী বার্তা"
         subtext="নতুন পুজোযাত্রার পথ সাজছে..."
       />
     </div>

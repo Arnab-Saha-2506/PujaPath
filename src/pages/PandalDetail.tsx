@@ -205,7 +205,7 @@ export const PandalDetail: React.FC = () => {
           variant="inline"
           size="lg"
           text="মণ্ডপ বিবরণ প্রস্তুত হচ্ছে..."
-          subtext="শারদোৎসব ২০২৫ • আগমনী বার্তা"
+          subtext="শারদোৎসব ২০২৬ • আগমনী বার্তা"
         />
       </div>
     );
