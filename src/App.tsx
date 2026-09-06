@@ -123,9 +123,11 @@ function App() {
 
             <div className="pt-6 border-t border-ivory-muted flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-charcoal-subtle">
               <div className="flex items-center space-x-1.5">
+                <span>Designed with authentic Bengali aesthetics for Sharadotsav 2025</span>
                 <span>Designed with authentic Bengali aesthetics for Sharadotsav 2026</span>
               </div>
               <div className="text-[11px]">
+                Kolkata Durga Puja &copy; 2025 • UNESCO Intangible Cultural Heritage
                 Kolkata Durga Puja &copy; 2026 • UNESCO Intangible Cultural Heritage
               </div>
             </div>
