@@ -306,9 +306,9 @@ export const PandalDetail: React.FC = () => {
             <span className="bg-vermilion text-white font-semibold text-xs px-3 py-1 rounded-full shadow-xs">
               {pandal.areaName || 'South Kolkata'}
             </span>
-            <span className="text-white/90 text-xs font-mono bg-black/40 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/10">
+            {/* <span className="text-white/90 text-xs font-mono bg-black/40 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/10">
               ID #{pandal.id}
-            </span>
+            </span> */}
             {pandal.bestTimeToVisit && (
               <span className="bg-charcoal/70 backdrop-blur-md text-amber-300 text-xs font-medium px-2.5 py-0.5 rounded-full border border-amber-400/25">
                 ⭐ {pandal.bestTimeToVisit}
