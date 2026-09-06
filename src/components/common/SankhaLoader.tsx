@@ -10,7 +10,7 @@ interface SankhaLoaderProps {
 export const SankhaLoader: React.FC<SankhaLoaderProps> = ({
   variant = 'transition',
   size = 'md',
-  text = 'শারদোৎসব ২০২৫ • আগমনী বার্তা',
+  text = 'শারদোৎসব ২০২৬ • আগমনী বার্তা',
   subtext = 'পুজোযাত্রার পথ সাজছে...',
 }) => {
   const sizeConfig = {

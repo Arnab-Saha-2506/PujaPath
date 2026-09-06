@@ -42,7 +42,7 @@ export const PandalFallbackGraphic: React.FC<PandalFallbackGraphicProps> = ({
             <DurgaEyeIcon size={64} />
           </div>
           <span className="text-white text-xs font-bengali tracking-widest uppercase mt-2">
-            শারদোৎসব ২০২৫
+            শারদোৎসব ২০২৬
           </span>
         </div>
 
