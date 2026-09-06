@@ -205,13 +205,14 @@ export const PandalDetail: React.FC = () => {
         <div className="h-72 bg-stone-200 rounded-3xl" />
         <div className="h-32 bg-stone-100 rounded-2xl" />
         <div className="h-48 bg-stone-100 rounded-2xl" />
-      <div className="min-h-[55vh] flex items-center justify-center py-12">
-        <SankhaLoader
-          variant="inline"
-          size="lg"
-          text="মণ্ডপ বিবরণ প্রস্তুত হচ্ছে..."
-          subtext="শারদোৎসব ২০২৬ • আগমনী বার্তা"
-        />
+        <div className="min-h-[55vh] flex items-center justify-center py-12">
+          <SankhaLoader
+            variant="inline"
+            size="lg"
+            text="মণ্ডপ বিবরণ প্রস্তুত হচ্ছে..."
+            subtext="শারদোৎসব ২০২৬ • আগমনী বার্তা"
+          />
+        </div>
       </div>
     );
   }
