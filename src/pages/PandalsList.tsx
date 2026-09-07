@@ -156,7 +156,7 @@ export const PandalsList: React.FC = () => {
                       isSelected ? 'bg-white/20 text-white' : 'bg-vermilion/10 text-vermilion'
                     )}
                   >
-                    27+
+                    40+
                   </span>
                 ) : area.id === 2 ? (
                   <span
@@ -165,7 +165,7 @@ export const PandalsList: React.FC = () => {
                       isSelected ? 'bg-white/20 text-white' : 'bg-leaf/15 text-leaf-dark'
                     )}
                   >
-                    63+
+                    70+
                   </span>
                 ) : area.id === 3 ? (
                   <span
@@ -175,6 +175,15 @@ export const PandalsList: React.FC = () => {
                     )}
                   >
                     23+
+                  </span>
+                ) : area.id === 4 ? (
+                  <span
+                    className={cn(
+                      'text-[10px] px-1.5 py-0.5 rounded-full font-bold',
+                      isSelected ? 'bg-white/20 text-white' : 'bg-brass/15 text-brass-dark'
+                    )}
+                  >
+                    47+
                   </span>
                 ) : (
                   <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium bg-stone-100 text-charcoal-subtle">

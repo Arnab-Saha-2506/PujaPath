@@ -26,6 +26,13 @@ const GREEN_LINE_ORDER = [
   'salt lake sector v',
 ];
 
+const YELLOW_LINE_ORDER = [
+  'noapara',
+  'dum dum cantonment',
+  'jessore road',
+  'jai hind',
+];
+
 export async function getStationsByLine(lineName: string): Promise<MetroStationResponseDTO[]> {
   const encodedLine = encodeURIComponent(lineName);
   const response = await apiClient.get<MetroStationResponseDTO[]>(
@@ -39,6 +46,21 @@ export async function getStationsByLine(lineName: string): Promise<MetroStationR
         a.name.toLowerCase().replace(/\s+/g, ' ').trim().includes(name)
       );
       const idxB = GREEN_LINE_ORDER.findIndex((name) =>
+        b.name.toLowerCase().replace(/\s+/g, ' ').trim().includes(name)
+      );
+      if (idxA === -1 && idxB === -1) return 0;
+      if (idxA === -1) return 1;
+      if (idxB === -1) return -1;
+      return idxA - idxB;
+    });
+  }
+
+  if (lineName.toLowerCase().includes('yellow')) {
+    return [...stations].sort((a, b) => {
+      const idxA = YELLOW_LINE_ORDER.findIndex((name) =>
+        a.name.toLowerCase().replace(/\s+/g, ' ').trim().includes(name)
+      );
+      const idxB = YELLOW_LINE_ORDER.findIndex((name) =>
         b.name.toLowerCase().replace(/\s+/g, ' ').trim().includes(name)
       );
       if (idxA === -1 && idxB === -1) return 0;

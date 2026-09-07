@@ -5,6 +5,7 @@ export type LocationStatus = 'idle' | 'prompt' | 'granted' | 'denied' | 'unavail
 export interface LocationContextType {
   latitude: number | null;
   longitude: number | null;
+  locality: string | null;
   status: LocationStatus;
   error: string | null;
   isLocating: boolean;
@@ -18,11 +19,13 @@ const LocationContext = createContext<LocationContextType | undefined>(undefined
 const STORAGE_LAT_KEY = 'pujapath_lat';
 const STORAGE_LON_KEY = 'pujapath_lon';
 const STORAGE_TIMESTAMP_KEY = 'pujapath_loc_time';
+const STORAGE_LOCALITY_KEY = 'pujapath_locality';
 const CACHE_DURATION_MS = 10 * 60 * 1000; // 10 minutes cache
 
 export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [latitude, setLatitude] = useState<number | null>(null);
   const [longitude, setLongitude] = useState<number | null>(null);
+  const [locality, setLocality] = useState<string | null>(null);
   const [status, setStatus] = useState<LocationStatus>('idle');
   const [error, setError] = useState<string | null>(null);
   const [isLocating, setIsLocating] = useState<boolean>(false);
@@ -34,6 +37,8 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const cachedLat = sessionStorage.getItem(STORAGE_LAT_KEY);
       const cachedLon = sessionStorage.getItem(STORAGE_LON_KEY);
       const cachedTime = sessionStorage.getItem(STORAGE_TIMESTAMP_KEY);
+      const cachedLocality = sessionStorage.getItem(STORAGE_LOCALITY_KEY);
+
 
       if (cachedLat && cachedLon && cachedTime) {
         const timeDiff = Date.now() - parseInt(cachedTime, 10);
@@ -41,12 +46,47 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           setLatitude(parseFloat(cachedLat));
           setLongitude(parseFloat(cachedLon));
           setStatus('granted');
+          if (cachedLocality) {
+            setLocality(cachedLocality);
+          }
         }
       }
     } catch {
       // sessionStorage might be restricted
     }
   }, []);
+
+  const reverseGeocode = useCallback(async (lat: number, lon: number): Promise<string | null> => {
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=16&addressdetails=1`,
+        {
+          headers: {
+            'Accept-Language': 'en',
+          },
+        }
+      );
+      if (!response.ok) throw new Error('Geocoding failed');
+      const data = await response.json();
+
+      const address = data.address || {};
+      const locality =
+        address.suburb ||
+        address.neighbourhood ||
+        address.quarter ||
+        address.hamlet ||
+        address.village ||
+        address.town ||
+        address.city ||
+        data.display_name?.split(',')[0] ||
+        null;
+
+      return locality;
+    } catch {
+      return null;
+    }
+  }, []);
+
 
   const fetchPosition = useCallback((): Promise<{ lat: number; lon: number }> => {
     return new Promise((resolve, reject) => {
@@ -91,10 +131,16 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       setStatus('granted');
       setLastRefreshed(now);
 
+      const loc = await reverseGeocode(lat, lon);
+      if (loc) setLocality(loc);
+
       try {
         sessionStorage.setItem(STORAGE_LAT_KEY, lat.toString());
         sessionStorage.setItem(STORAGE_LON_KEY, lon.toString());
         sessionStorage.setItem(STORAGE_TIMESTAMP_KEY, now.toString());
+        if (loc) {
+          sessionStorage.setItem(STORAGE_LOCALITY_KEY, loc);
+        }
       } catch {
         // ignore storage errors
       }
@@ -118,7 +164,7 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     } finally {
       setIsLocating(false);
     }
-  }, [fetchPosition, lastRefreshed, latitude]);
+  }, [fetchPosition, lastRefreshed, latitude, reverseGeocode]);
 
   const refreshLocation = useCallback(async () => {
     await requestLocation();
@@ -133,10 +179,12 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setLongitude(lon);
     setStatus('granted');
     setError(null);
+    setLocality('South Kolkata')
     try {
       sessionStorage.setItem(STORAGE_LAT_KEY, lat.toString());
       sessionStorage.setItem(STORAGE_LON_KEY, lon.toString());
       sessionStorage.setItem(STORAGE_TIMESTAMP_KEY, Date.now().toString());
+      sessionStorage.setItem(STORAGE_LOCALITY_KEY, 'South Kolkata');
     } catch {
       // ignore
     }
@@ -147,6 +195,7 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       value={{
         latitude,
         longitude,
+        locality,
         status,
         error,
         isLocating,
