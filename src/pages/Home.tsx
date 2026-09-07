@@ -76,7 +76,7 @@ export const Home: React.FC = () => {
     return pandal;
   });
 
-  // Curated iconic highlights spanning South, North, and Central Kolkata
+  // Curated iconic highlights spanning South, North, Central, and East Kolkata
   const iconicNames = [
     'Deshapriyo Park',
     'Baghbazar',
@@ -85,6 +85,8 @@ export const Home: React.FC = () => {
     'Tridhara Sammilani',
     'Suruchi Sangha',
     'Md. Ali Park',
+    'Sreebhumi',
+    'Salt Lake FD',
   ];
   const highlightedPandals = displayPandals
     .filter((p) => iconicNames.some((name) => p.name.toLowerCase().includes(name.toLowerCase())))
@@ -206,7 +208,7 @@ export const Home: React.FC = () => {
             to="/pandals"
             className="inline-flex items-center space-x-1 text-xs sm:text-sm font-semibold text-vermilion hover:text-vermilion-dark transition-colors"
           >
-            <span>View All {pandals.length > 0 ? `${pandals.length}+` : '110+'} Pandals</span>
+            <span>View All {pandals.length > 0 ? `${pandals.length}+` : '180+'} Pandals</span>
             <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
@@ -314,16 +316,14 @@ export const Home: React.FC = () => {
             </div>
           </div>
 
-          {/* East Kolkata */}
+          {/* East Kolkata - Active Card */}
           <div className="relative group bg-gradient-to-br from-emerald-50/60 via-ivory-surface to-teal-50/40 rounded-2xl border-2 border-emerald-200/70 p-6 shadow-warm-sm hover:shadow-warm-md transition-all flex flex-col justify-between">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                {/* <span className="bg-stone-100 text-charcoal-muted text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border border-stone-200"> */}
                 <span className="bg-emerald-500 text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
                   Salt Lake & Bypass
                 </span>
-                {/* <span className="text-[10px] font-semibold text-brass">Coming Soon</span> */}
-                <span className="text-xs font-bold text-brass-dark">{areaCounts[4] || 47}+ Pandals</span>
+                <span className="text-xs font-bold text-emerald-800">{areaCounts[4] || 47}+ Pandals</span>
               </div>
               <div>
                 <h3 className="text-xl font-bold text-charcoal group-hover:text-vermilion transition-colors">
@@ -394,7 +394,7 @@ export const Home: React.FC = () => {
               <Train className="w-3.5 h-3.5 text-emerald-400" />
               <span>Kolkata Metro Network</span>
               <span className="text-white/40">•</span>
-              <span className="text-emerald-400">Green, Blue, Purple & Orange Lines</span>
+              <span className="text-emerald-400">Blue, Green, Purple, Orange & Yellow Lines</span>
             </div>
             <h3 className="text-2xl sm:text-3xl font-bold tracking-tight">
               Beat the Puja Traffic by Metro

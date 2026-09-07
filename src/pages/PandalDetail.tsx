@@ -99,6 +99,32 @@ function getPandalProTip(pandal: PandalDetailResponseDTO): string {
     return 'Kalighat or Rabindra Sarobar Metro are within 800m. World-renowned for tranquil illumination and traditional metal craftwork.';
   }
 
+  // East Kolkata Iconic Pandals
+  if (name.includes('sreebhumi')) {
+    return 'Kolkata\'s most celebrated mega-spectacle on VIP Road, famed for monumental palace replicas. Massive crowds gather after dark; visit between 7:00 AM and 2:00 PM for comfortable viewing. Quick transit from Ultadanga or Phoolbagan Metro (Green Line).';
+  }
+  if (name.includes('salt lake fd') || (name.includes('fd block') && name.includes('salt lake'))) {
+    return 'One of Salt Lake\'s premier artistic theme attractions with immersive architectural craftsmanship. Accessible from Karunamoyee or Central Park Metro (Green Line), followed by a quick toto or e-rickshaw ride.';
+  }
+  if (name.includes('salt lake bj') || name.includes('bj block')) {
+    return 'Acclaimed community celebration in Sector II, Salt Lake. Convenient walking distance or 3-min toto ride from Karunamoyee Metro station.';
+  }
+  if (name.includes('salt lake ck') || name.includes('ck block')) {
+    return 'Serene Sector II Salt Lake community celebration. Pair with BJ Block next door for a pleasant walking loop.';
+  }
+  if (name.includes('33 pally') || (name.includes('beliaghata') && name.includes('agrani'))) {
+    return 'Acclaimed for soulful, nostalgic themes celebrating rural Bengal and cultural roots. Located just 600m from Phoolbagan Metro station (Green Line Gate 2).';
+  }
+  if (name.includes('mitali') || name.includes('kankurgachi')) {
+    return 'High-profile celebration on Maniktala Main Road famous for grand illuminations and thematic pandals. Short walk from Phoolbagan Metro station.';
+  }
+  if (name.includes('new town') || name.includes('action area')) {
+    return 'Spacious, open-air theme installations in Newtown. Ideal for stress-free family visits with ample parking and pedestrian walkways.';
+  }
+  if (name.includes('keshtopur')) {
+    return 'Vibrant VIP road neighborhood celebration. Easiest transit via VIP road connector or Jessore Road transit link.';
+  }
+
   // Dynamic contextual fallback based on nearby metro stations
   if (pandal.nearbyMetros && pandal.nearbyMetros.length > 0) {
     const nearest = pandal.nearbyMetros[0];
