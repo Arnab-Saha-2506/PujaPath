@@ -25,31 +25,39 @@ export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = t
       onClick={handleCardClick}
       className="group bg-ivory-surface rounded-2xl border border-ivory-border hover:border-terracotta/40 shadow-warm-sm hover:shadow-warm-md transition-all duration-300 flex flex-col overflow-hidden relative cursor-pointer active:scale-[0.99]"
     >
-      {/* Media Header */}
-      <div className="relative overflow-hidden h-44 bg-charcoal">
+      {/* Media Header - Responsive Aspect & Height for All Screen Sizes */}
+      <div className="relative overflow-hidden h-48 sm:h-52 md:h-48 lg:h-52 bg-charcoal">
         {pandal.imageUrl && !imgError ? (
           <>
+            {/* Ambient Blurred Background Fill to seamlessly handle portrait/tall aspect ratios & PNG transparency */}
+            <img
+              src={pandal.imageUrl}
+              alt=""
+              aria-hidden="true"
+              className="absolute inset-0 w-full h-full object-cover filter blur-lg scale-125 opacity-55"
+            />
+            {/* Focused Foreground Image - Top-weighted 28% positioning preserves Durga idol faces & pandal crowns */}
             <img
               src={pandal.imageUrl}
               alt={pandal.name}
               loading="lazy"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 brightness-[0.92]"
+              className="relative w-full h-full object-cover object-[center_28%] group-hover:scale-105 transition-transform duration-500 brightness-[0.93] contrast-[1.03]"
               onError={() => setImgError(true)}
             />
-            {/* Subtle multi-layer gradient scrim for badge legibility and clean separation */}
-            <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 via-transparent to-black/40 pointer-events-none" />
+            {/* Multi-layer gradient scrim for badge legibility and bottom blending */}
+            <div className="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-black/45 pointer-events-none" />
           </>
         ) : (
           <PandalFallbackGraphic name={pandal.name} />
         )}
 
-        {/* Top Badges Overlay */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none z-10">
-          <span className="bg-charcoal/70 backdrop-blur-md text-white font-semibold text-xs px-2.5 py-1 rounded-full shadow-sm border border-white/20">
+        {/* Top Badges Overlay - Protected against narrow screen wrapping */}
+        <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-none z-10">
+          <span className="bg-charcoal/75 backdrop-blur-md text-white font-semibold text-xs px-2.5 py-1 rounded-full shadow-sm border border-white/20 truncate max-w-[55%]">
             {pandal.areaName || 'South Kolkata'}
           </span>
           {pandal.bestTimeToVisit && (
-            <div className="pointer-events-auto">
+            <div className="pointer-events-auto shrink-0">
               <BestTimeBadge timeSlot={pandal.bestTimeToVisit} />
             </div>
           )}
