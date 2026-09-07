@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 
 export const Home: React.FC = () => {
-  const { latitude, longitude, status, isLocating, requestLocation, refreshLocation, simulateKolkataLocation } =
+  const { latitude, longitude, locality, status, isLocating, requestLocation, refreshLocation, simulateKolkataLocation } =
     useGeolocation();
 
   const [areas, setAreas] = useState<AreaResponseDTO[]>([]);
@@ -150,6 +150,12 @@ export const Home: React.FC = () => {
                 <span className="text-xs sm:text-sm font-semibold text-white">
                   📍 Exploring from current location
                 </span>
+                {/* NEW: Show locality name or coordinates */}
+                {(locality || (latitude !== null && longitude !== null)) && (
+                  <span className="text-[11px] text-emerald-200 font-mono bg-black/30 px-2 py-0.5 rounded-full">
+                    {locality || `${latitude?.toFixed(2)}°N, ${longitude?.toFixed(2)}°E`}
+                  </span>
+                )}
                 <button
                   onClick={refreshLocation}
                   disabled={isLocating}
