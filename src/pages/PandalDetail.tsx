@@ -301,26 +301,26 @@ export const PandalDetail: React.FC = () => {
       </div>
 
       {/* Header Banner with Clean Non-Overlapping Overlay & Ambient Backdrop */}
-      <div className="relative rounded-3xl overflow-hidden border border-ivory-border shadow-warm-md min-h-[240px] sm:min-h-[300px] md:min-h-[360px] bg-charcoal">
+      <div className="relative rounded-3xl overflow-hidden border border-ivory-border shadow-warm-md min-h-[280px] sm:min-h-[340px] md:min-h-[400px] lg:min-h-[460px] bg-charcoal">
         {pandal.imageUrl && !imgError ? (
-          <div className="relative w-full h-64 sm:h-76 md:h-88 lg:h-96 overflow-hidden">
-            {/* Ambient blurred backdrop fill so aspect ratios fit seamlessly */}
+          <div className="relative w-full h-72 sm:h-84 md:h-96 lg:h-[440px] xl:h-[480px] overflow-hidden">
+            {/* Ambient blurred backdrop fill so aspect ratios fit seamlessly without black bars */}
             <img
               src={pandal.imageUrl}
               alt=""
-              className="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-60"
+              className="absolute inset-0 w-full h-full object-cover filter blur-xl scale-125 opacity-60"
               aria-hidden="true"
             />
-            {/* Focused high-resolution banner image */}
+            {/* Focused high-resolution banner image with top-weighted framing */}
             <img
               src={pandal.imageUrl}
               alt={pandal.name}
-              className="relative w-full h-full object-cover object-center brightness-[0.85] contrast-[1.05]"
+              className="relative w-full h-full object-cover object-[center_28%] brightness-[0.88] contrast-[1.04]"
               onError={() => setImgError(true)}
             />
-            {/* Multi-layer gradient overlays ensuring white text is 100% readable */}
-            <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/50 via-55% to-charcoal/20 pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-r from-charcoal/70 via-charcoal/20 to-transparent pointer-events-none" />
+            {/* Multi-layer gradient overlays ensuring white text is 100% readable across all viewports */}
+            <div className="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/50 via-60% to-charcoal/20 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-r from-charcoal/80 via-charcoal/20 to-transparent pointer-events-none" />
           </div>
         ) : (
           <PandalFallbackGraphic name={pandal.name} variant="banner" />
