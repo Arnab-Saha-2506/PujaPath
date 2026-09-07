@@ -219,7 +219,7 @@ export const Home: React.FC = () => {
                 <span className="bg-vermilion text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
                   Theme Hub
                 </span>
-                <span className="text-xs font-bold text-terracotta">{areaCounts[1] || 27}+ Pandals</span>
+                <span className="text-xs font-bold text-terracotta">{areaCounts[1] || 40}+ Pandals</span>
               </div>
               <div>
                 <h3 className="text-xl font-bold text-charcoal group-hover:text-vermilion transition-colors">
@@ -253,7 +253,7 @@ export const Home: React.FC = () => {
                 <span className="bg-leaf text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
                   Heritage Hub
                 </span>
-                <span className="text-xs font-bold text-leaf-dark">{areaCounts[2] || 63}+ Pandals</span>
+                <span className="text-xs font-bold text-leaf-dark">{areaCounts[2] || 70}+ Pandals</span>
               </div>
               <div>
                 <h3 className="text-xl font-bold text-charcoal group-hover:text-vermilion transition-colors">
@@ -315,16 +315,20 @@ export const Home: React.FC = () => {
           </div>
 
           {/* East Kolkata */}
-          <div className="bg-ivory-surface rounded-2xl border border-ivory-border p-6 shadow-warm-sm flex flex-col justify-between opacity-95">
+          <div className="relative group bg-gradient-to-br from-emerald-50/60 via-ivory-surface to-teal-50/40 rounded-2xl border-2 border-emerald-200/70 p-6 shadow-warm-sm hover:shadow-warm-md transition-all flex flex-col justify-between">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="bg-stone-100 text-charcoal-muted text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border border-stone-200">
+                {/* <span className="bg-stone-100 text-charcoal-muted text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full border border-stone-200"> */}
+                <span className="bg-emerald-500 text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
                   Salt Lake & Bypass
                 </span>
-                <span className="text-[10px] font-semibold text-brass">Coming Soon</span>
+                {/* <span className="text-[10px] font-semibold text-brass">Coming Soon</span> */}
+                <span className="text-xs font-bold text-brass-dark">{areaCounts[4] || 47}+ Pandals</span>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-charcoal">East Kolkata</h3>
+                <h3 className="text-xl font-bold text-charcoal group-hover:text-vermilion transition-colors">
+                  East Kolkata
+                </h3>
                 <p className="text-xs font-bengali text-charcoal-subtle mt-0.5">
                   পূর্ব কলকাতা • সল্টলেক ও ইএম বাইপাস
                 </p>
@@ -337,11 +341,11 @@ export const Home: React.FC = () => {
 
             <div className="mt-5 pt-4 border-t border-ivory-muted">
               <Link
-                to="/metro/lines/Green%20Line"
-                className="w-full inline-flex items-center justify-center space-x-1.5 bg-stone-100 hover:bg-stone-200 text-charcoal text-xs font-semibold py-2.5 px-4 rounded-xl transition-colors"
+                to="/areas/4/pandals"
+                className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-all"
               >
-                <span>Green Line Route</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <span>Explore East</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>
