@@ -90,7 +90,8 @@ export const MetroStationTimeline: React.FC<MetroStationTimelineProps> = ({
                           {((lineName.toLowerCase().includes('green') && station.name.toLowerCase().includes('howrah maidan')) ||
                             (lineName.toLowerCase().includes('blue') && station.name.toLowerCase().includes('dakshineswar')) ||
                             (lineName.toLowerCase().includes('purple') && station.name.toLowerCase().includes('joka')) ||
-                            (lineName.toLowerCase().includes('orange') && index === 0)) && (
+                            (lineName.toLowerCase().includes('orange') && index === 0) ||
+                            (lineName.toLowerCase().includes('yellow') && (station.name.toLowerCase().includes('noapara') || index === 0))) && (
                               <span className="text-[10px] font-semibold bg-stone-200 text-charcoal px-2 py-0.5 rounded-full border border-stone-300">
                                 Origin / Terminal
                               </span>
@@ -98,7 +99,8 @@ export const MetroStationTimeline: React.FC<MetroStationTimelineProps> = ({
                           {((lineName.toLowerCase().includes('green') && station.name.toLowerCase().includes('sector v')) ||
                             (lineName.toLowerCase().includes('blue') && station.name.toLowerCase().includes('kavi subhash')) ||
                             (lineName.toLowerCase().includes('purple') && station.name.toLowerCase().includes('majerhat')) ||
-                            (lineName.toLowerCase().includes('orange') && index === stations.length - 1)) && (
+                            (lineName.toLowerCase().includes('orange') && index === stations.length - 1) ||
+                            (lineName.toLowerCase().includes('yellow') && (station.name.toLowerCase().includes('jai hind') || index === stations.length - 1))) && (
                               <span className="text-[10px] font-semibold bg-stone-200 text-charcoal px-2 py-0.5 rounded-full border border-stone-300">
                                 Terminal
                               </span>

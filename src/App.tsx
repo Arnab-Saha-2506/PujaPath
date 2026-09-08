@@ -117,6 +117,14 @@ function App() {
                       🟠 Orange Line (Garia - Ruby)
                     </Link>
                   </li>
+                  <li>
+                    <Link
+                      to="/metro/lines/Yellow%20Line"
+                      className="hover:text-[#EAB308] transition-colors"
+                    >
+                      🟡 Yellow Line (Noapara - Airport)
+                    </Link>
+                  </li>
                 </ul>
               </div>
             </div>

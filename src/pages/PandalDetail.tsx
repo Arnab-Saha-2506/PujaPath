@@ -99,6 +99,32 @@ function getPandalProTip(pandal: PandalDetailResponseDTO): string {
     return 'Kalighat or Rabindra Sarobar Metro are within 800m. World-renowned for tranquil illumination and traditional metal craftwork.';
   }
 
+  // East Kolkata Iconic Pandals
+  if (name.includes('sreebhumi')) {
+    return 'Kolkata\'s most celebrated mega-spectacle on VIP Road, famed for monumental palace replicas. Massive crowds gather after dark; visit between 7:00 AM and 2:00 PM for comfortable viewing. Quick transit from Ultadanga or Phoolbagan Metro (Green Line).';
+  }
+  if (name.includes('salt lake fd') || (name.includes('fd block') && name.includes('salt lake'))) {
+    return 'One of Salt Lake\'s premier artistic theme attractions with immersive architectural craftsmanship. Accessible from Karunamoyee or Central Park Metro (Green Line), followed by a quick toto or e-rickshaw ride.';
+  }
+  if (name.includes('salt lake bj') || name.includes('bj block')) {
+    return 'Acclaimed community celebration in Sector II, Salt Lake. Convenient walking distance or 3-min toto ride from Karunamoyee Metro station.';
+  }
+  if (name.includes('salt lake ck') || name.includes('ck block')) {
+    return 'Serene Sector II Salt Lake community celebration. Pair with BJ Block next door for a pleasant walking loop.';
+  }
+  if (name.includes('33 pally') || (name.includes('beliaghata') && name.includes('agrani'))) {
+    return 'Acclaimed for soulful, nostalgic themes celebrating rural Bengal and cultural roots. Located just 600m from Phoolbagan Metro station (Green Line Gate 2).';
+  }
+  if (name.includes('mitali') || name.includes('kankurgachi')) {
+    return 'High-profile celebration on Maniktala Main Road famous for grand illuminations and thematic pandals. Short walk from Phoolbagan Metro station.';
+  }
+  if (name.includes('new town') || name.includes('action area')) {
+    return 'Spacious, open-air theme installations in Newtown. Ideal for stress-free family visits with ample parking and pedestrian walkways.';
+  }
+  if (name.includes('keshtopur')) {
+    return 'Vibrant VIP road neighborhood celebration. Easiest transit via VIP road connector or Jessore Road transit link.';
+  }
+
   // Dynamic contextual fallback based on nearby metro stations
   if (pandal.nearbyMetros && pandal.nearbyMetros.length > 0) {
     const nearest = pandal.nearbyMetros[0];
@@ -275,26 +301,26 @@ export const PandalDetail: React.FC = () => {
       </div>
 
       {/* Header Banner with Clean Non-Overlapping Overlay & Ambient Backdrop */}
-      <div className="relative rounded-3xl overflow-hidden border border-ivory-border shadow-warm-md min-h-[240px] sm:min-h-[300px] md:min-h-[360px] bg-charcoal">
+      <div className="relative rounded-3xl overflow-hidden border border-ivory-border shadow-warm-md min-h-[280px] sm:min-h-[340px] md:min-h-[400px] lg:min-h-[460px] bg-charcoal">
         {pandal.imageUrl && !imgError ? (
-          <div className="relative w-full h-64 sm:h-76 md:h-88 lg:h-96 overflow-hidden">
-            {/* Ambient blurred backdrop fill so aspect ratios fit seamlessly */}
+          <div className="relative w-full h-72 sm:h-84 md:h-96 lg:h-[440px] xl:h-[480px] overflow-hidden">
+            {/* Ambient blurred backdrop fill so aspect ratios fit seamlessly without black bars */}
             <img
               src={pandal.imageUrl}
               alt=""
-              className="absolute inset-0 w-full h-full object-cover filter blur-md scale-110 opacity-60"
+              className="absolute inset-0 w-full h-full object-cover filter blur-xl scale-125 opacity-60"
               aria-hidden="true"
             />
-            {/* Focused high-resolution banner image */}
+            {/* Focused high-resolution banner image with top-weighted framing */}
             <img
               src={pandal.imageUrl}
               alt={pandal.name}
-              className="relative w-full h-full object-cover object-center brightness-[0.85] contrast-[1.05]"
+              className="relative w-full h-full object-cover object-[center_28%] brightness-[0.88] contrast-[1.04]"
               onError={() => setImgError(true)}
             />
-            {/* Multi-layer gradient overlays ensuring white text is 100% readable */}
-            <div className="absolute inset-0 bg-gradient-to-t from-charcoal via-charcoal/50 via-55% to-charcoal/20 pointer-events-none" />
-            <div className="absolute inset-0 bg-gradient-to-r from-charcoal/70 via-charcoal/20 to-transparent pointer-events-none" />
+            {/* Multi-layer gradient overlays ensuring white text is 100% readable across all viewports */}
+            <div className="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/50 via-60% to-charcoal/20 pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-r from-charcoal/80 via-charcoal/20 to-transparent pointer-events-none" />
           </div>
         ) : (
           <PandalFallbackGraphic name={pandal.name} variant="banner" />
@@ -306,9 +332,9 @@ export const PandalDetail: React.FC = () => {
             <span className="bg-vermilion text-white font-semibold text-xs px-3 py-1 rounded-full shadow-xs">
               {pandal.areaName || 'South Kolkata'}
             </span>
-            <span className="text-white/90 text-xs font-mono bg-black/40 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/10">
+            {/* <span className="text-white/90 text-xs font-mono bg-black/40 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/10">
               ID #{pandal.id}
-            </span>
+            </span> */}
             {pandal.bestTimeToVisit && (
               <span className="bg-charcoal/70 backdrop-blur-md text-amber-300 text-xs font-medium px-2.5 py-0.5 rounded-full border border-amber-400/25">
                 ⭐ {pandal.bestTimeToVisit}

@@ -70,6 +70,20 @@ export const METRO_LINES_METADATA: Record<string, MetroLineMeta> = {
     status: 'Operational Phase 1',
     tagline: 'Connects EM Bypass and Ruby hospital pandal circuits with Garia.',
   },
+  'Yellow Line': {
+    name: 'Yellow Line',
+    code: 'Line 4',
+    color: 'bg-[#EAB308]',
+    hex: '#EAB308',
+    bgLight: 'bg-yellow-50',
+    textColor: 'text-[#B45309]',
+    borderColor: 'border-[#EAB308]',
+    ringColor: 'ring-[#EAB308]',
+    corridor: 'Noapara - Airport Corridor',
+    terminals: 'Noapara ⇄ Jai Hind (Airport)',
+    status: 'Operational Phase 1 (Noapara to Airport)',
+    tagline: 'High-speed link connecting North Kolkata & Dum Dum directly to NSCBI Airport and VIP Road puja circuits.',
+  },
 };
 
 export function getMetroLineMeta(lineName: string): MetroLineMeta {

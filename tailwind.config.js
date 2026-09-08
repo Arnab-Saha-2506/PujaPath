@@ -54,6 +54,7 @@ export default {
           green: '#009A44',
           purple: '#7D3F98',
           orange: '#ED6B00',
+          yellow: '#EAB308',
         },
       },
       fontFamily: {
