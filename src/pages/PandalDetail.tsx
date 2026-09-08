@@ -12,19 +12,22 @@ import { formatDistance, formatWalkingTime, calculateHaversineDistance, estimate
 import { ErrorBanner } from '../components/common/ErrorBanner';
 import {
   MapPin,
+  Clock,
+  Compass,
+  ArrowLeft,
+  ArrowRight,
+  Share2,
   Train,
   Navigation,
-  Clock,
-  RefreshCw,
-  ArrowLeft,
-  Share2,
   Footprints,
-  Compass,
-  ArrowRight,
+  RefreshCw,
+  Plus,
+  Check,
   Info,
   Lightbulb,
   Route,
 } from 'lucide-react';
+import { useRoutePlanner } from '../context/RouteContext';
 
 function getPandalProTip(pandal: PandalDetailResponseDTO): string {
   const name = pandal.name.toLowerCase();
@@ -140,6 +143,7 @@ export const PandalDetail: React.FC = () => {
 
   const { latitude, longitude, status, isLocating, requestLocation, refreshLocation, simulateKolkataLocation } =
     useGeolocation();
+  const { isPandalSelected, togglePandalSelection } = useRoutePlanner();
 
   const [pandal, setPandal] = useState<PandalDetailResponseDTO | null>(null);
   const [allAreaPandals, setAllAreaPandals] = useState<PandalResponseDTO[]>([]);
@@ -279,10 +283,12 @@ export const PandalDetail: React.FC = () => {
     }
   };
 
+  const isSelectedInRoute = pandal ? isPandalSelected(pandal.id) : false;
+
   return (
     <div className="max-w-7xl xl:max-w-[1360px] 2xl:max-w-[1520px] mx-auto pb-40 md:pb-24 space-y-8">
       {/* Top Back Navigation Bar */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2">
         <Link
           to="/pandals"
           className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal dark:text-stone-200 hover:text-vermilion transition-colors bg-ivory-surface dark:bg-obsidian-50 border border-ivory-border dark:border-obsidian-300 px-3.5 py-2 rounded-xl shadow-xs"
@@ -290,13 +296,40 @@ export const PandalDetail: React.FC = () => {
           <ArrowLeft className="w-4 h-4" />
           <span>All Pandals</span>
         </Link>
-        <button
-          onClick={handleShare}
-          className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal dark:text-stone-200 hover:text-vermilion transition-colors bg-ivory-surface dark:bg-obsidian-50 border border-ivory-border dark:border-obsidian-300 px-3.5 py-2 rounded-xl shadow-xs"
-        >
-          <Share2 className="w-3.5 h-3.5" />
-          <span>Share</span>
-        </button>
+
+        <div className="flex items-center space-x-2">
+          {/* Add to Route Toggle */}
+          <button
+            type="button"
+            onClick={() => pandal && togglePandalSelection(pandal.id)}
+            className={`inline-flex items-center space-x-1.5 text-xs font-semibold px-3 sm:px-3.5 py-2 rounded-xl border transition-[colors,box-shadow] shadow-xs cursor-pointer ${isSelectedInRoute
+                ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700/50'
+                : 'bg-ivory-surface dark:bg-obsidian-50 text-charcoal dark:text-stone-200 border-ivory-border dark:border-obsidian-300 hover:border-vermilion/40'
+              }`}
+          >
+            {isSelectedInRoute ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                <span className="hidden sm:inline">In Parikrama Route</span>
+                <span className="sm:hidden">In Route</span>
+              </>
+            ) : (
+              <>
+                <Plus className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Add to Route</span>
+                <span className="sm:hidden">+ Route</span>
+              </>
+            )}
+          </button>
+
+          <button
+            onClick={handleShare}
+            className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal dark:text-stone-200 hover:text-vermilion transition-colors bg-ivory-surface dark:bg-obsidian-50 border border-ivory-border dark:border-obsidian-300 px-3 sm:px-3.5 py-2 rounded-xl shadow-xs"
+          >
+            <Share2 className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Share</span>
+          </button>
+        </div>
       </div>
 
       {/* Header Banner with Clean Non-Overlapping Overlay & Ambient Backdrop */}

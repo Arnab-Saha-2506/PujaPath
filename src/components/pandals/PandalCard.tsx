@@ -4,8 +4,9 @@ import { PandalResponseDTO } from '../../types/api';
 import { PandalFallbackGraphic } from './PandalFallbackGraphic';
 import { DistanceBadge } from './DistanceBadge';
 import { BestTimeBadge } from './BestTimeBadge';
-import { MapPin, ArrowRight, Navigation, Train } from 'lucide-react';
+import { MapPin, ArrowRight, Navigation, Train, Plus, Check } from 'lucide-react';
 import { getNearestMetroStation } from '../../utils/nearestMetro';
+import { useRoutePlanner } from '../../context/RouteContext';
 
 interface PandalCardProps {
   pandal: PandalResponseDTO;
@@ -15,11 +16,27 @@ interface PandalCardProps {
 export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = true }) => {
   const navigate = useNavigate();
   const [imgError, setImgError] = useState(false);
+  const { isPandalSelected, togglePandalSelection } = useRoutePlanner();
   const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pandal.latitude},${pandal.longitude}`;
 
-  const nearestMetro = pandal.nearbyMetroStationName
-    ? { name: pandal.nearbyMetroStationName }
-    : getNearestMetroStation(pandal.latitude, pandal.longitude);
+  // Use the backend-provided nearbyMetroStationName directly; fallback only if missing
+  const rawMetroName =
+    pandal.nearbyMetroStationName?.trim() ||
+    (pandal as any).nearbyMetros?.[0]?.name ||
+    getNearestMetroStation(pandal.latitude, pandal.longitude)?.name;
+
+  const metroLabel = rawMetroName
+    ? rawMetroName.toLowerCase().endsWith('metro')
+      ? rawMetroName
+      : `${rawMetroName} Metro`
+    : null;
+
+  const isSelectedInRoute = isPandalSelected(pandal.id);
+
+  const handleToggleRoute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    togglePandalSelection(pandal.id);
+  };
 
   const handleCardClick = () => {
     navigate(`/pandals/${pandal.id}`);
@@ -66,10 +83,10 @@ export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = t
             </span>
 
             {/* Tag 2: Nearby Metro Station */}
-            {nearestMetro && (
+            {metroLabel && (
               <span className="bg-black/75 backdrop-blur-md text-emerald-300 font-semibold text-[10.5px] sm:text-[11px] px-2.5 py-0.5 sm:py-1 rounded-full shadow-xs border border-emerald-400/35 flex items-center space-x-1 shrink-0">
                 <Train className="w-3 h-3 text-emerald-400 shrink-0" />
-                <span>{nearestMetro.name} Metro</span>
+                <span>{metroLabel}</span>
               </span>
             )}
           </div>
@@ -111,23 +128,48 @@ export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = t
         </div>
 
         {/* Action Footer */}
-        <div className="mt-4 pt-3 border-t border-ivory-muted dark:border-obsidian-300 flex items-center justify-between">
-          <a
-            href={googleMapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            title="Open directions in Google Maps"
-            className="inline-flex items-center space-x-1 text-xs font-semibold text-terracotta dark:text-amber-300 hover:text-vermilion dark:hover:text-amber-200 transition-colors px-2 py-1 rounded-lg hover:bg-terracotta-50 dark:hover:bg-obsidian-200 border border-transparent hover:border-terracotta/20 dark:hover:border-amber-500/20"
-          >
-            <Navigation className="w-3.5 h-3.5" />
-            <span>Maps</span>
-          </a>
+        <div className="mt-4 pt-3 border-t border-ivory-muted dark:border-obsidian-300 flex items-center justify-between gap-1.5">
+          <div className="flex items-center space-x-1">
+            <a
+              href={googleMapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              title="Open directions in Google Maps"
+              className="inline-flex items-center space-x-1 text-xs font-semibold text-terracotta dark:text-amber-300 hover:text-vermilion dark:hover:text-amber-200 transition-colors px-2 py-1 rounded-lg hover:bg-terracotta-50 dark:hover:bg-obsidian-200 border border-transparent hover:border-terracotta/20 dark:hover:border-amber-500/20"
+            >
+              <Navigation className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Maps</span>
+            </a>
+
+            {/* Quick Add to Parikrama Route Toggle */}
+            <button
+              type="button"
+              onClick={handleToggleRoute}
+              title={isSelectedInRoute ? 'Remove from Parikrama Route' : 'Add to Parikrama Route'}
+              className={`inline-flex items-center space-x-1 text-xs font-semibold px-2 py-1 rounded-lg border transition-[colors,box-shadow] cursor-pointer ${isSelectedInRoute
+                  ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700/50'
+                  : 'bg-ivory-warm/70 dark:bg-obsidian-100 text-charcoal-soft dark:text-stone-300 border-ivory-border dark:border-obsidian-300 hover:border-vermilion/40'
+                }`}
+            >
+              {isSelectedInRoute ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                  <span>In Route</span>
+                </>
+              ) : (
+                <>
+                  <Plus className="w-3.5 h-3.5 text-charcoal-subtle dark:text-stone-400" />
+                  <span>+ Route</span>
+                </>
+              )}
+            </button>
+          </div>
 
           <span
-            className="inline-flex items-center space-x-1 text-xs font-semibold text-vermilion dark:text-vermilion-light group-hover:translate-x-0.5 transition-colors bg-vermilion/5 dark:bg-vermilion/15 group-hover:bg-vermilion/10 dark:group-hover:bg-vermilion/25 px-3 py-1.5 rounded-lg"
+            className="inline-flex items-center space-x-1 text-xs font-semibold text-vermilion dark:text-vermilion-light group-hover:translate-x-0.5 transition-colors bg-vermilion/5 dark:bg-vermilion/15 group-hover:bg-vermilion/10 dark:group-hover:bg-vermilion/25 px-2.5 sm:px-3 py-1.5 rounded-lg shrink-0"
           >
-            <span>View Pandal</span>
+            <span>View</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </span>
         </div>

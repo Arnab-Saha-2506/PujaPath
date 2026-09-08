@@ -33,6 +33,7 @@ export const MOCK_PANDALS: PandalResponseDTO[] = [
     areaId: 1,
     areaName: 'South Kolkata',
     bestTimeToVisit: 'Evening',
+    nearbyMetroStationName: 'Kalighat',
   },
   {
     id: 2,
@@ -45,6 +46,7 @@ export const MOCK_PANDALS: PandalResponseDTO[] = [
     areaId: 1,
     areaName: 'South Kolkata',
     bestTimeToVisit: 'Late Night',
+    nearbyMetroStationName: 'Kalighat',
   },
   {
     id: 3,
@@ -57,6 +59,7 @@ export const MOCK_PANDALS: PandalResponseDTO[] = [
     areaId: 1,
     areaName: 'South Kolkata',
     bestTimeToVisit: 'Evening',
+    nearbyMetroStationName: 'Kalighat',
   },
   {
     id: 4,
@@ -69,6 +72,7 @@ export const MOCK_PANDALS: PandalResponseDTO[] = [
     areaId: 1,
     areaName: 'South Kolkata',
     bestTimeToVisit: 'Night',
+    nearbyMetroStationName: 'Jatin Das Park',
   },
   {
     id: 5,
@@ -81,6 +85,7 @@ export const MOCK_PANDALS: PandalResponseDTO[] = [
     areaId: 1,
     areaName: 'South Kolkata',
     bestTimeToVisit: 'Morning / Afternoon',
+    nearbyMetroStationName: 'Jatin Das Park',
   },
   {
     id: 6,
@@ -93,6 +98,7 @@ export const MOCK_PANDALS: PandalResponseDTO[] = [
     areaId: 1,
     areaName: 'South Kolkata',
     bestTimeToVisit: 'Late Evening',
+    nearbyMetroStationName: 'Kalighat',
   },
   {
     id: 7,
@@ -105,6 +111,7 @@ export const MOCK_PANDALS: PandalResponseDTO[] = [
     areaId: 1,
     areaName: 'South Kolkata',
     bestTimeToVisit: 'Evening',
+    nearbyMetroStationName: 'Kalighat',
   },
   {
     id: 8,
@@ -117,6 +124,7 @@ export const MOCK_PANDALS: PandalResponseDTO[] = [
     areaId: 1,
     areaName: 'South Kolkata',
     bestTimeToVisit: 'Evening',
+    nearbyMetroStationName: 'Kalighat',
   },
   {
     id: 9,
@@ -129,6 +137,7 @@ export const MOCK_PANDALS: PandalResponseDTO[] = [
     areaId: 1,
     areaName: 'South Kolkata',
     bestTimeToVisit: 'Afternoon / Evening',
+    nearbyMetroStationName: 'Kalighat',
   },
   {
     id: 10,
@@ -141,6 +150,7 @@ export const MOCK_PANDALS: PandalResponseDTO[] = [
     areaId: 1,
     areaName: 'South Kolkata',
     bestTimeToVisit: 'Midnight',
+    nearbyMetroStationName: 'Netaji',
   },
   {
     id: 11,
@@ -153,6 +163,7 @@ export const MOCK_PANDALS: PandalResponseDTO[] = [
     areaId: 1,
     areaName: 'South Kolkata',
     bestTimeToVisit: 'Late Night',
+    nearbyMetroStationName: 'Kalighat',
   },
   {
     id: 12,
@@ -165,6 +176,7 @@ export const MOCK_PANDALS: PandalResponseDTO[] = [
     areaId: 1,
     areaName: 'South Kolkata',
     bestTimeToVisit: 'Evening Adda',
+    nearbyMetroStationName: 'Netaji Bhavan',
   },
   {
     id: 13,
@@ -177,6 +189,7 @@ export const MOCK_PANDALS: PandalResponseDTO[] = [
     areaId: 1,
     areaName: 'South Kolkata',
     bestTimeToVisit: 'Late Evening',
+    nearbyMetroStationName: 'Kalighat',
   },
   {
     id: 20,
@@ -189,6 +202,7 @@ export const MOCK_PANDALS: PandalResponseDTO[] = [
     areaId: 1,
     areaName: 'South Kolkata',
     bestTimeToVisit: 'Late Night',
+    nearbyMetroStationName: 'Kalighat',
   },
   // North Kolkata
   {

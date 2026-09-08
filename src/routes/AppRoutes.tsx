@@ -7,6 +7,7 @@ import { MetroLines } from '../pages/MetroLines';
 import { MetroLineTimeline } from '../pages/MetroLineTimeline';
 import { MetroStationDetail } from '../pages/MetroStationDetail';
 import { Nearby } from '../pages/Nearby';
+import { RoutePlanner } from '../pages/RoutePlanner';
 
 export const AppRoutes: React.FC = () => {
   return (
@@ -15,6 +16,8 @@ export const AppRoutes: React.FC = () => {
       <Route path="/pandals" element={<PandalsList />} />
       <Route path="/areas/:areaId/pandals" element={<PandalsList />} />
       <Route path="/pandals/:pandalId" element={<PandalDetail />} />
+      <Route path="/routes" element={<RoutePlanner />} />
+      <Route path="/planner" element={<Navigate to="/routes" replace />} />
       <Route path="/metro" element={<MetroLines />} />
       <Route path="/metro/lines/:lineName" element={<MetroLineTimeline />} />
       <Route path="/metro/stations/:stationId" element={<MetroStationDetail />} />
