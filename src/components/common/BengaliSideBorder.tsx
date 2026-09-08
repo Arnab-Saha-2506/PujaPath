@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { memo } from 'react';
 
-export const BengaliSideBorder: React.FC<{ side: 'left' | 'right' }> = ({ side }) => {
+// Pre-create the motif array once at module level — avoids Array.from on every render.
+const MOTIF_INDICES = Array.from({ length: 12 }, (_, i) => i);
+
+export const BengaliSideBorder: React.FC<{ side: 'left' | 'right' }> = memo(({ side }) => {
   const isLeft = side === 'left';
 
   return (
@@ -17,7 +20,7 @@ export const BengaliSideBorder: React.FC<{ side: 'left' | 'right' }> = ({ side }
 
       {/* Repeating Bengali Cultural Motifs (Alpana / Padma / Shankha) */}
       <div className="flex flex-col justify-around h-full space-y-8 opacity-40 hover:opacity-70 transition-opacity">
-        {Array.from({ length: 12 }).map((_, idx) => (
+        {MOTIF_INDICES.map((idx) => (
           <div key={idx} className="flex flex-col items-center space-y-2">
             <svg
               width="20"
@@ -53,5 +56,5 @@ export const BengaliSideBorder: React.FC<{ side: 'left' | 'right' }> = ({ side }
       </div>
     </aside>
   );
-};
+});
 

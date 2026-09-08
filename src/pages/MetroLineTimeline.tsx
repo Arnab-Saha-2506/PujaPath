@@ -40,7 +40,7 @@ export const MetroLineTimeline: React.FC = () => {
       <div>
         <Link
           to="/metro"
-          className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal hover:text-vermilion transition-colors bg-ivory-surface border border-ivory-border px-3.5 py-2 rounded-xl shadow-xs"
+          className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal dark:text-stone-200 hover:text-vermilion transition-colors bg-ivory-surface dark:bg-obsidian-50 border border-ivory-border dark:border-obsidian-300 px-3.5 py-2 rounded-xl shadow-xs"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>All Metro Lines</span>
@@ -83,12 +83,12 @@ export const MetroLineTimeline: React.FC = () => {
       {/* Stations Timeline */}
       <div className="space-y-3">
         <div className="flex items-center justify-between px-1">
-          <h2 className="text-lg font-bold text-charcoal">Route Stations & Timeline</h2>
-          <span className="text-xs text-charcoal-subtle">Click any station to view pandals</span>
+          <h2 className="text-lg font-bold text-charcoal dark:text-stone-100">Route Stations & Timeline</h2>
+          <span className="text-xs text-charcoal-subtle dark:text-stone-400">Click any station to view pandals</span>
         </div>
 
         {loading ? (
-          <div className="bg-ivory-surface rounded-2xl border border-ivory-border p-6 shadow-warm-sm">
+          <div className="bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 p-6 shadow-warm-sm">
             <TimelineSkeleton count={8} />
           </div>
         ) : (

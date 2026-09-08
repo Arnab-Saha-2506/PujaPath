@@ -8,14 +8,24 @@
     --text-primary: #18181B;
   }
 
+  :root.dark {
+    --bg-canvas: #090305;
+    --text-primary: #F5F5F4;
+  }
+
   body {
     background-color: #FAF7F2;
     color: #18181B;
     overflow-x: hidden;
   }
+
+  .dark body {
+    background-color: #090305;
+    color: #F5F5F4;
+  }
 }
 
-/* Subtle Alpana Floral Background Pattern */
+/* Subtle Alpana Floral Background Pattern (Light & Dark Theme) */
 .bg-alpana-pattern {
   background-color: #FAF7F2;
   background-image: radial-gradient(circle at 50% 50%, rgba(185, 28, 28, 0.03) 0, rgba(185, 28, 28, 0.03) 3px, transparent 4px),
@@ -24,9 +34,37 @@
   background-size: 40px 40px, 80px 80px, 80px 80px;
 }
 
+/* Authentic Bengali Festive Blackish-Red Gradient Background (Dark Theme Default) */
+/* NOTE: background-attachment: scroll (NOT fixed) — fixed disables GPU compositing
+   and forces full software repaint on every scroll pixel, causing severe lag. */
+.dark .bg-alpana-pattern {
+  background-color: #090305;
+  background-image:
+    radial-gradient(ellipse 90% 60% at 50% -10%, rgba(185, 28, 28, 0.22) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 50% at 100% 40%, rgba(153, 27, 27, 0.16) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 0% 75%, rgba(127, 29, 29, 0.16) 0%, transparent 60%),
+    radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.025) 0, rgba(245, 158, 11, 0.025) 2px, transparent 3px),
+    linear-gradient(180deg, #090204 0%, #120407 35%, #180509 70%, #090204 100%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 100% 100%;
+  background-attachment: scroll;
+}
+
+/* Theme-switch flash prevention — briefly added to <html> during toggle to suppress
+   all CSS transitions while the dark class is being applied/removed. */
+.no-transition *,
+.no-transition *::before,
+.no-transition *::after {
+  transition: none !important;
+  animation: none !important;
+}
+
 /* Terracotta Border Accent */
 .border-terracotta-subtle {
   border-color: #F3ECE2;
+}
+
+.dark .border-terracotta-subtle {
+  border-color: #311217;
 }
 
 /* Custom Scrollbars */
@@ -39,13 +77,26 @@
   background: #FAF7F2;
 }
 
+.dark ::-webkit-scrollbar-track {
+  background: #090305;
+}
+
 ::-webkit-scrollbar-thumb {
   background: #E8DED1;
   border-radius: 9999px;
 }
 
+.dark ::-webkit-scrollbar-thumb {
+  background: #311217;
+  border-radius: 9999px;
+}
+
 ::-webkit-scrollbar-thumb:hover {
   background: #C25E43;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #DC2626;
 }
 
 /* ==========================================================================

@@ -7,7 +7,7 @@ import { calculateHaversineDistance, estimateWalkingTime } from '../utils/distan
 import { PandalCard } from '../components/pandals/PandalCard';
 import { PandalGridSkeleton } from '../components/common/SkeletonLoader';
 import { EmptyState } from '../components/common/EmptyState';
-import { ArrowLeft, Train, MapPin, Footprints, ExternalLink } from 'lucide-react';
+import { ArrowLeft, MapPin, ExternalLink } from 'lucide-react';
 import { MOCK_METRO_STATIONS } from '../services/mockData';
 
 export const MetroStationDetail: React.FC = () => {
@@ -90,7 +90,7 @@ export const MetroStationDetail: React.FC = () => {
       <div>
         <Link
           to="/metro"
-          className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal hover:text-vermilion transition-colors bg-ivory-surface border border-ivory-border px-3.5 py-2 rounded-xl shadow-xs"
+          className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal dark:text-stone-200 hover:text-vermilion transition-colors bg-ivory-surface dark:bg-obsidian-50 border border-ivory-border dark:border-obsidian-300 px-3.5 py-2 rounded-xl shadow-xs"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>All Metro Lines</span>
@@ -98,11 +98,11 @@ export const MetroStationDetail: React.FC = () => {
       </div>
 
       {/* Station Header */}
-      <div className="bg-ivory-surface rounded-3xl border border-ivory-border p-6 sm:p-8 shadow-warm-sm">
+      <div className="bg-ivory-surface dark:bg-obsidian-50 rounded-3xl border border-ivory-border dark:border-obsidian-300 p-6 sm:p-8 shadow-warm-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-2">
             <div className="flex items-center space-x-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-charcoal-muted">
+              <span className="text-xs font-bold uppercase tracking-wider text-charcoal-muted dark:text-stone-400">
                 Metro Station Transit Node
               </span>
               <div className="flex items-center space-x-1.5">
@@ -121,12 +121,12 @@ export const MetroStationDetail: React.FC = () => {
               </div>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal dark:text-stone-100">
               {stationMeta?.name || 'Metro Station'}
             </h1>
 
             {stationMeta && (
-              <p className="text-xs sm:text-sm text-charcoal-muted flex items-center space-x-1.5">
+              <p className="text-xs sm:text-sm text-charcoal-muted dark:text-stone-400 flex items-center space-x-1.5">
                 <MapPin className="w-4 h-4 text-vermilion shrink-0" />
                 <span>
                   Coordinates: {stationMeta.latitude.toFixed(4)}° N,{' '}
@@ -142,7 +142,7 @@ export const MetroStationDetail: React.FC = () => {
                 href={`https://www.google.com/maps/search/?api=1&query=${stationMeta.latitude},${stationMeta.longitude}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal hover:text-vermilion bg-ivory-warm border border-ivory-border px-4 py-2.5 rounded-xl transition-colors"
+                className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal dark:text-stone-200 hover:text-vermilion bg-ivory-warm dark:bg-obsidian-100 border border-ivory-border dark:border-obsidian-300 px-4 py-2.5 rounded-xl transition-colors"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
                 <span>Station on Google Maps</span>
@@ -154,16 +154,16 @@ export const MetroStationDetail: React.FC = () => {
 
       {/* Nearby Pandals Section */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between border-b border-ivory-border pb-3">
+        <div className="flex items-center justify-between border-b border-ivory-border dark:border-obsidian-300 pb-3">
           <div>
-            <h2 className="text-xl sm:text-2xl font-extrabold text-charcoal">
+            <h2 className="text-xl sm:text-2xl font-extrabold text-charcoal dark:text-stone-100">
               Puja Pandals Near {stationMeta?.name || 'Station'}
             </h2>
-            <p className="text-xs text-charcoal-muted mt-0.5">
+            <p className="text-xs text-charcoal-muted dark:text-stone-400 mt-0.5">
               Sorted by walking proximity from this metro station exit.
             </p>
           </div>
-          <span className="text-xs font-semibold bg-terracotta-50 text-terracotta px-3 py-1 rounded-full border border-terracotta-200">
+          <span className="text-xs font-semibold bg-terracotta-50 dark:bg-obsidian-200 text-terracotta dark:text-amber-300 px-3 py-1 rounded-full border border-terracotta-200 dark:border-terracotta-700">
             {pandals.length} Pandals Accessible
           </span>
         </div>

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 
 interface SankhaLoaderProps {
   variant?: 'transition' | 'inline' | 'fullscreen';
@@ -260,16 +260,16 @@ export const SankhaLoader: React.FC<SankhaLoaderProps> = ({
 
       {/* Rhythmic Bengali Typography & Soundwave Caption */}
       <div className="mt-4 space-y-1.5">
-        <div className="inline-flex items-center space-x-2 bg-ivory-surface/90 border border-terracotta/25 px-4 py-1.5 rounded-full shadow-warm-sm">
+        <div className="inline-flex items-center space-x-2 bg-ivory-surface dark:bg-obsidian-50/90 border border-terracotta/25 px-4 py-1.5 rounded-full shadow-warm-sm">
           <span className="text-vermilion font-bold animate-pulse text-xs">॥</span>
-          <h3 className={`font-bengali font-extrabold text-charcoal tracking-wide ${sizeConfig.titleSize}`}>
+          <h3 className={`font-bengali font-extrabold text-charcoal dark:text-stone-200 tracking-wide ${sizeConfig.titleSize}`}>
             {text}
           </h3>
           <span className="text-vermilion font-bold animate-pulse text-xs">॥</span>
         </div>
 
         {subtext && (
-          <p className={`font-sans font-medium text-charcoal-muted tracking-tight ${sizeConfig.subtextSize}`}>
+          <p className={`font-sans font-medium text-charcoal-muted dark:text-stone-400 tracking-tight ${sizeConfig.subtextSize}`}>
             {subtext}
           </p>
         )}
@@ -286,7 +286,7 @@ export const SankhaLoader: React.FC<SankhaLoaderProps> = ({
 
   if (variant === 'fullscreen' || variant === 'transition') {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-ivory/85 backdrop-blur-md transition-all duration-300">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-ivory/85 dark:bg-[#090305]/95 backdrop-blur-md transition-opacity duration-300">
         {content}
       </div>
     );
