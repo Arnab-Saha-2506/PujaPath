@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -56,6 +57,26 @@ export default {
           orange: '#ED6B00',
           yellow: '#EAB308',
         },
+        // Dark theme surfaces with warm blackish-red undertones
+        obsidian: {
+          DEFAULT: '#090305',
+          50: '#140608',
+          100: '#19080B',
+          200: '#220B0F',
+          300: '#311217',
+          400: '#481B22',
+          500: '#642530',
+        },
+        blood: {
+          DEFAULT: '#7F1D1D',
+          light: '#991B1B',
+          dark: '#3A0609',
+          deep: '#200407',
+        }
+      },
+      backgroundImage: {
+        'dark-gradient': 'radial-gradient(ellipse at 50% 20%, #2A080E 0%, #1B0509 55%, #090305 100%)',
+        'blackish-red': 'linear-gradient(145deg, #0A0305 0%, #1B0509 45%, #2A080F 75%, #0A0305 100%)',
       },
       fontFamily: {
         sans: ['"Plus Jakarta Sans"', 'Inter', 'system-ui', 'sans-serif'],

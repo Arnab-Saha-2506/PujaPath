@@ -8,7 +8,7 @@ import { PandalCard } from '../components/pandals/PandalCard';
 import { PandalGridSkeleton } from '../components/common/SkeletonLoader';
 import { EmptyState } from '../components/common/EmptyState';
 import { AlpanaCircle } from '../components/common/AlpanaMotif';
-import { Search, MapPin, SlidersHorizontal, Sparkles } from 'lucide-react';
+import { Search, MapPin, SlidersHorizontal } from 'lucide-react';
 import { cn } from '../utils/cn';
 
 export const PandalsList: React.FC = () => {
@@ -111,7 +111,7 @@ export const PandalsList: React.FC = () => {
   return (
     <div className="space-y-8 pb-16">
       {/* Header Banner */}
-      <div className="relative overflow-hidden bg-ivory-surface rounded-2xl border border-ivory-border p-6 sm:p-8 shadow-warm-sm">
+      <div className="relative overflow-hidden bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 p-6 sm:p-8 shadow-warm-sm">
         <div className="absolute -top-12 -right-12 pointer-events-none opacity-20">
           <AlpanaCircle size={220} opacity={0.2} />
         </div>
@@ -121,20 +121,20 @@ export const PandalsList: React.FC = () => {
             <span className="text-xs font-bold uppercase tracking-wider text-vermilion">
               Durga Puja Directory
             </span>
-            <span className="text-xs text-charcoal-subtle">•</span>
-            <span className="text-xs font-bengali text-charcoal-muted">কলকাতার সেরা পুজো</span>
+            <span className="text-xs text-charcoal-subtle dark:text-stone-500">•</span>
+            <span className="text-xs font-bengali text-charcoal-muted dark:text-stone-400">কলকাতার সেরা পুজো</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal dark:text-stone-100 tracking-tight">
             Kolkata Puja Pandals
           </h1>
-          <p className="text-xs sm:text-sm text-charcoal-muted">
+          <p className="text-xs sm:text-sm text-charcoal-muted dark:text-stone-300">
             Explore famous heritage & community pandals across Kolkata. Check live walking
             distances, nearest metro connections, and best visiting times.
           </p>
         </div>
 
         {/* Area Tabs */}
-        <div className="mt-6 flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none border-b border-ivory-muted">
+        <div className="mt-6 flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none border-b border-ivory-muted dark:border-obsidian-300">
           {areas.map((area) => {
             const isSelected = selectedAreaId === area.id;
             return (
@@ -145,7 +145,7 @@ export const PandalsList: React.FC = () => {
                   'px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap flex items-center space-x-2',
                   isSelected
                     ? 'bg-vermilion text-white shadow-warm-sm'
-                    : 'bg-ivory-warm text-charcoal-soft hover:bg-stone-200/70'
+                    : 'bg-ivory-warm dark:bg-obsidian-100 text-charcoal-soft dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-obsidian-200 border border-transparent dark:border-obsidian-300'
                 )}
               >
                 <span>{area.name}</span>
@@ -153,7 +153,7 @@ export const PandalsList: React.FC = () => {
                   <span
                     className={cn(
                       'text-[10px] px-1.5 py-0.5 rounded-full font-bold',
-                      isSelected ? 'bg-white/20 text-white' : 'bg-vermilion/10 text-vermilion'
+                      isSelected ? 'bg-white/20 text-white' : 'bg-vermilion/10 text-vermilion dark:text-vermilion-light'
                     )}
                   >
                     40+
@@ -162,7 +162,7 @@ export const PandalsList: React.FC = () => {
                   <span
                     className={cn(
                       'text-[10px] px-1.5 py-0.5 rounded-full font-bold',
-                      isSelected ? 'bg-white/20 text-white' : 'bg-leaf/15 text-leaf-dark'
+                      isSelected ? 'bg-white/20 text-white' : 'bg-leaf/15 text-leaf-dark dark:text-emerald-400'
                     )}
                   >
                     70+
@@ -171,7 +171,7 @@ export const PandalsList: React.FC = () => {
                   <span
                     className={cn(
                       'text-[10px] px-1.5 py-0.5 rounded-full font-bold',
-                      isSelected ? 'bg-white/20 text-white' : 'bg-brass/15 text-brass-dark'
+                      isSelected ? 'bg-white/20 text-white' : 'bg-brass/15 text-brass-dark dark:text-amber-300'
                     )}
                   >
                     23+
@@ -180,13 +180,13 @@ export const PandalsList: React.FC = () => {
                   <span
                     className={cn(
                       'text-[10px] px-1.5 py-0.5 rounded-full font-bold',
-                      isSelected ? 'bg-white/20 text-white' : 'bg-brass/15 text-brass-dark'
+                      isSelected ? 'bg-white/20 text-white' : 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
                     )}
                   >
                     47+
                   </span>
                 ) : (
-                  <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium bg-stone-100 text-charcoal-subtle">
+                  <span className="text-[10px] px-1.5 py-0.5 rounded-full font-medium bg-stone-100 dark:bg-obsidian-200 text-charcoal-subtle dark:text-stone-400">
                     Soon
                   </span>
                 )}
@@ -199,18 +199,18 @@ export const PandalsList: React.FC = () => {
       {/* Filter and Search Bar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="relative w-full sm:max-w-md">
-          <Search className="w-4 h-4 text-charcoal-subtle absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-charcoal-subtle dark:text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search pandals by name, street, or theme..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-ivory-surface border border-ivory-border rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-vermilion/30 focus:border-vermilion transition-all shadow-xs"
+            className="w-full pl-10 pr-4 py-2.5 bg-ivory-surface dark:bg-obsidian-50 border border-ivory-border dark:border-obsidian-300 rounded-xl text-sm text-charcoal dark:text-stone-100 placeholder:text-charcoal-subtle dark:placeholder:text-stone-400 focus:outline-hidden focus:ring-2 focus:ring-vermilion/30 focus:border-vermilion transition-all shadow-xs"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-charcoal-subtle hover:text-charcoal"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-charcoal-subtle dark:text-stone-400 hover:text-charcoal dark:hover:text-stone-200"
             >
               Clear
             </button>
@@ -219,14 +219,14 @@ export const PandalsList: React.FC = () => {
 
         {/* Sort controls */}
         <div className="flex items-center space-x-2 w-full sm:w-auto justify-between sm:justify-end">
-          <span className="text-xs text-charcoal-subtle flex items-center space-x-1">
+          <span className="text-xs text-charcoal-subtle dark:text-stone-400 flex items-center space-x-1">
             <SlidersHorizontal className="w-3.5 h-3.5" />
             <span>Sort:</span>
           </span>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
-            className="bg-ivory-surface border border-ivory-border rounded-xl text-xs font-semibold px-3 py-2 text-charcoal focus:outline-hidden focus:ring-2 focus:ring-vermilion/30 shadow-xs"
+            className="bg-ivory-surface dark:bg-obsidian-100 border border-ivory-border dark:border-obsidian-300 rounded-xl text-xs font-semibold px-3 py-2 text-charcoal dark:text-stone-100 focus:outline-hidden focus:ring-2 focus:ring-vermilion/30 shadow-xs [&>option]:bg-ivory-surface dark:[&>option]:bg-obsidian-100 dark:[&>option]:text-stone-100"
           >
             <option value="default">Default Order</option>
             {status === 'granted' && <option value="distance">Nearest to Me</option>}
@@ -254,9 +254,9 @@ export const PandalsList: React.FC = () => {
         />
       ) : (
         <div>
-          <div className="flex items-center justify-between mb-4 text-xs text-charcoal-subtle">
+          <div className="flex items-center justify-between mb-4 text-xs text-charcoal-subtle dark:text-stone-400">
             <span>
-              Showing <strong className="text-charcoal">{filteredPandals.length}</strong> pandals
+              Showing <strong className="text-charcoal dark:text-stone-100">{filteredPandals.length}</strong> pandals
               in {areas.find((a) => a.id === selectedAreaId)?.name || 'Kolkata'}
             </span>
             {status === 'granted' && (

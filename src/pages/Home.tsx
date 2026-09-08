@@ -16,6 +16,7 @@ import {
   Sparkles,
   ChevronRight,
 } from 'lucide-react';
+import { DurgaCountdown } from '../components/common/DurgaCountdown';
 
 export const Home: React.FC = () => {
   const { latitude, longitude, locality, status, isLocating, requestLocation, refreshLocation, simulateKolkataLocation } =
@@ -95,12 +96,11 @@ export const Home: React.FC = () => {
   // Fallback to first 4 if filter doesn't match
   const fallbackHighlights =
     highlightedPandals.length > 0 ? highlightedPandals : displayPandals.slice(0, 4);
-  highlightedPandals.length > 0 ? highlightedPandals : displayPandals.slice(0, 4);
 
   return (
     <div className="space-y-12 pb-16">
       {/* 1. Hero Section with Authentic Bengali Aesthetic & Festive Backdrop Image */}
-      <section className="relative overflow-hidden rounded-3xl border border-ivory-border p-6 sm:p-10 lg:p-14 shadow-warm-md text-white">
+      <section className="relative overflow-hidden rounded-3xl border border-ivory-border dark:border-obsidian-300 dark:border-blood/40 p-6 sm:p-10 lg:p-14 shadow-warm-md text-white bg-dark-gradient dark:block">
         {/* Background Image with slight blur & gradient scrim for text readability */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
@@ -111,7 +111,10 @@ export const Home: React.FC = () => {
           {/* Dual-tone gradient scrim for superior text contrast while preserving image aesthetics */}
           {/* <div className="absolute inset-0 bg-gradient-to-b from-black/65 via-charcoal/70 to-charcoal/90" /> */}
           {/* <div className="absolute inset-0 bg-gradient-to-tr from-vermilion-deep/25 via-transparent to-amber-950/30 mix-blend-multiply" /> */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-charcoal/30 to-charcoal/55" />
+          {/* Light mode gradient */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-charcoal/30 to-charcoal/55 dark:hidden" />
+          {/* Dark mode gradient - rich blackish red atmospheric scrim */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#090305]/95 via-[#25070C]/85 to-[#090305]/95 dark:block hidden" />
 
         </div>
 
@@ -124,12 +127,15 @@ export const Home: React.FC = () => {
         </div>
 
         <div className="relative z-10 max-w-3xl mx-auto text-center space-y-5">
-          {/* Bengali Pill Badge */}
-          <div className="inline-flex items-center space-x-2 bg-black/45 backdrop-blur-md border border-amber-400/40 px-4 py-1.5 rounded-full shadow-xs">
-            <DurgaEyeIcon size={20} />
-            <span className="text-xs sm:text-sm font-bengali font-semibold text-amber-300 tracking-wide drop-shadow-xs">
-              শারদোৎসব ২০২৬ • পুজোর কলকাতা, আপনার পথে
-            </span>
+          {/* Top Festive Header Row: Cultural Pill Badge & Liquid Glass Soshthi Ticker */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5">
+            <div className="inline-flex items-center space-x-2 bg-black/45 backdrop-blur-md border border-amber-400/40 px-3.5 py-1.5 rounded-full shadow-xs">
+              <DurgaEyeIcon size={18} />
+              <span className="text-xs sm:text-sm font-bengali font-semibold text-amber-300 tracking-wide drop-shadow-xs">
+                শারদোৎসব ২০২৬ • পুজোর কলকাতা
+              </span>
+            </div>
+            <DurgaCountdown />
           </div>
 
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight font-sans drop-shadow-md">
@@ -192,15 +198,15 @@ export const Home: React.FC = () => {
 
       {/* 2. Explore by Area Section */}
       <section className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-ivory-border pb-3">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-ivory-border dark:border-obsidian-300 pb-3">
           <div>
             <div className="flex items-center space-x-2">
               <span className="text-xs font-bold uppercase tracking-wider text-vermilion font-sans">
                 Geographic Zones
               </span>
-              <span className="text-xs font-bengali text-charcoal-subtle">অঞ্চল অনুসারে পুজো</span>
+              <span className="text-xs font-bengali text-charcoal-subtle dark:text-stone-500">অঞ্চল অনুসারে পুজো</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-charcoal mt-1">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-charcoal dark:text-stone-200 mt-1">
               Explore by Area
             </h2>
           </div>
@@ -215,29 +221,29 @@ export const Home: React.FC = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {/* South Kolkata - Featured Card */}
-          <div className="relative group bg-gradient-to-br from-terracotta-50 via-ivory-surface to-ivory-warm rounded-2xl border-2 border-terracotta/40 p-6 shadow-warm-sm hover:shadow-warm-md transition-all flex flex-col justify-between">
+          <div className="relative group bg-gradient-to-br from-terracotta-50 via-ivory-surface to-ivory-warm dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-terracotta/40 dark:border-terracotta/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-all flex flex-col justify-between">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="bg-vermilion text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
                   Theme Hub
                 </span>
-                <span className="text-xs font-bold text-terracotta">{areaCounts[1] || 40}+ Pandals</span>
+                <span className="text-xs font-bold text-terracotta dark:text-amber-300">{areaCounts[1] || 40}+ Pandals</span>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-charcoal group-hover:text-vermilion transition-colors">
+                <h3 className="text-xl font-bold text-charcoal dark:text-stone-100 group-hover:text-vermilion transition-colors">
                   South Kolkata
                 </h3>
-                <p className="text-xs font-bengali text-charcoal-subtle mt-0.5">
+                <p className="text-xs font-bengali text-charcoal-subtle dark:text-stone-400 mt-0.5">
                   দক্ষিণ কলকাতা • ঐতিহ্য ও মেগা থিম পুজো
                 </p>
               </div>
-              <p className="text-xs text-charcoal-muted leading-relaxed">
+              <p className="text-xs text-charcoal-muted dark:text-stone-300 leading-relaxed">
                 Home to Kolkata's most iconic celebrations: Deshapriyo Park, Ballygunge Cultural,
                 Tridhara, Suruchi Sangha, and Chetla Agrani.
               </p>
             </div>
 
-            <div className="mt-5 pt-4 border-t border-terracotta-100">
+            <div className="mt-5 pt-4 border-t border-terracotta-100 dark:border-obsidian-300">
               <Link
                 to="/areas/1/pandals"
                 className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-all"
@@ -249,29 +255,29 @@ export const Home: React.FC = () => {
           </div>
 
           {/* North Kolkata - Active Card */}
-          <div className="relative group bg-gradient-to-br from-terracotta-50/50 via-ivory-surface to-ivory-warm rounded-2xl border-2 border-terracotta/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-all flex flex-col justify-between">
+          <div className="relative group bg-gradient-to-br from-terracotta-50/50 via-ivory-surface to-ivory-warm dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-terracotta/30 dark:border-leaf/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-all flex flex-col justify-between">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="bg-leaf text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
                   Heritage Hub
                 </span>
-                <span className="text-xs font-bold text-leaf-dark">{areaCounts[2] || 70}+ Pandals</span>
+                <span className="text-xs font-bold text-leaf-dark dark:text-emerald-400">{areaCounts[2] || 70}+ Pandals</span>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-charcoal group-hover:text-vermilion transition-colors">
+                <h3 className="text-xl font-bold text-charcoal dark:text-stone-100 group-hover:text-vermilion transition-colors">
                   North Kolkata
                 </h3>
-                <p className="text-xs font-bengali text-charcoal-subtle mt-0.5">
+                <p className="text-xs font-bengali text-charcoal-subtle dark:text-stone-400 mt-0.5">
                   উত্তর কলকাতা • বনেদি বাড়ির সাবেকিয়ানা
                 </p>
               </div>
-              <p className="text-xs text-charcoal-muted leading-relaxed">
+              <p className="text-xs text-charcoal-muted dark:text-stone-300 leading-relaxed">
                 Centuries-old heritage pujas and clay artisans: Baghbazar Sarbojanin, Kumartuli Park,
                 Sovabazar, Hatkhola, and Jagat Mukherjee Park.
               </p>
             </div>
 
-            <div className="mt-5 pt-4 border-t border-ivory-muted">
+            <div className="mt-5 pt-4 border-t border-ivory-muted dark:border-obsidian-300">
               <Link
                 to="/areas/2/pandals"
                 className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-all"
@@ -283,29 +289,29 @@ export const Home: React.FC = () => {
           </div>
 
           {/* Central Kolkata - Active Card */}
-          <div className="relative group bg-gradient-to-br from-amber-50/50 via-ivory-surface to-ivory-warm rounded-2xl border-2 border-amber-300/40 p-6 shadow-warm-sm hover:shadow-warm-md transition-all flex flex-col justify-between">
+          <div className="relative group bg-gradient-to-br from-amber-50/50 via-ivory-surface to-ivory-warm dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-amber-300/40 dark:border-brass/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-all flex flex-col justify-between">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="bg-brass text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
                   Grand Lighting
                 </span>
-                <span className="text-xs font-bold text-brass-dark">{areaCounts[3] || 23}+ Pandals</span>
+                <span className="text-xs font-bold text-brass-dark dark:text-amber-300">{areaCounts[3] || 23}+ Pandals</span>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-charcoal group-hover:text-vermilion transition-colors">
+                <h3 className="text-xl font-bold text-charcoal dark:text-stone-100 group-hover:text-vermilion transition-colors">
                   Central Kolkata
                 </h3>
-                <p className="text-xs font-bengali text-charcoal-subtle mt-0.5">
+                <p className="text-xs font-bengali text-charcoal-subtle dark:text-stone-400 mt-0.5">
                   মধ্য কলকাতা • প্রাণকেন্দ্র ও আলোকসজ্জা
                 </p>
               </div>
-              <p className="text-xs text-charcoal-muted leading-relaxed">
+              <p className="text-xs text-charcoal-muted dark:text-stone-300 leading-relaxed">
                 Heart of the city famous for lake reflections and architectural replicas: College Square,
                 Md. Ali Park, and Santosh Mitra Square.
               </p>
             </div>
 
-            <div className="mt-5 pt-4 border-t border-ivory-muted">
+            <div className="mt-5 pt-4 border-t border-ivory-muted dark:border-obsidian-300">
               <Link
                 to="/areas/3/pandals"
                 className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-all"
@@ -317,29 +323,29 @@ export const Home: React.FC = () => {
           </div>
 
           {/* East Kolkata - Active Card */}
-          <div className="relative group bg-gradient-to-br from-emerald-50/60 via-ivory-surface to-teal-50/40 rounded-2xl border-2 border-emerald-200/70 p-6 shadow-warm-sm hover:shadow-warm-md transition-all flex flex-col justify-between">
+          <div className="relative group bg-gradient-to-br from-emerald-50/60 via-ivory-surface to-teal-50/40 dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-emerald-200/70 dark:border-emerald-500/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-all flex flex-col justify-between">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="bg-emerald-500 text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
                   Salt Lake & Bypass
                 </span>
-                <span className="text-xs font-bold text-emerald-800">{areaCounts[4] || 47}+ Pandals</span>
+                <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">{areaCounts[4] || 47}+ Pandals</span>
               </div>
               <div>
-                <h3 className="text-xl font-bold text-charcoal group-hover:text-vermilion transition-colors">
+                <h3 className="text-xl font-bold text-charcoal dark:text-stone-100 group-hover:text-vermilion transition-colors">
                   East Kolkata
                 </h3>
-                <p className="text-xs font-bengali text-charcoal-subtle mt-0.5">
+                <p className="text-xs font-bengali text-charcoal-subtle dark:text-stone-400 mt-0.5">
                   পূর্ব কলকাতা • সল্টলেক ও ইএম বাইপাস
                 </p>
               </div>
-              <p className="text-xs text-charcoal-muted leading-relaxed">
+              <p className="text-xs text-charcoal-muted dark:text-stone-300 leading-relaxed">
                 Green Line East-West metro corridor connecting Salt Lake FD Block, BJ Block, and
                 Sreebhumi Sporting Club.
               </p>
             </div>
 
-            <div className="mt-5 pt-4 border-t border-ivory-muted">
+            <div className="mt-5 pt-4 border-t border-ivory-muted dark:border-obsidian-300">
               <Link
                 to="/areas/4/pandals"
                 className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-all"
@@ -354,15 +360,15 @@ export const Home: React.FC = () => {
 
       {/* 3. Quick Highlights Grid / Carousel */}
       <section className="space-y-6">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-ivory-border pb-3">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-ivory-border dark:border-obsidian-300 pb-3">
           <div>
             <div className="flex items-center space-x-2">
               <span className="text-xs font-bold uppercase tracking-wider text-terracotta">
                 Iconic Highlights
               </span>
-              <span className="text-xs font-bengali text-charcoal-subtle">কলকাতা জুড়ে সেরা আকর্ষণ</span>
+              <span className="text-xs font-bengali text-charcoal-subtle dark:text-stone-500">কলকাতা জুড়ে সেরা আকর্ষণ</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-charcoal mt-1">
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-charcoal dark:text-stone-200 mt-1">
               Iconic Pandals of Kolkata
             </h2>
           </div>
@@ -387,7 +393,7 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 4. Metro Route Finder Callout Banner */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-charcoal via-stone-900 to-charcoal rounded-3xl p-6 sm:p-8 md:p-10 text-white shadow-xl">
+      <section className="relative overflow-hidden bg-gradient-to-r from-charcoal via-stone-900 to-charcoal dark:from-obsidian-100 dark:via-[#1c070b] dark:to-obsidian-100 border border-transparent dark:border-obsidian-300 rounded-3xl p-6 sm:p-8 md:p-10 text-white shadow-xl">
         <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="space-y-2 max-w-xl text-left">
             <div className="inline-flex items-center space-x-2 bg-white/10 px-3 py-1 rounded-full text-xs font-semibold">

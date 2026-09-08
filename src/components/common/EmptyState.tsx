@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, Sparkles } from 'lucide-react';
+import { Sparkles } from 'lucide-react';
 import { DurgaEyeIcon } from './DurgaEyeIcon';
 
 interface EmptyStateProps {
@@ -16,12 +16,12 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   onAction,
 }) => {
   return (
-    <div className="bg-ivory-surface rounded-2xl border border-ivory-border p-8 sm:p-12 text-center max-w-lg mx-auto my-8 shadow-warm-sm flex flex-col items-center">
+    <div className="bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 p-8 sm:p-12 text-center max-w-lg mx-auto my-8 shadow-warm-sm flex flex-col items-center">
       <div className="w-16 h-16 rounded-2xl bg-terracotta-50 border border-terracotta/20 flex items-center justify-center mb-4 shadow-sm">
         <DurgaEyeIcon size={40} />
       </div>
-      <h3 className="text-lg font-bold text-charcoal mb-1">{title}</h3>
-      <p className="text-xs text-charcoal-muted max-w-sm mb-5 leading-relaxed">
+      <h3 className="text-lg font-bold text-charcoal dark:text-stone-200 mb-1">{title}</h3>
+      <p className="text-xs text-charcoal-muted dark:text-stone-400 max-w-sm mb-5 leading-relaxed">
         {description}
       </p>
       {actionText && onAction && (

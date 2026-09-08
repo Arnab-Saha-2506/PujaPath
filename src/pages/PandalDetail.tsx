@@ -7,7 +7,6 @@ import { useGeolocation } from '../hooks/useGeolocation';
 import { PandalFallbackGraphic } from '../components/pandals/PandalFallbackGraphic';
 import { SankhaLoader } from '../components/common/SankhaLoader';
 import { BestTimeBadge } from '../components/pandals/BestTimeBadge';
-import { PandalCard } from '../components/pandals/PandalCard';
 import { getMetroLineMeta, parseStationLines } from '../utils/metroColors';
 import { formatDistance, formatWalkingTime, calculateHaversineDistance, estimateWalkingTime } from '../utils/distance';
 import { ErrorBanner } from '../components/common/ErrorBanner';
@@ -227,8 +226,8 @@ export const PandalDetail: React.FC = () => {
   if (loading) {
     return (
       <div className="max-w-7xl xl:max-w-[1360px] 2xl:max-w-[1520px] mx-auto py-10 space-y-6 animate-pulse">
-        <div className="h-8 bg-stone-200 rounded w-1/3" />
-        <div className="h-72 bg-stone-200 rounded-3xl" />
+        <div className="h-8 bg-stone-200 dark:bg-obsidian-300 rounded w-1/3" />
+        <div className="h-72 bg-stone-200 dark:bg-obsidian-300 rounded-3xl" />
         <div className="h-32 bg-stone-100 rounded-2xl" />
         <div className="h-48 bg-stone-100 rounded-2xl" />
         <div className="min-h-[55vh] flex items-center justify-center py-12">
@@ -286,14 +285,14 @@ export const PandalDetail: React.FC = () => {
       <div className="flex items-center justify-between">
         <Link
           to="/pandals"
-          className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal hover:text-vermilion transition-colors bg-ivory-surface border border-ivory-border px-3.5 py-2 rounded-xl shadow-xs"
+          className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal dark:text-stone-200 hover:text-vermilion transition-colors bg-ivory-surface dark:bg-obsidian-50 border border-ivory-border dark:border-obsidian-300 px-3.5 py-2 rounded-xl shadow-xs"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>All Pandals</span>
         </Link>
         <button
           onClick={handleShare}
-          className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal hover:text-vermilion transition-colors bg-ivory-surface border border-ivory-border px-3.5 py-2 rounded-xl shadow-xs"
+          className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal dark:text-stone-200 hover:text-vermilion transition-colors bg-ivory-surface dark:bg-obsidian-50 border border-ivory-border dark:border-obsidian-300 px-3.5 py-2 rounded-xl shadow-xs"
         >
           <Share2 className="w-3.5 h-3.5" />
           <span>Share</span>
@@ -301,7 +300,7 @@ export const PandalDetail: React.FC = () => {
       </div>
 
       {/* Header Banner with Clean Non-Overlapping Overlay & Ambient Backdrop */}
-      <div className="relative rounded-3xl overflow-hidden border border-ivory-border shadow-warm-md min-h-[280px] sm:min-h-[340px] md:min-h-[400px] lg:min-h-[460px] bg-charcoal">
+      <div className="relative rounded-3xl overflow-hidden border border-ivory-border dark:border-obsidian-300 shadow-warm-md min-h-[280px] sm:min-h-[340px] md:min-h-[400px] lg:min-h-[460px] bg-charcoal">
         {pandal.imageUrl && !imgError ? (
           <div className="relative w-full h-72 sm:h-84 md:h-96 lg:h-[440px] xl:h-[480px] overflow-hidden">
             {/* Ambient blurred backdrop fill so aspect ratios fit seamlessly without black bars */}
@@ -354,7 +353,7 @@ export const PandalDetail: React.FC = () => {
       </div>
 
       {/* Live Distance Card */}
-      <div className="bg-ivory-surface rounded-2xl border border-ivory-border p-5 sm:p-6 shadow-warm-sm">
+      <div className="bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 p-5 sm:p-6 shadow-warm-sm">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center space-x-2">
@@ -371,21 +370,21 @@ export const PandalDetail: React.FC = () => {
 
             {status === 'granted' && distanceInfo ? (
               <div>
-                <div className="text-xl sm:text-2xl font-bold text-charcoal flex items-center space-x-2">
+                <div className="text-xl sm:text-2xl font-bold text-charcoal dark:text-stone-200 flex items-center space-x-2">
                   <span>You're {formatDistance(distanceInfo.distanceInKm)} away</span>
                 </div>
-                <div className="text-xs sm:text-sm text-charcoal-muted flex items-center space-x-2 mt-0.5">
+                <div className="text-xs sm:text-sm text-charcoal-muted dark:text-stone-400 flex items-center space-x-2 mt-0.5">
                   <Footprints className="w-4 h-4 text-terracotta" />
                   <span>Approximately {formatWalkingTime(distanceInfo.walkingTimeMinutes)}</span>
                 </div>
               </div>
             ) : status === 'granted' && distanceLoading ? (
-              <p className="text-xs text-charcoal-muted animate-pulse">
+              <p className="text-xs text-charcoal-muted dark:text-stone-400 animate-pulse">
                 Calculating walking distance from your GPS...
               </p>
             ) : (
               <div className="space-y-1">
-                <p className="text-xs sm:text-sm text-charcoal-muted">
+                <p className="text-xs sm:text-sm text-charcoal-muted dark:text-stone-400">
                   Enable device location to see exact walking distance and travel time to {pandal.name}.
                 </p>
               </div>
@@ -397,7 +396,7 @@ export const PandalDetail: React.FC = () => {
               <button
                 onClick={refreshLocation}
                 disabled={isLocating || distanceLoading}
-                className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal hover:text-vermilion bg-ivory-warm hover:bg-stone-200/70 border border-ivory-border px-3.5 py-2 rounded-xl transition-colors disabled:opacity-50"
+                className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal dark:text-stone-200 hover:text-vermilion bg-ivory-warm dark:bg-obsidian-100 hover:bg-stone-200 dark:bg-obsidian-300/70 border border-ivory-border dark:border-obsidian-300 px-3.5 py-2 rounded-xl transition-colors disabled:opacity-50"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isLocating || distanceLoading ? 'animate-spin' : ''}`} />
                 <span>Refresh Location</span>
@@ -428,46 +427,46 @@ export const PandalDetail: React.FC = () => {
       {/* Grid: About Pandal + Best Time to Visit & Dynamic Pro-Tip */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Description (2 Cols) */}
-        <div className="lg:col-span-2 bg-ivory-surface rounded-2xl border border-ivory-border p-6 shadow-warm-sm space-y-4">
+        <div className="lg:col-span-2 bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 p-6 shadow-warm-sm space-y-4">
           <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-vermilion">
             <Info className="w-4 h-4" />
             <span>About The Pandal</span>
           </div>
-          <h3 className="text-xl font-bold text-charcoal">
+          <h3 className="text-xl font-bold text-charcoal dark:text-stone-100">
             Cultural Heritage & Theme Concept
           </h3>
-          <p className="text-sm text-charcoal-muted leading-relaxed whitespace-pre-line">
+          <p className="text-sm text-charcoal-muted dark:text-stone-400 leading-relaxed whitespace-pre-line">
             {pandal.description}
           </p>
-          <div className="pt-3 border-t border-ivory-muted text-xs text-charcoal-subtle flex items-center space-x-2">
+          <div className="pt-3 border-t border-ivory-muted dark:border-obsidian-400 text-xs text-charcoal-subtle dark:text-stone-500 flex items-center space-x-2">
             <span>Geographic Coordinates:</span>
             <span className="font-mono">{pandal.latitude.toFixed(4)}° N, {pandal.longitude.toFixed(4)}° E</span>
           </div>
         </div>
 
         {/* Best Time To Visit + Dynamic Pro-Tip (1 Col) */}
-        <div className="bg-gradient-to-br from-amber-50/80 via-ivory-surface to-orange-50/50 rounded-2xl border border-amber-200/70 p-6 shadow-warm-sm space-y-4 flex flex-col justify-between">
+        <div className="bg-gradient-to-br from-amber-50/80 via-ivory-surface to-orange-50/50 dark:from-obsidian-100 dark:via-obsidian-50 dark:to-obsidian-100 rounded-2xl border border-amber-200/70 dark:border-amber-500/30 p-6 shadow-warm-sm space-y-4 flex flex-col justify-between">
           <div className="space-y-3">
-            <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-amber-900">
-              <Clock className="w-4 h-4 text-amber-700" />
+            <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-amber-900 dark:text-amber-300">
+              <Clock className="w-4 h-4 text-amber-700 dark:text-amber-400" />
               <span>Visiting Recommendation</span>
             </div>
-            <h3 className="text-base font-bold text-charcoal">Best Time to Visit</h3>
+            <h3 className="text-base font-bold text-charcoal dark:text-stone-100">Best Time to Visit</h3>
             <div>
               <BestTimeBadge timeSlot={pandal.bestTimeToVisit} className="text-sm px-3 py-1.5" />
             </div>
-            <p className="text-xs text-charcoal-muted leading-relaxed">
+            <p className="text-xs text-charcoal-muted dark:text-stone-400 leading-relaxed">
               Crowds peak between 8 PM and 1 AM. Early morning offers peaceful rituals and photography without long queues.
             </p>
           </div>
 
           {/* DYNAMIC PRO-TIP (Tailored for each specific pandal) */}
-          <div className="p-3.5 bg-white/80 rounded-xl border border-amber-200/70 text-xs text-charcoal-soft font-medium space-y-1">
-            <div className="flex items-center space-x-1.5 text-amber-900 font-bold">
-              <Lightbulb className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+          <div className="p-3.5 bg-white/80 dark:bg-obsidian-100/90 rounded-xl border border-amber-200/70 dark:border-amber-500/30 text-xs text-charcoal-soft dark:text-stone-300 font-medium space-y-1">
+            <div className="flex items-center space-x-1.5 text-amber-900 dark:text-amber-300 font-bold">
+              <Lightbulb className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 shrink-0" />
               <span>Pandal Insider Tip:</span>
             </div>
-            <p className="text-charcoal-muted leading-relaxed">
+            <p className="text-charcoal-muted dark:text-stone-300 leading-relaxed">
               {proTip}
             </p>
           </div>
@@ -476,53 +475,53 @@ export const PandalDetail: React.FC = () => {
 
       {/* Walkable Pandals Circuit (Under 1 - 2 km from THIS pandal) */}
       {nearbyCircuitPandals.length > 0 && (
-        <div className="bg-ivory-surface rounded-2xl border border-terracotta/30 p-6 shadow-warm-sm space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-ivory-muted pb-3">
+        <div className="bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-terracotta/30 dark:border-obsidian-300 p-6 shadow-warm-sm space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 border-b border-ivory-muted dark:border-obsidian-400 pb-3">
             <div className="flex items-center space-x-2">
               <Route className="w-5 h-5 text-vermilion" />
-              <h2 className="text-lg sm:text-xl font-bold text-charcoal">
+              <h2 className="text-lg sm:text-xl font-bold text-charcoal dark:text-stone-100">
                 Nearby Pandals (Walkable Circuit • হাঁটার দূরত্বে আরও পুজো)
               </h2>
             </div>
-            <span className="text-xs font-semibold text-terracotta">
+            <span className="text-xs font-semibold text-terracotta dark:text-amber-300">
               Within 2 km of {pandal.name}
             </span>
           </div>
 
-          <p className="text-xs text-charcoal-muted">
-            Visiting <strong>{pandal.name}</strong>? Hop directly to these neighboring pandals on foot without hailing a cab:
+          <p className="text-xs text-charcoal-muted dark:text-stone-300">
+            Visiting <strong className="text-charcoal dark:text-stone-100">{pandal.name}</strong>? Hop directly to these neighboring pandals on foot without hailing a cab:
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {nearbyCircuitPandals.map((circuitPandal) => (
               <div
                 key={circuitPandal.id}
-                className="bg-ivory-warm/60 border border-ivory-border hover:border-terracotta/40 rounded-2xl p-4 transition-all duration-200 shadow-xs hover:shadow-warm-sm flex flex-col justify-between"
+                className="bg-ivory-warm dark:bg-obsidian-100/60 border border-ivory-border dark:border-obsidian-300 hover:border-terracotta/40 rounded-2xl p-4 transition-all duration-200 shadow-xs hover:shadow-warm-sm flex flex-col justify-between"
               >
                 <div className="space-y-2">
-                  <div className="inline-flex items-center space-x-1.5 bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-0.5 rounded-full text-xs font-semibold">
+                  <div className="inline-flex items-center space-x-1.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-700/40 px-2.5 py-0.5 rounded-full text-xs font-semibold">
                     <Footprints className="w-3 h-3 text-leaf" />
                     <span>{formatDistance(circuitPandal.distanceKm)} from here</span>
                     <span className="opacity-40">•</span>
                     <span>{formatWalkingTime(circuitPandal.walkingTimeMinutes)}</span>
                   </div>
 
-                  <h4 className="text-base font-bold text-charcoal hover:text-vermilion transition-colors">
+                  <h4 className="text-base font-bold text-charcoal dark:text-stone-200 hover:text-vermilion transition-colors">
                     {circuitPandal.name}
                   </h4>
 
-                  <p className="text-xs text-charcoal-muted line-clamp-1">
+                  <p className="text-xs text-charcoal-muted dark:text-stone-400 line-clamp-1">
                     📍 {circuitPandal.address}
                   </p>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-ivory-muted flex items-center justify-between">
-                  <span className="text-[11px] text-charcoal-subtle">
+                <div className="mt-4 pt-3 border-t border-ivory-muted dark:border-obsidian-400 flex items-center justify-between">
+                  <span className="text-[11px] text-charcoal-subtle dark:text-stone-400">
                     {circuitPandal.bestTimeToVisit || 'Evening'}
                   </span>
                   <Link
                     to={`/pandals/${circuitPandal.id}`}
-                    className="inline-flex items-center space-x-1 text-xs font-bold text-vermilion bg-vermilion/5 hover:bg-vermilion/10 px-3 py-1.5 rounded-lg transition-colors"
+                    className="inline-flex items-center space-x-1 text-xs font-bold text-vermilion bg-vermilion/5 hover:bg-vermilion/10 dark:bg-vermilion/15 dark:hover:bg-vermilion/25 px-3 py-1.5 rounded-lg transition-colors"
                   >
                     <span>Hop to Pandal</span>
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -535,21 +534,21 @@ export const PandalDetail: React.FC = () => {
       )}
 
       {/* Nearby Metro Stations */}
-      <div className="bg-ivory-surface rounded-2xl border border-ivory-border p-6 shadow-warm-sm space-y-4">
-        <div className="flex items-center justify-between border-b border-ivory-muted pb-3">
+      <div className="bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 p-6 shadow-warm-sm space-y-4">
+        <div className="flex items-center justify-between border-b border-ivory-muted dark:border-obsidian-400 pb-3">
           <div className="flex items-center space-x-2">
             <Train className="w-5 h-5 text-vermilion" />
-            <h2 className="text-lg sm:text-xl font-bold text-charcoal">
+            <h2 className="text-lg sm:text-xl font-bold text-charcoal dark:text-stone-100">
               Nearby Metro Stations
             </h2>
           </div>
-          <span className="text-xs text-charcoal-subtle">
+          <span className="text-xs text-charcoal-subtle dark:text-stone-400">
             {pandal.nearbyMetros.length} transit links
           </span>
         </div>
 
         {pandal.nearbyMetros.length === 0 ? (
-          <p className="text-xs text-charcoal-muted py-4">
+          <p className="text-xs text-charcoal-muted dark:text-stone-400 py-4">
             No specific metro stations mapped for this pandal yet.
           </p>
         ) : (
@@ -560,7 +559,7 @@ export const PandalDetail: React.FC = () => {
               return (
                 <div
                   key={metro.id}
-                  className="bg-ivory-warm/60 border border-ivory-border hover:border-terracotta/40 rounded-xl p-4 transition-all duration-200 shadow-xs hover:shadow-warm-sm flex flex-col justify-between"
+                  className="bg-ivory-warm dark:bg-obsidian-100/60 border border-ivory-border dark:border-obsidian-300 hover:border-terracotta/40 rounded-xl p-4 transition-all duration-200 shadow-xs hover:shadow-warm-sm flex flex-col justify-between"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
@@ -580,14 +579,14 @@ export const PandalDetail: React.FC = () => {
                       </div>
                     </div>
 
-                    <h4 className="text-base font-bold text-charcoal">
+                    <h4 className="text-base font-bold text-charcoal dark:text-stone-100">
                       {metro.name}
                     </h4>
 
                     {(metro.distanceKm != null || metro.walkingTimeMinutes != null) && (
-                      <div className="flex items-center space-x-1.5 text-xs text-charcoal-muted pt-1">
+                      <div className="flex items-center space-x-1.5 text-xs text-charcoal-muted dark:text-stone-400 pt-1">
                         <Footprints className="w-3.5 h-3.5 text-terracotta" />
-                        <span className="font-semibold text-charcoal">
+                        <span className="font-semibold text-charcoal dark:text-stone-200">
                           {formatDistance(metro.distanceKm)}
                         </span>
                         <span className="opacity-40">•</span>
@@ -596,7 +595,7 @@ export const PandalDetail: React.FC = () => {
                     )}
                   </div>
 
-                  <div className="mt-4 pt-3 border-t border-ivory-muted flex items-center justify-between">
+                  <div className="mt-4 pt-3 border-t border-ivory-muted dark:border-obsidian-400 flex items-center justify-between">
                     <Link
                       to={`/metro/stations/${metro.id}`}
                       className="inline-flex items-center space-x-1 text-xs font-semibold text-vermilion hover:underline"

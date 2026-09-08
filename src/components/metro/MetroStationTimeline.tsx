@@ -21,17 +21,17 @@ export const MetroStationTimeline: React.FC<MetroStationTimelineProps> = ({
   );
 
   return (
-    <div className="bg-ivory-surface rounded-2xl border border-ivory-border p-4 sm:p-6 shadow-warm-sm">
+    <div className="bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 p-4 sm:p-6 shadow-warm-sm">
       {/* Filter Bar */}
       <div className="mb-6">
         <div className="relative">
-          <Search className="w-4 h-4 text-charcoal-subtle absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-charcoal-subtle dark:text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder={`Search stations along ${lineName}...`}
             value={filterQuery}
             onChange={(e) => setFilterQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-ivory-warm border border-ivory-border rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-vermilion/30 focus:border-vermilion transition-all placeholder:text-charcoal-subtle"
+            className="w-full pl-10 pr-4 py-2 bg-ivory-warm dark:bg-obsidian-100 border border-ivory-border dark:border-obsidian-300 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-vermilion/30 focus:border-vermilion transition-all placeholder:text-charcoal-subtle dark:placeholder:text-stone-400 text-charcoal dark:text-stone-100 shadow-xs"
           />
         </div>
       </div>
@@ -45,21 +45,19 @@ export const MetroStationTimeline: React.FC<MetroStationTimelineProps> = ({
         />
 
         {filteredStations.length === 0 ? (
-          <div className="text-center py-8 text-sm text-charcoal-muted">
+          <div className="text-center py-8 text-sm text-charcoal-muted dark:text-stone-400">
             No stations match your search "{filterQuery}".
           </div>
         ) : (
           filteredStations.map((station, index) => {
             const allLines = parseStationLines(station.line);
             const isInterchange = allLines.length > 1;
-            const isFirst = index === 0;
-            const isLast = index === filteredStations.length - 1;
 
             return (
               <div key={station.id} className="relative group">
                 {/* Timeline Station Dot */}
                 <div
-                  className={`absolute -left-6 sm:-left-8 top-3.5 w-6 h-6 rounded-full flex items-center justify-center border-3 transition-transform group-hover:scale-125 bg-ivory-surface shadow-xs z-10`}
+                  className={`absolute -left-6 sm:-left-8 top-3.5 w-6 h-6 rounded-full flex items-center justify-center border-3 transition-transform group-hover:scale-125 bg-ivory-surface dark:bg-obsidian-50 shadow-xs z-10`}
                   style={{
                     borderColor: meta.hex,
                   }}
@@ -70,18 +68,18 @@ export const MetroStationTimeline: React.FC<MetroStationTimelineProps> = ({
                       style={{ backgroundColor: meta.hex }}
                     />
                   ) : (
-                    <div className="w-2 h-2 rounded-full bg-charcoal-soft" />
+                    <div className="w-2 h-2 rounded-full bg-charcoal-soft dark:bg-stone-300" />
                   )}
                 </div>
 
                 {/* Station Card */}
-                <div className="bg-ivory-warm/70 hover:bg-ivory-surface border border-ivory-border hover:border-terracotta/40 rounded-xl p-3.5 sm:p-4 transition-all duration-200 shadow-xs hover:shadow-warm-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="bg-ivory-warm dark:bg-obsidian-100/70 hover:bg-ivory-surface dark:bg-obsidian-50 border border-ivory-border dark:border-obsidian-300 hover:border-terracotta/40 rounded-xl p-3.5 sm:p-4 transition-all duration-200 shadow-xs hover:shadow-warm-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="space-y-1">
                     <div className="flex items-center space-x-2 flex-wrap gap-y-1">
-                      <span className="text-xs text-charcoal-subtle font-mono">
+                      <span className="text-xs text-charcoal-subtle dark:text-stone-400 font-mono">
                         #{String(index + 1).padStart(2, '0')}
                       </span>
-                      <h4 className="text-base font-bold text-charcoal group-hover:text-vermilion transition-colors">
+                      <h4 className="text-base font-bold text-charcoal dark:text-stone-100 group-hover:text-vermilion transition-colors">
                         {station.name}
                       </h4>
                       {/* Accurate Terminal Badges based on genuine terminal stations */}
@@ -92,7 +90,7 @@ export const MetroStationTimeline: React.FC<MetroStationTimelineProps> = ({
                             (lineName.toLowerCase().includes('purple') && station.name.toLowerCase().includes('joka')) ||
                             (lineName.toLowerCase().includes('orange') && index === 0) ||
                             (lineName.toLowerCase().includes('yellow') && (station.name.toLowerCase().includes('noapara') || index === 0))) && (
-                              <span className="text-[10px] font-semibold bg-stone-200 text-charcoal px-2 py-0.5 rounded-full border border-stone-300">
+                              <span className="text-[10px] font-semibold bg-stone-200 dark:bg-obsidian-300 text-charcoal dark:text-stone-200 px-2 py-0.5 rounded-full border border-stone-300 dark:border-obsidian-400">
                                 Origin / Terminal
                               </span>
                             )}
@@ -101,7 +99,7 @@ export const MetroStationTimeline: React.FC<MetroStationTimelineProps> = ({
                             (lineName.toLowerCase().includes('purple') && station.name.toLowerCase().includes('majerhat')) ||
                             (lineName.toLowerCase().includes('orange') && index === stations.length - 1) ||
                             (lineName.toLowerCase().includes('yellow') && (station.name.toLowerCase().includes('jai hind') || index === stations.length - 1))) && (
-                              <span className="text-[10px] font-semibold bg-stone-200 text-charcoal px-2 py-0.5 rounded-full border border-stone-300">
+                              <span className="text-[10px] font-semibold bg-stone-200 dark:bg-obsidian-300 text-charcoal dark:text-stone-200 px-2 py-0.5 rounded-full border border-stone-300">
                                 Terminal
                               </span>
                             )}

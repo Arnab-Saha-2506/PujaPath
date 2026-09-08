@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SankhaLoader } from './SankhaLoader';
 
@@ -48,7 +48,7 @@ export const PageTransition: React.FC = () => {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-ivory/90 backdrop-blur-md transition-opacity duration-300 ease-out ${isFading ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-ivory/90 dark:bg-[#090305]/95 backdrop-blur-md transition-opacity duration-300 ease-out ${isFading ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'
         }`}
       style={{ willChange: 'opacity' }}
     >

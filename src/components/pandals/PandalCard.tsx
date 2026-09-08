@@ -4,7 +4,8 @@ import { PandalResponseDTO } from '../../types/api';
 import { PandalFallbackGraphic } from './PandalFallbackGraphic';
 import { DistanceBadge } from './DistanceBadge';
 import { BestTimeBadge } from './BestTimeBadge';
-import { MapPin, ArrowRight, Navigation } from 'lucide-react';
+import { MapPin, ArrowRight, Navigation, Train } from 'lucide-react';
+import { getNearestMetroStation } from '../../utils/nearestMetro';
 
 interface PandalCardProps {
   pandal: PandalResponseDTO;
@@ -16,6 +17,10 @@ export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = t
   const [imgError, setImgError] = useState(false);
   const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pandal.latitude},${pandal.longitude}`;
 
+  const nearestMetro = pandal.nearbyMetroStationName
+    ? { name: pandal.nearbyMetroStationName }
+    : getNearestMetroStation(pandal.latitude, pandal.longitude);
+
   const handleCardClick = () => {
     navigate(`/pandals/${pandal.id}`);
   };
@@ -23,7 +28,7 @@ export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = t
   return (
     <div
       onClick={handleCardClick}
-      className="group bg-ivory-surface rounded-2xl border border-ivory-border hover:border-terracotta/40 shadow-warm-sm hover:shadow-warm-md transition-all duration-300 flex flex-col overflow-hidden relative cursor-pointer active:scale-[0.99]"
+      className="group bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 hover:border-terracotta/40 dark:hover:border-vermilion/50 shadow-warm-sm hover:shadow-warm-md transition-all duration-300 flex flex-col overflow-hidden relative cursor-pointer active:scale-[0.99]"
     >
       {/* Media Header - Responsive Aspect & Height for All Screen Sizes */}
       <div className="relative overflow-hidden h-48 sm:h-52 md:h-48 lg:h-52 bg-charcoal">
@@ -51,11 +56,24 @@ export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = t
           <PandalFallbackGraphic name={pandal.name} />
         )}
 
-        {/* Top Badges Overlay - Protected against narrow screen wrapping */}
-        <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2 pointer-events-none z-10">
-          <span className="bg-charcoal/75 backdrop-blur-md text-white font-semibold text-xs px-2.5 py-1 rounded-full shadow-sm border border-white/20 truncate max-w-[55%]">
-            {pandal.areaName || 'South Kolkata'}
-          </span>
+        {/* Top Badges Overlay - Two primary navigation tags (Area & Nearby Metro) + Best Time */}
+        <div className="absolute top-2.5 left-2.5 right-2.5 flex items-start justify-between gap-1.5 pointer-events-none z-10">
+          <div className="flex flex-wrap items-center gap-1.5 max-w-[72%] sm:max-w-[75%]">
+            {/* Tag 1: Which part of Kolkata */}
+            <span className="bg-black/75 backdrop-blur-md text-white font-semibold text-[10.5px] sm:text-[11px] px-2.5 py-0.5 sm:py-1 rounded-full shadow-xs border border-white/20 flex items-center space-x-1 shrink-0">
+              <MapPin className="w-3 h-3 text-vermilion-light shrink-0" />
+              <span>{pandal.areaName || 'South Kolkata'}</span>
+            </span>
+
+            {/* Tag 2: Nearby Metro Station */}
+            {nearestMetro && (
+              <span className="bg-black/75 backdrop-blur-md text-emerald-300 font-semibold text-[10.5px] sm:text-[11px] px-2.5 py-0.5 sm:py-1 rounded-full shadow-xs border border-emerald-400/35 flex items-center space-x-1 shrink-0">
+                <Train className="w-3 h-3 text-emerald-400 shrink-0" />
+                <span>{nearestMetro.name} Metro</span>
+              </span>
+            )}
+          </div>
+
           {pandal.bestTimeToVisit && (
             <div className="pointer-events-auto shrink-0">
               <BestTimeBadge timeSlot={pandal.bestTimeToVisit} />
@@ -78,36 +96,36 @@ export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = t
             </div>
           )}
 
-          <h3 className="text-lg font-bold text-charcoal group-hover:text-vermilion transition-colors line-clamp-1">
+          <h3 className="text-lg font-bold text-charcoal dark:text-stone-100 group-hover:text-vermilion dark:group-hover:text-vermilion-light transition-colors line-clamp-1">
             {pandal.name}
           </h3>
 
-          <div className="flex items-start space-x-1.5 mt-1.5 text-xs text-charcoal-muted line-clamp-1">
+          <div className="flex items-start space-x-1.5 mt-1.5 text-xs text-charcoal-muted dark:text-stone-300 line-clamp-1">
             <MapPin className="w-3.5 h-3.5 text-vermilion shrink-0 mt-0.5" />
             <span>{pandal.address}</span>
           </div>
 
-          <p className="mt-2 text-xs text-charcoal-subtle line-clamp-2 leading-relaxed">
+          <p className="mt-2 text-xs text-charcoal-subtle dark:text-stone-400 line-clamp-2 leading-relaxed">
             {pandal.description}
           </p>
         </div>
 
         {/* Action Footer */}
-        <div className="mt-4 pt-3 border-t border-ivory-muted flex items-center justify-between">
+        <div className="mt-4 pt-3 border-t border-ivory-muted dark:border-obsidian-300 flex items-center justify-between">
           <a
             href={googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
             title="Open directions in Google Maps"
-            className="inline-flex items-center space-x-1 text-xs font-semibold text-terracotta hover:text-vermilion transition-colors px-2 py-1 rounded-lg hover:bg-terracotta-50 border border-transparent hover:border-terracotta/20"
+            className="inline-flex items-center space-x-1 text-xs font-semibold text-terracotta dark:text-amber-300 hover:text-vermilion dark:hover:text-amber-200 transition-colors px-2 py-1 rounded-lg hover:bg-terracotta-50 dark:hover:bg-obsidian-200 border border-transparent hover:border-terracotta/20 dark:hover:border-amber-500/20"
           >
             <Navigation className="w-3.5 h-3.5" />
             <span>Maps</span>
           </a>
 
           <span
-            className="inline-flex items-center space-x-1 text-xs font-semibold text-vermilion group-hover:translate-x-0.5 transition-all bg-vermilion/5 group-hover:bg-vermilion/10 px-3 py-1.5 rounded-lg"
+            className="inline-flex items-center space-x-1 text-xs font-semibold text-vermilion dark:text-vermilion-light group-hover:translate-x-0.5 transition-all bg-vermilion/5 dark:bg-vermilion/15 group-hover:bg-vermilion/10 dark:group-hover:bg-vermilion/25 px-3 py-1.5 rounded-lg"
           >
             <span>View Pandal</span>
             <ArrowRight className="w-3.5 h-3.5" />
