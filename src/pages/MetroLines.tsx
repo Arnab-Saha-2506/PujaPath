@@ -3,7 +3,7 @@ import { LineResponseDTO } from '../types/api';
 import { getMetroLines } from '../services/metroService';
 import { MetroLineCard } from '../components/metro/MetroLineCard';
 import { AlpanaCircle } from '../components/common/AlpanaMotif';
-import { Train, Info, MapPin } from 'lucide-react';
+import { Train, Info } from 'lucide-react';
 
 export const MetroLines: React.FC = () => {
   const [lines, setLines] = useState<LineResponseDTO[]>([]);
@@ -31,7 +31,7 @@ export const MetroLines: React.FC = () => {
   return (
     <div className="space-y-8 pb-16">
       {/* Header Banner */}
-      <div className="relative overflow-hidden bg-ivory-surface rounded-3xl border border-ivory-border p-6 sm:p-8 shadow-warm-sm">
+      <div className="relative overflow-hidden bg-ivory-surface dark:bg-obsidian-50 rounded-3xl border border-ivory-border dark:border-obsidian-300 p-6 sm:p-8 shadow-warm-sm">
         <div className="absolute -top-12 -right-12 pointer-events-none opacity-20">
           <AlpanaCircle size={220} opacity={0.2} />
         </div>
@@ -41,13 +41,13 @@ export const MetroLines: React.FC = () => {
             <span className="text-xs font-bold uppercase tracking-wider text-metro-blue">
               Transit Rapid Network
             </span>
-            <span className="text-xs text-charcoal-subtle">•</span>
-            <span className="text-xs font-bengali text-charcoal-muted">কলকাতা মেট্রো রেলওয়ে</span>
+            <span className="text-xs text-charcoal-subtle dark:text-stone-500">•</span>
+            <span className="text-xs font-bengali text-charcoal-muted dark:text-stone-400">কলকাতা মেট্রো রেলওয়ে</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal dark:text-stone-200 tracking-tight">
             Kolkata Metro
           </h1>
-          <p className="text-xs sm:text-sm text-charcoal-muted leading-relaxed">
+          <p className="text-xs sm:text-sm text-charcoal-muted dark:text-stone-400 leading-relaxed">
             Find the easiest metro route to your Puja destination. Kolkata Metro runs round-the-clock
             special midnight services during Saptami, Ashtami, and Nabami nights.
           </p>
@@ -57,11 +57,11 @@ export const MetroLines: React.FC = () => {
       {/* Metro Lines Grid */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-bold text-charcoal flex items-center space-x-2">
+          <h2 className="text-lg font-bold text-charcoal dark:text-stone-200 flex items-center space-x-2">
             <Train className="w-5 h-5 text-vermilion" />
             <span>Active Metro Lines ({lines.length || 4})</span>
           </h2>
-          <span className="text-xs text-charcoal-subtle">
+          <span className="text-xs text-charcoal-subtle dark:text-stone-500">
             Select a line to explore all stations & nearby pandals
           </span>
         </div>
@@ -69,7 +69,7 @@ export const MetroLines: React.FC = () => {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 animate-pulse">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="h-64 bg-stone-200/60 rounded-2xl" />
+              <div key={i} className="h-64 bg-stone-200 dark:bg-obsidian-300/60 rounded-2xl" />
             ))}
           </div>
         ) : (
@@ -82,26 +82,26 @@ export const MetroLines: React.FC = () => {
       </div>
 
       {/* Puja Special Transit Tips Card */}
-      <div className="bg-stone-50 border border-stone-200 rounded-2xl p-6 shadow-xs space-y-3">
-        <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-charcoal">
+      <div className="bg-stone-50 dark:bg-obsidian-200 border border-stone-200 dark:border-obsidian-300 rounded-2xl p-6 shadow-xs space-y-3">
+        <div className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-charcoal dark:text-stone-200">
           <Info className="w-4 h-4 text-vermilion" />
           <span>Puja Metro Advisory</span>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-charcoal-muted">
-          <div className="p-3 bg-white rounded-xl border border-stone-200">
-            <strong className="block text-charcoal font-semibold mb-1">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-charcoal-muted dark:text-stone-400">
+          <div className="p-3 bg-white dark:bg-obsidian-100 rounded-xl border border-stone-200 dark:border-obsidian-300">
+            <strong className="block text-charcoal dark:text-stone-200 font-semibold mb-1">
               🌙 Nightlong Trains
             </strong>
             Blue and Green Lines run trains until 4:00 AM on Saptami, Ashtami, and Nabami nights.
           </div>
-          <div className="p-3 bg-white rounded-xl border border-stone-200">
-            <strong className="block text-charcoal font-semibold mb-1">
+          <div className="p-3 bg-white dark:bg-obsidian-100 rounded-xl border border-stone-200 dark:border-obsidian-300">
+            <strong className="block text-charcoal dark:text-stone-200 font-semibold mb-1">
               🎟️ Smart Cards & QR
             </strong>
             Purchase digital mobile QR tickets or keep metro smart cards recharged to skip long token queues.
           </div>
-          <div className="p-3 bg-white rounded-xl border border-stone-200">
-            <strong className="block text-charcoal font-semibold mb-1">
+          <div className="p-3 bg-white dark:bg-obsidian-100 rounded-xl border border-stone-200 dark:border-obsidian-300">
+            <strong className="block text-charcoal dark:text-stone-200 font-semibold mb-1">
               🔀 Esplanade Junction
             </strong>
             Interchange between Blue Line (North-South) and Green Line (Howrah / Salt Lake) at Esplanade.

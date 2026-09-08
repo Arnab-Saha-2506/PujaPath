@@ -16,8 +16,6 @@ import {
   MapPin,
   RefreshCw,
   Sparkles,
-  Footprints,
-  Compass,
   Navigation,
   SlidersHorizontal,
 } from 'lucide-react';
@@ -101,7 +99,7 @@ export const Nearby: React.FC = () => {
   return (
     <div className="space-y-8 pb-16">
       {/* Header Banner */}
-      <div className="relative overflow-hidden bg-ivory-surface rounded-3xl border border-ivory-border p-6 sm:p-8 shadow-warm-sm">
+      <div className="relative overflow-hidden bg-ivory-surface dark:bg-obsidian-50 rounded-3xl border border-ivory-border dark:border-obsidian-300 p-6 sm:p-8 shadow-warm-sm">
         <div className="absolute -top-12 -right-12 pointer-events-none opacity-20">
           <AlpanaCircle size={220} opacity={0.2} />
         </div>
@@ -111,13 +109,13 @@ export const Nearby: React.FC = () => {
             <span className="text-xs font-bold uppercase tracking-wider text-vermilion">
               Proximity Radar
             </span>
-            <span className="text-xs text-charcoal-subtle">•</span>
-            <span className="text-xs font-bengali text-charcoal-muted">আপনার কাছে পুজো</span>
+            <span className="text-xs text-charcoal-subtle dark:text-stone-500">•</span>
+            <span className="text-xs font-bengali text-charcoal-muted dark:text-stone-400">আপনার কাছে পুজো</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal tracking-tight">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-charcoal dark:text-stone-200 tracking-tight">
             Puja Near You
           </h1>
-          <p className="text-xs sm:text-sm text-charcoal-muted leading-relaxed">
+          <p className="text-xs sm:text-sm text-charcoal-muted dark:text-stone-400 leading-relaxed">
             Discover Durga Puja pandals around your current position. Filter by walking distance,
             check walking time, and navigate seamlessly through Kolkata's festive streets.
           </p>
@@ -126,7 +124,7 @@ export const Nearby: React.FC = () => {
 
       {/* Location Status or Permission Request Banner */}
       {status !== 'granted' ? (
-        <div className="bg-ivory-surface rounded-3xl border border-terracotta/30 p-8 sm:p-12 text-center max-w-xl mx-auto shadow-warm-md flex flex-col items-center relative overflow-hidden">
+        <div className="bg-ivory-surface dark:bg-obsidian-50 rounded-3xl border border-terracotta/30 p-8 sm:p-12 text-center max-w-xl mx-auto shadow-warm-md flex flex-col items-center relative overflow-hidden">
           <div className="absolute -top-10 -right-10 pointer-events-none opacity-15 text-vermilion">
             <AlpanaCircle size={180} opacity={0.2} />
           </div>
@@ -139,11 +137,11 @@ export const Nearby: React.FC = () => {
             শারদ পরিক্রমা • নিকটবর্তী পুজো
           </span>
 
-          <h3 className="text-xl sm:text-2xl font-bold text-charcoal mb-2">
+          <h3 className="text-xl sm:text-2xl font-bold text-charcoal dark:text-stone-200 mb-2">
             Allow location access to discover nearby Puja pandals
           </h3>
 
-          <p className="text-xs sm:text-sm text-charcoal-muted max-w-md mb-6 leading-relaxed">
+          <p className="text-xs sm:text-sm text-charcoal-muted dark:text-stone-400 max-w-md mb-6 leading-relaxed">
             {error ||
               'We use your browser GPS to compute real-time walking times and closest metro routes to each pandal.'}
           </p>
@@ -152,7 +150,7 @@ export const Nearby: React.FC = () => {
             <button
               onClick={requestLocation}
               disabled={isLocating}
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs sm:text-sm font-semibold px-6 py-3 rounded-xl shadow-warm-md active:scale-95 transition-all disabled:opacity-60"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs sm:text-sm font-semibold px-6 py-3 rounded-xl shadow-warm-md active:scale-95 transition-colors disabled:opacity-60"
             >
               <MapPin className="w-4 h-4 text-white" />
               <span>{isLocating ? 'Locating...' : 'Enable Location'}</span>
@@ -160,7 +158,7 @@ export const Nearby: React.FC = () => {
 
             <button
               onClick={simulateKolkataLocation}
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-terracotta-50 hover:bg-terracotta-100 text-terracotta text-xs sm:text-sm font-semibold px-5 py-3 rounded-xl border border-terracotta-200 transition-all shadow-xs"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-terracotta-50 hover:bg-terracotta-100 text-terracotta text-xs sm:text-sm font-semibold px-5 py-3 rounded-xl border border-terracotta-200 transition-colors shadow-xs"
             >
               <Sparkles className="w-4 h-4" />
               <span>Explore South Kolkata Demo</span>
@@ -170,7 +168,7 @@ export const Nearby: React.FC = () => {
       ) : (
         <div className="space-y-6">
           {/* Active Location Info & Filter Bar */}
-          <div className="bg-ivory-surface rounded-2xl border border-ivory-border p-4 sm:p-5 shadow-warm-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 p-4 sm:p-5 shadow-warm-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 rounded-xl bg-leaf/10 border border-leaf/30 flex items-center justify-center text-leaf shrink-0">
                 <Navigation className="w-5 h-5" />
@@ -178,24 +176,24 @@ export const Nearby: React.FC = () => {
               <div>
                 <div className="flex items-center space-x-2">
                   <span className="text-xs font-bold text-leaf">GPS Active</span>
-                  <span className="text-[11px] text-charcoal-subtle font-mono">
+                  <span className="text-[11px] text-charcoal-subtle dark:text-stone-500 font-mono">
                     ({latitude?.toFixed(4)}° N, {longitude?.toFixed(4)}° E)
                   </span>
                 </div>
-                <p className="text-xs text-charcoal-muted">
+                <p className="text-xs text-charcoal-muted dark:text-stone-400">
                   Sorted by closest walking proximity to you
                 </p>
               </div>
             </div>
 
             <div className="flex items-center space-x-2.5">
-              <div className="flex items-center space-x-1.5 bg-ivory-warm px-3 py-1.5 rounded-xl border border-ivory-border text-xs">
-                <SlidersHorizontal className="w-3.5 h-3.5 text-charcoal-subtle" />
-                <span className="text-charcoal-subtle">Radius:</span>
+              <div className="flex items-center space-x-1.5 bg-ivory-warm dark:bg-obsidian-100 px-3 py-1.5 rounded-xl border border-ivory-border dark:border-obsidian-300 text-xs">
+                <SlidersHorizontal className="w-3.5 h-3.5 text-charcoal-subtle dark:text-stone-400" />
+                <span className="text-charcoal-subtle dark:text-stone-400">Radius:</span>
                 <select
                   value={maxDistanceKm}
                   onChange={(e) => setMaxDistanceKm(Number(e.target.value))}
-                  className="bg-transparent font-semibold text-charcoal focus:outline-hidden"
+                  className="bg-transparent font-semibold text-charcoal dark:text-stone-200 focus:outline-hidden [&>option]:bg-ivory-surface dark:[&>option]:bg-obsidian-100 dark:[&>option]:text-stone-100"
                 >
                   <option value={1}>Under 1 km</option>
                   <option value={1.5}>Under 1.5 km (Walkable)</option>
@@ -208,7 +206,7 @@ export const Nearby: React.FC = () => {
               <button
                 onClick={refreshLocation}
                 disabled={isLocating}
-                className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal hover:text-vermilion bg-ivory-warm border border-ivory-border px-3 py-2 rounded-xl transition-colors"
+                className="inline-flex items-center space-x-1.5 text-xs font-semibold text-charcoal dark:text-stone-200 hover:text-vermilion bg-ivory-warm dark:bg-obsidian-100 border border-ivory-border dark:border-obsidian-300 px-3 py-2 rounded-xl transition-colors"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isLocating ? 'animate-spin' : ''}`} />
                 <span className="hidden sm:inline">Refresh</span>
@@ -218,21 +216,21 @@ export const Nearby: React.FC = () => {
 
           {/* Closest Walkable Strips Preview (<= 1.5 km) */}
           {walkablePandals.length > 0 ? (
-            <div className="bg-emerald-50/80 border border-leaf/25 rounded-2xl p-4 space-y-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-leaf-dark block mb-1">
+            <div className="bg-emerald-50/80 dark:bg-emerald-950/30 border border-leaf/25 dark:border-emerald-700/40 rounded-2xl p-4 space-y-2">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-leaf-dark dark:text-emerald-400 block mb-1">
                 🚶 Closest Walkable Pandals Right Now (&le; 1.5 km)
               </span>
               <div className="flex flex-wrap gap-2">
                 {walkablePandals.slice(0, 4).map((pandal) => (
                   <div
                     key={pandal.id}
-                    className="inline-flex items-center space-x-2 bg-white px-3 py-1.5 rounded-xl border border-leaf/20 text-xs text-charcoal shadow-xs"
+                    className="inline-flex items-center space-x-2 bg-white dark:bg-obsidian-100 px-3 py-1.5 rounded-xl border border-leaf/20 dark:border-emerald-600/30 text-xs text-charcoal dark:text-stone-200 shadow-xs"
                   >
                     <span className="font-bold text-vermilion">
                       📍 {formatDistance(pandal.distanceKm)}
                     </span>
-                    <span className="text-charcoal font-semibold">• {pandal.name}</span>
-                    <span className="text-charcoal-muted">
+                    <span className="text-charcoal dark:text-stone-200 font-semibold">• {pandal.name}</span>
+                    <span className="text-charcoal-muted dark:text-stone-400">
                       • {formatWalkingTime(pandal.walkingTimeMinutes)}
                     </span>
                   </div>
@@ -240,9 +238,9 @@ export const Nearby: React.FC = () => {
               </div>
             </div>
           ) : sortedPandals.length > 0 ? (
-            <div className="bg-stone-50 border border-stone-200/80 rounded-2xl p-4 text-xs text-charcoal-muted flex items-center justify-between">
+            <div className="bg-stone-50 dark:bg-obsidian-200 border border-stone-200/80 dark:border-obsidian-300 rounded-2xl p-4 text-xs text-charcoal-muted dark:text-stone-400 flex items-center justify-between">
               <div>
-                <span className="font-semibold text-charcoal">No pandals within 1.5 km walking radius.</span>{' '}
+                <span className="font-semibold text-charcoal dark:text-stone-200">No pandals within 1.5 km walking radius.</span>{' '}
                 Nearest pandal is <strong className="text-vermilion">{sortedPandals[0].name}</strong> ({formatDistance(sortedPandals[0].distanceKm)} away).
               </div>
             </div>
@@ -252,16 +250,16 @@ export const Nearby: React.FC = () => {
           {loading ? (
             <PandalGridSkeleton count={6} />
           ) : sortedPandals.length === 0 ? (
-            <div className="text-center py-12 bg-ivory-surface rounded-2xl border border-ivory-border p-8 max-w-lg mx-auto">
-              <p className="text-sm font-bold text-charcoal">
+            <div className="text-center py-12 bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 p-8 max-w-lg mx-auto">
+              <p className="text-sm font-bold text-charcoal dark:text-stone-100">
                 No pandals found within {maxDistanceKm} km of your coordinates.
               </p>
-              <p className="text-xs text-charcoal-muted mt-1.5">
+              <p className="text-xs text-charcoal-muted dark:text-stone-400 mt-1.5">
                 Pandals beyond 10 km are excluded to focus on your immediate neighbourhood.
               </p>
               <button
                 onClick={simulateKolkataLocation}
-                className="mt-4 inline-flex items-center space-x-1.5 bg-vermilion text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-warm-sm hover:bg-vermilion-dark transition-all"
+                className="mt-4 inline-flex items-center space-x-1.5 bg-vermilion text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-warm-sm hover:bg-vermilion-dark transition-colors"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Explore South Kolkata Demo (Deshapriyo Park)</span>

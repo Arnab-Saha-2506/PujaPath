@@ -5,6 +5,7 @@ import './index.css'
 import App from './App.tsx'
 import { initGA, logPageView } from './utils/analytics'
 import { useEffect } from 'react'
+import { ThemeProvider } from './context/ThemeContext'
 import { useLocation } from 'react-router-dom'
 
 function RouteChangeTracker() {
@@ -22,7 +23,10 @@ initGA();
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <ThemeProvider>
+        <RouteChangeTracker />
+        <App />
+      </ThemeProvider>
     </BrowserRouter>
   </StrictMode>,
 )

@@ -16,6 +16,7 @@ export interface PandalResponseDTO {
   bestTimeToVisit?: string;
   distanceKm?: number | null;
   walkingTimeMinutes?: number | null;
+  nearbyMetroStationName?: string;
 }
 
 export interface MetroStationResponseDTO {
