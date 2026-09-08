@@ -286,7 +286,7 @@ export const SankhaLoader: React.FC<SankhaLoaderProps> = ({
 
   if (variant === 'fullscreen' || variant === 'transition') {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-ivory/85 dark:bg-[#090305]/95 backdrop-blur-md transition-all duration-300">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-ivory/85 dark:bg-[#090305]/95 backdrop-blur-md transition-opacity duration-300">
         {content}
       </div>
     );

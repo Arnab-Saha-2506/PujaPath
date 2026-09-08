@@ -142,7 +142,7 @@ export const PandalsList: React.FC = () => {
                 key={area.id}
                 onClick={() => handleTabChange(area.id)}
                 className={cn(
-                  'px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap flex items-center space-x-2',
+                  'px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-colors whitespace-nowrap flex items-center space-x-2',
                   isSelected
                     ? 'bg-vermilion text-white shadow-warm-sm'
                     : 'bg-ivory-warm dark:bg-obsidian-100 text-charcoal-soft dark:text-stone-300 hover:bg-stone-200 dark:hover:bg-obsidian-200 border border-transparent dark:border-obsidian-300'
@@ -205,7 +205,7 @@ export const PandalsList: React.FC = () => {
             placeholder="Search pandals by name, street, or theme..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-ivory-surface dark:bg-obsidian-50 border border-ivory-border dark:border-obsidian-300 rounded-xl text-sm text-charcoal dark:text-stone-100 placeholder:text-charcoal-subtle dark:placeholder:text-stone-400 focus:outline-hidden focus:ring-2 focus:ring-vermilion/30 focus:border-vermilion transition-all shadow-xs"
+            className="w-full pl-10 pr-4 py-2.5 bg-ivory-surface dark:bg-obsidian-50 border border-ivory-border dark:border-obsidian-300 rounded-xl text-sm text-charcoal dark:text-stone-100 placeholder:text-charcoal-subtle dark:placeholder:text-stone-400 focus:outline-hidden focus:ring-2 focus:ring-vermilion/30 focus:border-vermilion transition-colors shadow-xs"
           />
           {searchQuery && (
             <button

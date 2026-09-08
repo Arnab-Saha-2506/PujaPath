@@ -35,6 +35,8 @@
 }
 
 /* Authentic Bengali Festive Blackish-Red Gradient Background (Dark Theme Default) */
+/* NOTE: background-attachment: scroll (NOT fixed) — fixed disables GPU compositing
+   and forces full software repaint on every scroll pixel, causing severe lag. */
 .dark .bg-alpana-pattern {
   background-color: #090305;
   background-image:
@@ -44,7 +46,16 @@
     radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.025) 0, rgba(245, 158, 11, 0.025) 2px, transparent 3px),
     linear-gradient(180deg, #090204 0%, #120407 35%, #180509 70%, #090204 100%);
   background-size: 100% 100%, 100% 100%, 100% 100%, 40px 40px, 100% 100%;
-  background-attachment: fixed;
+  background-attachment: scroll;
+}
+
+/* Theme-switch flash prevention — briefly added to <html> during toggle to suppress
+   all CSS transitions while the dark class is being applied/removed. */
+.no-transition *,
+.no-transition *::before,
+.no-transition *::after {
+  transition: none !important;
+  animation: none !important;
 }
 
 /* Terracotta Border Accent */

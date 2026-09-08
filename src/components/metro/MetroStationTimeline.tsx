@@ -31,7 +31,7 @@ export const MetroStationTimeline: React.FC<MetroStationTimelineProps> = ({
             placeholder={`Search stations along ${lineName}...`}
             value={filterQuery}
             onChange={(e) => setFilterQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-ivory-warm dark:bg-obsidian-100 border border-ivory-border dark:border-obsidian-300 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-vermilion/30 focus:border-vermilion transition-all placeholder:text-charcoal-subtle dark:placeholder:text-stone-400 text-charcoal dark:text-stone-100 shadow-xs"
+            className="w-full pl-10 pr-4 py-2 bg-ivory-warm dark:bg-obsidian-100 border border-ivory-border dark:border-obsidian-300 rounded-xl text-sm focus:outline-hidden focus:ring-2 focus:ring-vermilion/30 focus:border-vermilion transition-colors placeholder:text-charcoal-subtle dark:placeholder:text-stone-400 text-charcoal dark:text-stone-100 shadow-xs"
           />
         </div>
       </div>
@@ -73,7 +73,7 @@ export const MetroStationTimeline: React.FC<MetroStationTimelineProps> = ({
                 </div>
 
                 {/* Station Card */}
-                <div className="bg-ivory-warm dark:bg-obsidian-100/70 hover:bg-ivory-surface dark:bg-obsidian-50 border border-ivory-border dark:border-obsidian-300 hover:border-terracotta/40 rounded-xl p-3.5 sm:p-4 transition-all duration-200 shadow-xs hover:shadow-warm-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="bg-ivory-warm dark:bg-obsidian-100/70 hover:bg-ivory-surface dark:bg-obsidian-50 border border-ivory-border dark:border-obsidian-300 hover:border-terracotta/40 rounded-xl p-3.5 sm:p-4 transition-[colors,box-shadow] duration-200 shadow-xs hover:shadow-warm-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                   <div className="space-y-1">
                     <div className="flex items-center space-x-2 flex-wrap gap-y-1">
                       <span className="text-xs text-charcoal-subtle dark:text-stone-400 font-mono">
@@ -135,7 +135,7 @@ export const MetroStationTimeline: React.FC<MetroStationTimelineProps> = ({
                   {/* Action link to view pandals */}
                   <Link
                     to={`/metro/stations/${station.id}`}
-                    className="shrink-0 inline-flex items-center space-x-1.5 text-xs font-semibold text-vermilion bg-vermilion/5 hover:bg-vermilion/10 px-3 py-1.5 rounded-lg border border-vermilion/15 transition-all self-start sm:self-center"
+                    className="shrink-0 inline-flex items-center space-x-1.5 text-xs font-semibold text-vermilion bg-vermilion/5 hover:bg-vermilion/10 px-3 py-1.5 rounded-lg border border-vermilion/15 transition-colors self-start sm:self-center"
                   >
                     <Train className="w-3.5 h-3.5 text-vermilion" />
                     <span>View Nearby Pandals</span>

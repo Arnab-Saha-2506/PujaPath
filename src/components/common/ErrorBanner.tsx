@@ -22,7 +22,7 @@ export const ErrorBanner: React.FC<ErrorBannerProps> = ({
           {onRetry && (
             <button
               onClick={onRetry}
-              className="mt-3 inline-flex items-center space-x-1.5 bg-vermilion text-white text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-vermilion-dark active:scale-95 transition-all"
+              className="mt-3 inline-flex items-center space-x-1.5 bg-vermilion text-white text-xs font-semibold px-3 py-1.5 rounded-lg hover:bg-vermilion-dark active:scale-95 transition-colors"
             >
               <RefreshCw className="w-3 h-3" />
               <span>Retry</span>

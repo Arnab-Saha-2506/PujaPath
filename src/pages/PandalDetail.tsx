@@ -406,7 +406,7 @@ export const PandalDetail: React.FC = () => {
                 <button
                   onClick={requestLocation}
                   disabled={isLocating}
-                  className="inline-flex items-center space-x-1.5 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-warm-sm active:scale-95 transition-all"
+                  className="inline-flex items-center space-x-1.5 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-warm-sm active:scale-95 transition-colors"
                 >
                   <MapPin className="w-3.5 h-3.5" />
                   <span>{isLocating ? 'Locating...' : 'Enable Location'}</span>
@@ -496,7 +496,7 @@ export const PandalDetail: React.FC = () => {
             {nearbyCircuitPandals.map((circuitPandal) => (
               <div
                 key={circuitPandal.id}
-                className="bg-ivory-warm dark:bg-obsidian-100/60 border border-ivory-border dark:border-obsidian-300 hover:border-terracotta/40 rounded-2xl p-4 transition-all duration-200 shadow-xs hover:shadow-warm-sm flex flex-col justify-between"
+                className="bg-ivory-warm dark:bg-obsidian-100/60 border border-ivory-border dark:border-obsidian-300 hover:border-terracotta/40 rounded-2xl p-4 transition-[colors,box-shadow] duration-200 shadow-xs hover:shadow-warm-sm flex flex-col justify-between"
               >
                 <div className="space-y-2">
                   <div className="inline-flex items-center space-x-1.5 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-700/40 px-2.5 py-0.5 rounded-full text-xs font-semibold">
@@ -559,7 +559,7 @@ export const PandalDetail: React.FC = () => {
               return (
                 <div
                   key={metro.id}
-                  className="bg-ivory-warm dark:bg-obsidian-100/60 border border-ivory-border dark:border-obsidian-300 hover:border-terracotta/40 rounded-xl p-4 transition-all duration-200 shadow-xs hover:shadow-warm-sm flex flex-col justify-between"
+                  className="bg-ivory-warm dark:bg-obsidian-100/60 border border-ivory-border dark:border-obsidian-300 hover:border-terracotta/40 rounded-xl p-4 transition-[colors,box-shadow] duration-200 shadow-xs hover:shadow-warm-sm flex flex-col justify-between"
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between">
@@ -618,7 +618,7 @@ export const PandalDetail: React.FC = () => {
             href={googleMapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white font-bold text-sm sm:text-base py-3.5 px-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-200 active:scale-98 border border-white/20"
+            className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white font-bold text-sm sm:text-base py-3.5 px-6 rounded-2xl shadow-xl hover:shadow-2xl transition-[colors,box-shadow] duration-200 active:scale-98 border border-white/20"
           >
             <Navigation className="w-5 h-5 text-white" />
             <span>Navigate to {pandal.name}</span>

@@ -150,7 +150,7 @@ export const Nearby: React.FC = () => {
             <button
               onClick={requestLocation}
               disabled={isLocating}
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs sm:text-sm font-semibold px-6 py-3 rounded-xl shadow-warm-md active:scale-95 transition-all disabled:opacity-60"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs sm:text-sm font-semibold px-6 py-3 rounded-xl shadow-warm-md active:scale-95 transition-colors disabled:opacity-60"
             >
               <MapPin className="w-4 h-4 text-white" />
               <span>{isLocating ? 'Locating...' : 'Enable Location'}</span>
@@ -158,7 +158,7 @@ export const Nearby: React.FC = () => {
 
             <button
               onClick={simulateKolkataLocation}
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-terracotta-50 hover:bg-terracotta-100 text-terracotta text-xs sm:text-sm font-semibold px-5 py-3 rounded-xl border border-terracotta-200 transition-all shadow-xs"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-terracotta-50 hover:bg-terracotta-100 text-terracotta text-xs sm:text-sm font-semibold px-5 py-3 rounded-xl border border-terracotta-200 transition-colors shadow-xs"
             >
               <Sparkles className="w-4 h-4" />
               <span>Explore South Kolkata Demo</span>
@@ -259,7 +259,7 @@ export const Nearby: React.FC = () => {
               </p>
               <button
                 onClick={simulateKolkataLocation}
-                className="mt-4 inline-flex items-center space-x-1.5 bg-vermilion text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-warm-sm hover:bg-vermilion-dark transition-all"
+                className="mt-4 inline-flex items-center space-x-1.5 bg-vermilion text-white text-xs font-semibold px-4 py-2 rounded-xl shadow-warm-sm hover:bg-vermilion-dark transition-colors"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Explore South Kolkata Demo (Deshapriyo Park)</span>

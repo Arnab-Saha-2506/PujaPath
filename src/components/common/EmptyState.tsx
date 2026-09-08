@@ -27,7 +27,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
       {actionText && onAction && (
         <button
           onClick={onAction}
-          className="inline-flex items-center space-x-2 bg-vermilion text-white text-xs font-semibold px-4 py-2 rounded-xl hover:bg-vermilion-dark active:scale-95 transition-all shadow-warm-sm"
+          className="inline-flex items-center space-x-2 bg-vermilion text-white text-xs font-semibold px-4 py-2 rounded-xl hover:bg-vermilion-dark active:scale-95 transition-colors shadow-warm-sm"
         >
           <Sparkles className="w-3.5 h-3.5" />
           <span>{actionText}</span>

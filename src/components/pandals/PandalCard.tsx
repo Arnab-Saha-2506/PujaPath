@@ -28,7 +28,7 @@ export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = t
   return (
     <div
       onClick={handleCardClick}
-      className="group bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 hover:border-terracotta/40 dark:hover:border-vermilion/50 shadow-warm-sm hover:shadow-warm-md transition-all duration-300 flex flex-col overflow-hidden relative cursor-pointer active:scale-[0.99]"
+      className="group bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 hover:border-terracotta/40 dark:hover:border-vermilion/50 shadow-warm-sm hover:shadow-warm-md transition-[colors,box-shadow,transform] duration-300 flex flex-col overflow-hidden relative cursor-pointer active:scale-[0.99]"
     >
       {/* Media Header - Responsive Aspect & Height for All Screen Sizes */}
       <div className="relative overflow-hidden h-48 sm:h-52 md:h-48 lg:h-52 bg-charcoal">
@@ -125,7 +125,7 @@ export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = t
           </a>
 
           <span
-            className="inline-flex items-center space-x-1 text-xs font-semibold text-vermilion dark:text-vermilion-light group-hover:translate-x-0.5 transition-all bg-vermilion/5 dark:bg-vermilion/15 group-hover:bg-vermilion/10 dark:group-hover:bg-vermilion/25 px-3 py-1.5 rounded-lg"
+            className="inline-flex items-center space-x-1 text-xs font-semibold text-vermilion dark:text-vermilion-light group-hover:translate-x-0.5 transition-colors bg-vermilion/5 dark:bg-vermilion/15 group-hover:bg-vermilion/10 dark:group-hover:bg-vermilion/25 px-3 py-1.5 rounded-lg"
           >
             <span>View Pandal</span>
             <ArrowRight className="w-3.5 h-3.5" />

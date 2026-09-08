@@ -178,14 +178,14 @@ export const Home: React.FC = () => {
                 <button
                   onClick={requestLocation}
                   disabled={isLocating}
-                  className="inline-flex items-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-xl shadow-warm-md hover:shadow-warm-lg active:scale-95 transition-all disabled:opacity-60"
+                  className="inline-flex items-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-xl shadow-warm-md hover:shadow-warm-lg active:scale-95 transition-[colors,box-shadow] disabled:opacity-60"
                 >
                   <MapPin className="w-4 h-4 text-white" />
                   <span>{isLocating ? 'Detecting Location...' : '📍 Use My Location'}</span>
                 </button>
                 <button
                   onClick={simulateKolkataLocation}
-                  className="inline-flex items-center space-x-1.5 bg-black/45 hover:bg-black/65 text-amber-200 border border-amber-400/40 text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl backdrop-blur-md shadow-xs transition-all active:scale-95"
+                  className="inline-flex items-center space-x-1.5 bg-black/45 hover:bg-black/65 text-amber-200 border border-amber-400/40 text-xs sm:text-sm font-semibold px-4 py-2.5 rounded-xl backdrop-blur-md shadow-xs transition-colors active:scale-95"
                 >
                   <Sparkles className="w-4 h-4 text-amber-300" />
                   <span>South Kolkata GPS Demo</span>
@@ -221,7 +221,7 @@ export const Home: React.FC = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {/* South Kolkata - Featured Card */}
-          <div className="relative group bg-gradient-to-br from-terracotta-50 via-ivory-surface to-ivory-warm dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-terracotta/40 dark:border-terracotta/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-all flex flex-col justify-between">
+          <div className="relative group bg-gradient-to-br from-terracotta-50 via-ivory-surface to-ivory-warm dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-terracotta/40 dark:border-terracotta/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-[colors,box-shadow] flex flex-col justify-between">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="bg-vermilion text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
@@ -246,7 +246,7 @@ export const Home: React.FC = () => {
             <div className="mt-5 pt-4 border-t border-terracotta-100 dark:border-obsidian-300">
               <Link
                 to="/areas/1/pandals"
-                className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-all"
+                className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-colors"
               >
                 <span>Explore South</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -255,7 +255,7 @@ export const Home: React.FC = () => {
           </div>
 
           {/* North Kolkata - Active Card */}
-          <div className="relative group bg-gradient-to-br from-terracotta-50/50 via-ivory-surface to-ivory-warm dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-terracotta/30 dark:border-leaf/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-all flex flex-col justify-between">
+          <div className="relative group bg-gradient-to-br from-terracotta-50/50 via-ivory-surface to-ivory-warm dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-terracotta/30 dark:border-leaf/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-[colors,box-shadow] flex flex-col justify-between">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="bg-leaf text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
@@ -280,7 +280,7 @@ export const Home: React.FC = () => {
             <div className="mt-5 pt-4 border-t border-ivory-muted dark:border-obsidian-300">
               <Link
                 to="/areas/2/pandals"
-                className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-all"
+                className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-colors"
               >
                 <span>Explore North</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -289,7 +289,7 @@ export const Home: React.FC = () => {
           </div>
 
           {/* Central Kolkata - Active Card */}
-          <div className="relative group bg-gradient-to-br from-amber-50/50 via-ivory-surface to-ivory-warm dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-amber-300/40 dark:border-brass/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-all flex flex-col justify-between">
+          <div className="relative group bg-gradient-to-br from-amber-50/50 via-ivory-surface to-ivory-warm dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-amber-300/40 dark:border-brass/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-[colors,box-shadow] flex flex-col justify-between">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="bg-brass text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
@@ -314,7 +314,7 @@ export const Home: React.FC = () => {
             <div className="mt-5 pt-4 border-t border-ivory-muted dark:border-obsidian-300">
               <Link
                 to="/areas/3/pandals"
-                className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-all"
+                className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-colors"
               >
                 <span>Explore Central</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -323,7 +323,7 @@ export const Home: React.FC = () => {
           </div>
 
           {/* East Kolkata - Active Card */}
-          <div className="relative group bg-gradient-to-br from-emerald-50/60 via-ivory-surface to-teal-50/40 dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-emerald-200/70 dark:border-emerald-500/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-all flex flex-col justify-between">
+          <div className="relative group bg-gradient-to-br from-emerald-50/60 via-ivory-surface to-teal-50/40 dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-emerald-200/70 dark:border-emerald-500/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-[colors,box-shadow] flex flex-col justify-between">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <span className="bg-emerald-500 text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
@@ -348,7 +348,7 @@ export const Home: React.FC = () => {
             <div className="mt-5 pt-4 border-t border-ivory-muted dark:border-obsidian-300">
               <Link
                 to="/areas/4/pandals"
-                className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-all"
+                className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-colors"
               >
                 <span>Explore East</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

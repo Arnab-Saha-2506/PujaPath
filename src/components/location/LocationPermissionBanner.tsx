@@ -38,7 +38,7 @@ export const LocationPermissionBanner: React.FC = () => {
           <button
             onClick={requestLocation}
             disabled={isLocating}
-            className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold px-5 py-2.5 rounded-xl shadow-warm-sm active:scale-95 transition-all disabled:opacity-60"
+            className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold px-5 py-2.5 rounded-xl shadow-warm-sm active:scale-95 transition-colors disabled:opacity-60"
           >
             <MapPin className="w-4 h-4 text-white" />
             <span>{isLocating ? 'Locating...' : 'Enable Location'}</span>
@@ -46,7 +46,7 @@ export const LocationPermissionBanner: React.FC = () => {
 
           <button
             onClick={simulateKolkataLocation}
-            className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-ivory-surface dark:bg-obsidian-50 hover:bg-terracotta-50 dark:hover:bg-obsidian-200 text-terracotta dark:text-amber-300 text-xs font-semibold px-4 py-2.5 rounded-xl border border-terracotta-200 dark:border-amber-500/30 shadow-xs active:scale-95 transition-all"
+            className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-ivory-surface dark:bg-obsidian-50 hover:bg-terracotta-50 dark:hover:bg-obsidian-200 text-terracotta dark:text-amber-300 text-xs font-semibold px-4 py-2.5 rounded-xl border border-terracotta-200 dark:border-amber-500/30 shadow-xs active:scale-95 transition-colors"
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>South Kolkata Demo (22.518, 88.353)</span>

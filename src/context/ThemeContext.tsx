@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect ,useMemo} from 'react';
 
 type Theme = 'dark' | 'light';
 
@@ -18,6 +18,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     useEffect(() => {
         const root = document.documentElement;
         const metaThemeColor = document.getElementById('meta-theme-color');
+
+        // Suppress all CSS transitions during theme swap to avoid the
+        // "every element animates at once" lag. Re-enable on next paint.
+        root.classList.add('no-transition');
+
         if (theme === 'dark') {
             root.classList.add('dark');
             if (metaThemeColor) metaThemeColor.setAttribute('content', '#090305');
@@ -26,11 +31,21 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             if (metaThemeColor) metaThemeColor.setAttribute('content', '#FAF7F2');
         }
         localStorage.setItem('pujapath_theme', theme);
+
+        // Two rAF calls: first lets the browser commit the class change,
+        // second removes no-transition after the frame is painted.
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                root.classList.remove('no-transition');
+            });
+        });
     }, [theme]);
 
-    const toggleTheme = () => {
-        setTheme(prev => prev === 'dark' ? 'light' : 'dark');
-    };
+    const toggleTheme = useMemo(() => {
+        return () => {
+            setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+        };
+    }, []);
 
     return (
         <ThemeContext.Provider value={{ theme, toggleTheme }}>

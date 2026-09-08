@@ -56,7 +56,7 @@ export const BottomNavigation: React.FC = () => {
                 <>
                   <div
                     className={cn(
-                      'p-1 rounded-full transition-all duration-200',
+                      'p-1 rounded-full transition-colors duration-200',
                       isActive ? 'bg-vermilion/10 scale-110' : ''
                     )}
                   >

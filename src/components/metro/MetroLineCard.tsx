@@ -12,7 +12,7 @@ export const MetroLineCard: React.FC<MetroLineCardProps> = ({ lineName, stationC
   const meta = getMetroLineMeta(lineName);
 
   return (
-    <div className="bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 overflow-hidden shadow-warm-sm hover:shadow-warm-md transition-all duration-300 flex flex-col justify-between group">
+    <div className="bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 overflow-hidden shadow-warm-sm hover:shadow-warm-md transition-[colors,box-shadow] duration-300 flex flex-col justify-between group">
       {/* Top Line Color Banner */}
       <div className="p-5 relative overflow-hidden" style={{ backgroundColor: meta.hex }}>
         <div className="relative z-10 flex items-start justify-between text-white">

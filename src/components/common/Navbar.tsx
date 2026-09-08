@@ -24,7 +24,7 @@ export const Navbar: React.FC = () => {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-ivory-warm dark:bg-obsidian-100/95 backdrop-blur-md border-b border-ivory-border dark:border-obsidian-300 shadow-warm-sm transition-all">
+    <header className="sticky top-0 z-40 bg-ivory-warm dark:bg-obsidian-100/95 backdrop-blur-md border-b border-ivory-border dark:border-obsidian-300 shadow-warm-sm transition-colors">
       {/* Subtle Top Red Accent Stripe (লাল পাড়) */}
       <div className="h-1 bg-gradient-to-r from-vermilion-deep via-vermilion to-terracotta" />
 
@@ -59,7 +59,7 @@ export const Navbar: React.FC = () => {
                   key={link.path}
                   to={link.path}
                   className={cn(
-                    'px-3.5 py-2 rounded-lg text-sm font-medium transition-all duration-150 flex flex-col items-center justify-center relative',
+                    'px-3.5 py-2 rounded-lg text-sm font-medium transition-colors duration-150 flex flex-col items-center justify-center relative',
                     active
                       ? 'text-vermilion-dark font-semibold bg-vermilion/5 dark:text-amber-300 dark:bg-vermilion/10'
                       : 'text-charcoal-soft hover:text-charcoal dark:text-stone-300 dark:hover:text-stone-100 hover:bg-ivory-muted/60 dark:hover:bg-obsidian-200/60'
@@ -103,7 +103,7 @@ export const Navbar: React.FC = () => {
                 <button
                   onClick={requestLocation}
                   disabled={isLocating}
-                  className="flex items-center space-x-1.5 bg-vermilion text-white text-xs font-medium px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full shadow-warm-sm hover:bg-vermilion-dark active:scale-95 transition-all disabled:opacity-60"
+                  className="flex items-center space-x-1.5 bg-vermilion text-white text-xs font-medium px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-full shadow-warm-sm hover:bg-vermilion-dark active:scale-95 transition-colors disabled:opacity-60"
                 >
                   <MapPin className="w-3.5 h-3.5 text-white shrink-0" />
                   <span className="whitespace-nowrap">{isLocating ? 'Locating...' : 'Use My Location'}</span>

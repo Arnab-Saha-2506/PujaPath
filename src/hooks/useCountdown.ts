@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface TimeLeft {
   days: number;
@@ -9,9 +9,12 @@ interface TimeLeft {
 }
 
 export function useCountdown(targetDate: Date): TimeLeft {
-  const calculateTimeLeft = (): TimeLeft => {
+  // Stable reference — only changes when targetDate changes.
+  // Prevents lint warning about missing dep in useEffect and avoids
+  // re-creating the function on every render tick.
+  const calculateTimeLeft = useCallback((): TimeLeft => {
     const total = targetDate.getTime() - new Date().getTime();
-    
+
     if (total <= 0) {
       return { days: 0, hours: 0, minutes: 0, seconds: 0, total: 0 };
     }
@@ -23,9 +26,10 @@ export function useCountdown(targetDate: Date): TimeLeft {
       seconds: Math.floor((total / 1000) % 60),
       total,
     };
-  };
+  }, [targetDate]);
 
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateTimeLeft());
+  // Lazy initialiser — runs calculateTimeLeft once on mount, not twice.
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>(() => calculateTimeLeft());
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -33,7 +37,7 @@ export function useCountdown(targetDate: Date): TimeLeft {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [targetDate]);
+  }, [calculateTimeLeft]);
 
   return timeLeft;
 }
