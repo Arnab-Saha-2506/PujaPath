@@ -5,15 +5,23 @@ import { useGeolocation } from '../../hooks/useGeolocation';
 import { MapPin, RefreshCw, Compass } from 'lucide-react';
 import { cn } from '../../utils/cn';
 import { ThemeToggle } from './ThemeToggle';
+import { useRoutePlanner } from '../../context/RouteContext';
 
 export const Navbar: React.FC = () => {
   const location = useLocation();
   const { status, isLocating, requestLocation, refreshLocation, simulateKolkataLocation } =
     useGeolocation();
+  const { selectedPandalIds } = useRoutePlanner();
 
   const navLinks = [
     { name: 'Home', path: '/', labelBengali: 'হোম' },
     { name: 'Pandals', path: '/pandals', labelBengali: 'পুজো প্যান্ডেল' },
+    {
+      name: 'Route Planner',
+      path: '/routes',
+      labelBengali: 'রুট প্ল্যানার',
+      badgeCount: selectedPandalIds.length,
+    },
     { name: 'Kolkata Metro', path: '/metro', labelBengali: 'মেট্রো রুট' },
     { name: 'Puja Near You', path: '/nearby', labelBengali: 'কাছের পুজো' },
   ];
@@ -65,7 +73,14 @@ export const Navbar: React.FC = () => {
                       : 'text-charcoal-soft hover:text-charcoal dark:text-stone-300 dark:hover:text-stone-100 hover:bg-ivory-muted/60 dark:hover:bg-obsidian-200/60'
                   )}
                 >
-                  <span>{link.name}</span>
+                  <div className="flex items-center space-x-1.5">
+                    <span>{link.name}</span>
+                    {Boolean(link.badgeCount && link.badgeCount > 0) && (
+                      <span className="w-4 h-4 rounded-full bg-vermilion text-white text-[10px] font-bold flex items-center justify-center -mt-0.5">
+                        {link.badgeCount}
+                      </span>
+                    )}
+                  </div>
                   <span className="text-[10px] text-charcoal-subtle dark:text-stone-400 font-bengali -mt-0.5 opacity-80">
                     {link.labelBengali}
                   </span>

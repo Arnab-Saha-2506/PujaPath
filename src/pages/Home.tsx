@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AreaResponseDTO, PandalResponseDTO } from '../types/api';
-import { getAreas, getAllPandals } from '../services/areaService';
+import { PandalResponseDTO } from '../types/api';
+import { getAllPandals } from '../services/areaService';
 import { useGeolocation } from '../hooks/useGeolocation';
 import { calculateHaversineDistance, estimateWalkingTime } from '../utils/distance';
 import { AlpanaCircle, AlpanaDivider } from '../components/common/AlpanaMotif';
@@ -22,7 +22,6 @@ export const Home: React.FC = () => {
   const { latitude, longitude, locality, status, isLocating, requestLocation, refreshLocation, simulateKolkataLocation } =
     useGeolocation();
 
-  const [areas, setAreas] = useState<AreaResponseDTO[]>([]);
   const [pandals, setPandals] = useState<PandalResponseDTO[]>([]);
   const [areaCounts, setAreaCounts] = useState<Record<number, number>>({});
   const [loading, setLoading] = useState(true);
@@ -32,12 +31,8 @@ export const Home: React.FC = () => {
     async function loadData() {
       try {
         setLoading(true);
-        const [areasData, allPandalsData] = await Promise.all([
-          getAreas(),
-          getAllPandals(),
-        ]);
+        const allPandalsData = await getAllPandals();
         if (isMounted) {
-          setAreas(areasData);
           setPandals(allPandalsData);
 
           // Calculate counts by area
@@ -413,18 +408,18 @@ export const Home: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0 w-full md:w-auto">
             <Link
-              to="/metro"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-lg transition-transform active:scale-95"
+              to="/routes"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white font-bold text-xs sm:text-sm px-6 py-3 rounded-xl shadow-warm-md hover:shadow-warm-lg transition-[colors,box-shadow] active:scale-95"
             >
-              <Train className="w-4 h-4" />
-              <span>Explore Metro Lines</span>
+              <Sparkles className="w-4 h-4 text-amber-300" />
+              <span>Plan Parikrama Route</span>
             </Link>
             <Link
-              to="/nearby"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-white/10 hover:bg-white/20 text-white font-semibold text-xs sm:text-sm px-5 py-3 rounded-xl border border-white/20 transition-colors"
+              to="/metro"
+              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 bg-white/15 hover:bg-white/25 text-white font-semibold text-xs sm:text-sm px-5 py-3 rounded-xl border border-white/20 transition-colors active:scale-95"
             >
-              <MapPin className="w-4 h-4 text-vermilion-light" />
-              <span>Find Closest Puja</span>
+              <Train className="w-4 h-4 text-emerald-400" />
+              <span>Metro Lines</span>
             </Link>
           </div>
         </div>

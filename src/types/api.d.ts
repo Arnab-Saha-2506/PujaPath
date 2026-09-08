@@ -55,6 +55,27 @@ export interface DistanceResponseDTO {
   walkingTimeMinutes: number;
 }
 
+export interface RouteLegDTO {
+  type: 'METRO' | 'PUJA';
+  name: string;
+  metroLine: string | null;
+  distanceFromPrevKm: number;
+  walkingMinutes: number;
+  latitude: number;
+  longitude: number;
+}
+
+export interface RouteResponseDTO {
+  route: RouteLegDTO[];
+  totalDistanceKm: number;
+  totalWalkingMinutes: number;
+  totalEstimatedMinutes: number;
+}
+
+export interface RouteRequestDTO {
+  pandalIds: number[];
+}
+
 export interface ApiErrorResponse {
   timestamp: string;
   status: number;
