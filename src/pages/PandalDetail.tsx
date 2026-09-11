@@ -303,8 +303,8 @@ export const PandalDetail: React.FC = () => {
             type="button"
             onClick={() => pandal && togglePandalSelection(pandal.id)}
             className={`inline-flex items-center space-x-1.5 text-xs font-semibold px-3 sm:px-3.5 py-2 rounded-xl border transition-[colors,box-shadow] shadow-xs cursor-pointer ${isSelectedInRoute
-                ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700/50'
-                : 'bg-ivory-surface dark:bg-obsidian-50 text-charcoal dark:text-stone-200 border-ivory-border dark:border-obsidian-300 hover:border-vermilion/40'
+              ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700/50'
+              : 'bg-ivory-surface dark:bg-obsidian-50 text-charcoal dark:text-stone-200 border-ivory-border dark:border-obsidian-300 hover:border-vermilion/40'
               }`}
           >
             {isSelectedInRoute ? (
@@ -317,7 +317,7 @@ export const PandalDetail: React.FC = () => {
               <>
                 <Plus className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Add to Route</span>
-                <span className="sm:hidden">+ Route</span>
+                <span className="sm:hidden">route</span>
               </>
             )}
           </button>

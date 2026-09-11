@@ -31,6 +31,7 @@ export const RouteProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
         // Clean out previous default [10, 11, 12, 19] so user starts with 0 selected
         if (
           Array.isArray(parsed) &&
@@ -48,6 +49,7 @@ export const RouteProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     } catch {
       // ignore
     }
+    return DEFAULT_PRESET_CIRCUIT;
     return [];
   });
 
