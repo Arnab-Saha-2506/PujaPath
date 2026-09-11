@@ -59,7 +59,6 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
       setIsSuccess(true);
     } catch (err: any) {
       console.error('Failed to send contact message:', err);
-      // If server returned message or network failure
       const serverMsg = err.response?.data?.message;
       setErrorMessage(
         serverMsg || 'Failed to send message. Please ensure network is reachable or try again later.'
@@ -80,32 +79,35 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-xs transition-opacity animate-in fade-in duration-200">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/60 backdrop-blur-xs transition-opacity animate-in fade-in duration-200 overflow-y-auto"
+      onClick={handleResetAndClose}
+    >
       <div
-        className="relative w-full max-w-lg bg-ivory-surface dark:bg-obsidian-100 rounded-3xl border border-ivory-border dark:border-obsidian-300 shadow-2xl overflow-hidden"
+        className="relative w-full max-w-lg md:max-w-2xl lg:max-w-3xl bg-ivory-surface dark:bg-obsidian-100 rounded-3xl border border-ivory-border dark:border-obsidian-300 shadow-2xl overflow-hidden my-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Background Festive Alpana Glow */}
         <div className="absolute -top-12 -right-12 pointer-events-none opacity-15">
-          <AlpanaCircle size={180} opacity={0.25} />
+          <AlpanaCircle size={220} opacity={0.25} />
         </div>
 
         {/* Modal Header */}
-        <div className="relative z-10 px-6 pt-6 pb-4 border-b border-stone-100 dark:border-obsidian-300 flex items-start justify-between">
+        <div className="relative z-10 px-6 md:px-8 pt-6 md:pt-8 pb-4 md:pb-5 border-b border-stone-100 dark:border-obsidian-300 flex items-start justify-between">
           <div>
             <div className="flex items-center space-x-2">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-vermilion">
+              <span className="text-[11px] md:text-xs font-bold uppercase tracking-wider text-vermilion">
                 Get In Touch
               </span>
               <span className="text-xs text-charcoal-subtle dark:text-stone-500">•</span>
-              <span className="text-xs font-bengali text-charcoal-muted dark:text-stone-400">
+              <span className="text-xs md:text-sm font-bengali text-charcoal-muted dark:text-stone-400">
                 যোগাযোগ ও বার্তা
               </span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-bold text-charcoal dark:text-stone-100 mt-0.5">
+            <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-charcoal dark:text-stone-100 mt-0.5">
               Contact Us
             </h3>
-            <p className="text-xs text-charcoal-muted dark:text-stone-400 mt-1 max-w-sm leading-relaxed italic">
+            <p className="text-xs md:text-sm text-charcoal-muted dark:text-stone-400 mt-1 max-w-xl leading-relaxed italic">
               "Whether you're seeking festival guidance, curious about routes, or sharing warm
               Sharadotsav appreciation — your voice brings PujaPath alive."
             </p>
@@ -113,56 +115,56 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
 
           <button
             onClick={handleResetAndClose}
-            className="p-1.5 rounded-full text-stone-400 hover:text-charcoal dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-obsidian-200 transition-colors"
+            className="p-1.5 md:p-2 rounded-full text-stone-400 hover:text-charcoal dark:hover:text-stone-200 hover:bg-stone-100 dark:hover:bg-obsidian-200 transition-colors cursor-pointer"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5 md:w-6 md:h-6" />
           </button>
         </div>
 
         {/* Modal Content */}
-        <div className="p-6">
+        <div className="p-6 md:p-8">
           {isSuccess ? (
-            <div className="text-center py-8 space-y-4">
-              <div className="w-14 h-14 mx-auto rounded-full bg-emerald-100 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-xs">
-                <CheckCircle2 className="w-8 h-8" />
+            <div className="text-center py-10 space-y-4">
+              <div className="w-16 h-16 mx-auto rounded-full bg-emerald-100 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shadow-xs">
+                <CheckCircle2 className="w-10 h-10" />
               </div>
-              <div className="space-y-1.5">
-                <h4 className="text-lg font-bold text-charcoal dark:text-stone-100">
+              <div className="space-y-2">
+                <h4 className="text-xl md:text-2xl font-bold text-charcoal dark:text-stone-100">
                   Message Sent Successfully!
                 </h4>
-                <p className="text-xs text-stone-600 dark:text-stone-400 max-w-xs mx-auto">
+                <p className="text-xs md:text-sm text-stone-600 dark:text-stone-400 max-w-md mx-auto leading-relaxed">
                   Thank you for reaching out. Our developer team will review your message and reply
                   back through your email address.
                 </p>
               </div>
               <button
                 onClick={handleResetAndClose}
-                className="mt-4 inline-flex items-center justify-center px-6 py-2.5 rounded-xl bg-vermilion text-white text-xs font-semibold hover:bg-vermilion-dark transition-colors shadow-xs"
+                className="mt-4 inline-flex items-center justify-center px-8 py-3 rounded-xl bg-vermilion text-white text-xs md:text-sm font-semibold hover:bg-vermilion-dark transition-colors shadow-xs cursor-pointer"
               >
                 Done
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-5">
               {/* Message Type Selector */}
               <div>
-                <label className="block text-xs font-semibold text-charcoal dark:text-stone-200 mb-1.5">
+                <label className="block text-xs md:text-sm font-semibold text-charcoal dark:text-stone-200 mb-2">
                   Message Type
                 </label>
-                <div className="grid grid-cols-2 gap-2.5">
+                <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
                     onClick={() => {
                       setType('query');
                       setErrorMessage(null);
                     }}
-                    className={`flex items-center justify-center space-x-2 py-2.5 px-3 rounded-xl border text-xs font-semibold transition-all ${
+                    className={`flex items-center justify-center space-x-2 py-3 px-4 rounded-xl border text-xs md:text-sm font-semibold transition-all cursor-pointer ${
                       type === 'query'
-                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 ring-2 ring-blue-500/20'
-                        : 'border-stone-200 dark:border-obsidian-300 bg-ivory-warm/70 dark:bg-obsidian-200/60 text-stone-600 dark:text-stone-300'
+                        ? 'border-blue-500 bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 ring-2 ring-blue-500/20 shadow-xs'
+                        : 'border-stone-200 dark:border-obsidian-300 bg-ivory-warm/70 dark:bg-obsidian-200/60 text-stone-600 dark:text-stone-300 hover:border-stone-300'
                     }`}
                   >
-                    <HelpCircle className="w-4 h-4 text-blue-500" />
+                    <HelpCircle className="w-4 h-4 md:w-5 md:h-5 text-blue-500" />
                     <span>Query / Question</span>
                   </button>
 
@@ -172,63 +174,64 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                       setType('appreciation');
                       setErrorMessage(null);
                     }}
-                    className={`flex items-center justify-center space-x-2 py-2.5 px-3 rounded-xl border text-xs font-semibold transition-all ${
+                    className={`flex items-center justify-center space-x-2 py-3 px-4 rounded-xl border text-xs md:text-sm font-semibold transition-all cursor-pointer ${
                       type === 'appreciation'
-                        ? 'border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 ring-2 ring-rose-500/20'
-                        : 'border-stone-200 dark:border-obsidian-300 bg-ivory-warm/70 dark:bg-obsidian-200/60 text-stone-600 dark:text-stone-300'
+                        ? 'border-rose-500 bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 ring-2 ring-rose-500/20 shadow-xs'
+                        : 'border-stone-200 dark:border-obsidian-300 bg-ivory-warm/70 dark:bg-obsidian-200/60 text-stone-600 dark:text-stone-300 hover:border-stone-300'
                     }`}
                   >
-                    <Heart className="w-4 h-4 text-rose-500" />
+                    <Heart className="w-4 h-4 md:w-5 md:h-5 text-rose-500" />
                     <span>Appreciation / Love</span>
                   </button>
                 </div>
               </div>
 
-              {/* Name Input */}
-              <div>
-                <label className="block text-xs font-semibold text-charcoal dark:text-stone-200 mb-1">
-                  Your Name <span className="text-vermilion">*</span>
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Sourav Mukherjee"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-ivory-warm dark:bg-obsidian-200/70 border border-ivory-border dark:border-obsidian-300 rounded-xl text-charcoal dark:text-stone-100 placeholder-stone-400 focus:outline-hidden focus:ring-2 focus:ring-vermilion/40"
-                />
-              </div>
+              {/* Name & Email in responsive 2-column on desktop */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Name Input */}
+                <div>
+                  <label className="block text-xs md:text-sm font-semibold text-charcoal dark:text-stone-200 mb-1.5">
+                    Your Name <span className="text-vermilion">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. Sourav Mukherjee"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full px-4 py-2.5 md:py-3 text-xs md:text-sm bg-ivory-warm dark:bg-obsidian-200/70 border border-ivory-border dark:border-obsidian-300 rounded-xl text-charcoal dark:text-stone-100 placeholder-stone-400 focus:outline-hidden focus:ring-2 focus:ring-vermilion/40 transition-all"
+                  />
+                </div>
 
-              {/* Email Input */}
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="text-xs font-semibold text-charcoal dark:text-stone-200">
+                {/* Email Input */}
+                <div>
+                  <label className="block text-xs md:text-sm font-semibold text-charcoal dark:text-stone-200 mb-1.5">
                     Email Address{' '}
                     {type === 'query' ? (
-                      <span className="text-vermilion font-bold">* (Mandatory for replies)</span>
+                      <span className="text-vermilion font-bold">* (Required)</span>
                     ) : (
-                      <span className="text-stone-400 font-normal">(Optional for appreciation)</span>
+                      <span className="text-stone-400 font-normal">(Optional)</span>
                     )}
                   </label>
+                  <input
+                    type="email"
+                    required={type === 'query'}
+                    placeholder="your.email@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-4 py-2.5 md:py-3 text-xs md:text-sm bg-ivory-warm dark:bg-obsidian-200/70 border border-ivory-border dark:border-obsidian-300 rounded-xl text-charcoal dark:text-stone-100 placeholder-stone-400 focus:outline-hidden focus:ring-2 focus:ring-vermilion/40 transition-all"
+                  />
                 </div>
-                <input
-                  type="email"
-                  required={type === 'query'}
-                  placeholder="your.email@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-ivory-warm dark:bg-obsidian-200/70 border border-ivory-border dark:border-obsidian-300 rounded-xl text-charcoal dark:text-stone-100 placeholder-stone-400 focus:outline-hidden focus:ring-2 focus:ring-vermilion/40"
-                />
               </div>
 
               {/* Message Input */}
               <div>
-                <label className="block text-xs font-semibold text-charcoal dark:text-stone-200 mb-1">
+                <label className="block text-xs md:text-sm font-semibold text-charcoal dark:text-stone-200 mb-1.5">
                   Message <span className="text-vermilion">*</span>
                 </label>
                 <textarea
                   required
-                  rows={3}
+                  rows={4}
                   placeholder={
                     type === 'query'
                       ? 'Tell us what you need help with or any route/pandal questions...'
@@ -236,13 +239,13 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                   }
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  className="w-full px-3.5 py-2.5 text-xs bg-ivory-warm dark:bg-obsidian-200/70 border border-ivory-border dark:border-obsidian-300 rounded-xl text-charcoal dark:text-stone-100 placeholder-stone-400 focus:outline-hidden focus:ring-2 focus:ring-vermilion/40 resize-none"
+                  className="w-full px-4 py-3 text-xs md:text-sm bg-ivory-warm dark:bg-obsidian-200/70 border border-ivory-border dark:border-obsidian-300 rounded-xl text-charcoal dark:text-stone-100 placeholder-stone-400 focus:outline-hidden focus:ring-2 focus:ring-vermilion/40 resize-none transition-all"
                 />
               </div>
 
               {/* Error Banner */}
               {errorMessage && (
-                <div className="p-2.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-xs text-rose-700 dark:text-rose-300 flex items-center gap-2">
+                <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/60 text-xs md:text-sm text-rose-700 dark:text-rose-300 flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 shrink-0" />
                   <span>{errorMessage}</span>
                 </div>
@@ -253,23 +256,23 @@ export const ContactModal: React.FC<ContactModalProps> = ({ isOpen, onClose }) =
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-vermilion to-vermilion-dark hover:from-vermilion-dark hover:to-vermilion text-white font-semibold text-xs sm:text-sm shadow-warm-md flex items-center justify-center space-x-2 transition-all active:scale-[0.98] disabled:opacity-60 cursor-pointer"
+                  className="w-full py-3.5 px-5 rounded-xl bg-gradient-to-r from-vermilion to-vermilion-dark hover:from-vermilion-dark hover:to-vermilion text-white font-semibold text-xs md:text-sm shadow-warm-md flex items-center justify-center space-x-2 transition-all active:scale-[0.99] disabled:opacity-60 cursor-pointer"
                 >
                   {isSubmitting ? (
                     <>
-                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <Loader2 className="w-4 h-4 md:w-5 md:h-5 animate-spin" />
                       <span>Sending Message...</span>
                     </>
                   ) : (
                     <>
-                      <Send className="w-4 h-4" />
+                      <Send className="w-4 h-4 md:w-5 md:h-5" />
                       <span>Send Message</span>
                     </>
                   )}
                 </button>
 
                 {/* Reply mention line below button */}
-                <p className="text-[11px] text-center text-charcoal-muted dark:text-stone-400 mt-2.5 leading-relaxed">
+                <p className="text-[11px] md:text-xs text-center text-charcoal-muted dark:text-stone-400 mt-2.5 leading-relaxed">
                   ✉️ Our developer team will review your message and reply back through your email.
                 </p>
               </div>

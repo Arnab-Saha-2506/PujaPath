@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { RouteResponseDTO } from '../../types/api';
 import { Navigation, Clock, Share2, Check, Footprints, Train, MapPin } from 'lucide-react';
+import { openRouteUrl } from '../../utils/navigation';
 
 interface RouteSummaryCardProps {
   routeResult: RouteResponseDTO;
@@ -135,15 +136,14 @@ export const RouteSummaryCard: React.FC<RouteSummaryCardProps> = ({ routeResult 
 
         {/* Right CTA Actions */}
         <div className="flex flex-col sm:flex-row md:flex-col gap-2.5 shrink-0">
-          <a
-            href={googleMapsRouteUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-warm-md hover:shadow-warm-lg transition-[colors,box-shadow] active:scale-95"
+          <button
+            type="button"
+            onClick={() => openRouteUrl(googleMapsRouteUrl)}
+            className="inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white font-bold text-xs sm:text-sm px-5 py-3 rounded-xl shadow-warm-md hover:shadow-warm-lg transition-[colors,box-shadow] active:scale-95 cursor-pointer"
           >
             <Navigation className="w-4 h-4" />
             <span>Open in Google Maps</span>
-          </a>
+          </button>
 
           <button
             type="button"

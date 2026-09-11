@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { NearbyPandalDTO, NearbyPlaceDTO, NearbyPlaceType } from '../../types/api';
 import { ZoomIn, ZoomOut, Compass } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { openNavigation } from '../../utils/navigation';
 
 export interface MapItem {
   id: string | number;
@@ -62,10 +63,10 @@ const TYPE_CONFIG: Record<
   },
   cafe: {
     label: 'Cafe',
-    bg: 'bg-amber-600',
-    border: 'border-amber-300',
+    bg: 'bg-amber-700',
+    border: 'border-amber-400',
     text: 'text-white',
-    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M17 8h1a4 4 0 1 1 0 8h-1"/><path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/><line x1="6" x2="6" y1="2" y2="4"/><line x1="10" x2="10" y1="2" y2="4"/><line x1="14" x2="14" y1="2" y2="4"/></svg>`,
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V9a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v1"/><path d="M5 8h14"/><path d="M9 12v4"/><path d="M15 12v4"/></svg>`,
   },
   pharmacy: {
     label: 'Pharmacy',
@@ -73,6 +74,20 @@ const TYPE_CONFIG: Record<
     border: 'border-violet-300',
     text: 'text-white',
     iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>`,
+  },
+  restaurant: {
+    label: 'Restaurant',
+    bg: 'bg-orange-600',
+    border: 'border-orange-300',
+    text: 'text-white',
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M18 2v6a3 3 0 0 1-3 3 3 3 0 0 1-3-3V2"/><path d="M15 2v18"/><path d="M6 2v20"/><path d="M6 10h4a2 2 0 0 0 2-2V2"/></svg>`,
+  },
+  toilet: {
+    label: 'Public Toilet',
+    bg: 'bg-teal-600',
+    border: 'border-teal-300',
+    text: 'text-white',
+    iconSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M7 21v-4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v4"/><rect x="4" y="3" width="16" height="10" rx="2"/><circle cx="12" cy="8" r="2"/></svg>`,
   },
 };
 
@@ -283,14 +298,12 @@ export const NearbyMap: React.FC<NearbyMapProps> = ({
                 </button>`
           : ''
         }
-          <a href="https://www.google.com/maps/dir/?api=1&destination=${item.latitude},${item.longitude}" 
-             target="_blank" 
-             rel="noopener noreferrer" 
-             class="${isPandal ? 'p-1.5' : 'flex-1 py-1.5 px-2.5'
-        } inline-flex items-center justify-center gap-1 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-200 text-xs font-semibold rounded-lg transition-colors">
+          <button id="btn-nav-${item.id}" class="${
+            isPandal ? 'p-1.5' : 'flex-1 py-1.5 px-2.5'
+          } inline-flex items-center justify-center gap-1 bg-stone-100 hover:bg-stone-200 dark:bg-stone-800 dark:hover:bg-stone-700 text-stone-700 dark:text-stone-200 text-xs font-semibold rounded-lg transition-colors cursor-pointer">
             <span>${isPandal ? 'Map' : 'Directions'}</span>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-3.5 h-3.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" x2="21" y1="14" y2="3"/></svg>
-          </a>
+          </button>
         </div>
       `;
 
@@ -311,6 +324,13 @@ export const NearbyMap: React.FC<NearbyMapProps> = ({
               navigateRef.current(`/pandals/${pandalId}`);
             };
           }
+        }
+        const navBtn = document.getElementById(`btn-nav-${item.id}`);
+        if (navBtn) {
+          navBtn.onclick = (e) => {
+            e.preventDefault();
+            openNavigation(item.latitude, item.longitude, item.name);
+          };
         }
       });
 
@@ -422,6 +442,14 @@ export const NearbyMap: React.FC<NearbyMapProps> = ({
         <div className="flex items-center gap-1">
           <span className="w-2.5 h-2.5 rounded-full bg-amber-600 inline-block" />
           <span className="text-stone-700 font-medium">Cafe</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="w-2.5 h-2.5 rounded-full bg-orange-600 inline-block" />
+          <span className="text-stone-700 font-medium">Restaurant</span>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="w-2.5 h-2.5 rounded-full bg-teal-600 inline-block" />
+          <span className="text-stone-700 font-medium">Toilet</span>
         </div>
       </div>
     </div>

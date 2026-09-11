@@ -22,7 +22,10 @@ import {
   Pill,
   Layers,
   Crosshair,
+  UtensilsCrossed,
+  Bath,
 } from 'lucide-react';
+import { openNavigation } from '../utils/navigation';
 
 type FilterCategory = 'all' | 'pandal' | NearbyPlaceType;
 
@@ -78,11 +81,25 @@ const FILTER_TABS: FilterTab[] = [
     badgeBg: 'bg-violet-100 text-violet-700 dark:bg-violet-950/60 dark:text-violet-300',
   },
   {
+    id: 'restaurant',
+    label: 'Restaurants',
+    icon: <UtensilsCrossed className="w-3.5 h-3.5 text-orange-600" />,
+    colorClass: 'text-orange-600 dark:text-orange-400',
+    badgeBg: 'bg-orange-100 text-orange-700 dark:bg-orange-950/60 dark:text-orange-300',
+  },
+  {
     id: 'cafe',
     label: 'Cafes',
     icon: <Coffee className="w-3.5 h-3.5 text-amber-600" />,
     colorClass: 'text-amber-600 dark:text-amber-400',
     badgeBg: 'bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300',
+  },
+  {
+    id: 'toilet',
+    label: 'Toilets',
+    icon: <Bath className="w-3.5 h-3.5 text-teal-600" />,
+    colorClass: 'text-teal-600 dark:text-teal-400',
+    badgeBg: 'bg-teal-100 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300',
   },
 ];
 
@@ -120,6 +137,16 @@ const CATEGORY_META: Record<
     icon: <Coffee className="w-3.5 h-3.5 text-amber-600" />,
     badgeClass: 'bg-amber-100 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300',
   },
+  restaurant: {
+    label: 'Restaurant',
+    icon: <UtensilsCrossed className="w-3.5 h-3.5 text-orange-600" />,
+    badgeClass: 'bg-orange-100 text-orange-700 dark:bg-orange-950/60 dark:text-orange-300',
+  },
+  toilet: {
+    label: 'Public Toilet',
+    icon: <Bath className="w-3.5 h-3.5 text-teal-600" />,
+    badgeClass: 'bg-teal-100 text-teal-700 dark:bg-teal-950/60 dark:text-teal-300',
+  },
 };
 
 export const Nearby: React.FC = () => {
@@ -150,6 +177,8 @@ export const Nearby: React.FC = () => {
     hospital: [],
     cafe: [],
     pharmacy: [],
+    restaurant: [],
+    toilet: [],
   });
 
   // Loading states
@@ -160,6 +189,8 @@ export const Nearby: React.FC = () => {
     hospital: false,
     cafe: false,
     pharmacy: false,
+    restaurant: false,
+    toilet: false,
   });
 
   // Request location on idle
@@ -217,7 +248,7 @@ export const Nearby: React.FC = () => {
 
     if (activeCategory === 'all') {
       // Pre-fetch all categories for instant switching
-      (['police', 'atm', 'hospital', 'pharmacy', 'cafe'] as NearbyPlaceType[]).forEach((type) => {
+      (['police', 'atm', 'hospital', 'pharmacy', 'restaurant', 'cafe', 'toilet'] as NearbyPlaceType[]).forEach((type) => {
         fetchPlaces(type);
       });
     } else if (activeCategory !== 'pandal') {
@@ -287,7 +318,9 @@ export const Nearby: React.FC = () => {
       atm: placesByType.atm.length,
       hospital: placesByType.hospital.length,
       pharmacy: placesByType.pharmacy.length,
+      restaurant: placesByType.restaurant.length,
       cafe: placesByType.cafe.length,
+      toilet: placesByType.toilet.length,
     };
     return counts;
   }, [allMapItems.length, pandals.length, placesByType]);
@@ -300,7 +333,9 @@ export const Nearby: React.FC = () => {
       'atm',
       'hospital',
       'pharmacy',
+      'restaurant',
       'cafe',
+      'toilet',
     ];
 
     const result: Array<{
@@ -626,16 +661,16 @@ export const Nearby: React.FC = () => {
                                       <ArrowRight className="w-3 h-3" />
                                     </button>
                                   ) : (
-                                    <a
-                                      href={`https://www.google.com/maps/dir/?api=1&destination=${item.latitude},${item.longitude}`}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      onClick={(e) => e.stopPropagation()}
-                                      title="Open Directions in Google Maps"
-                                      className="p-1.5 rounded-lg bg-stone-100 dark:bg-obsidian-200 text-stone-700 dark:text-stone-300 hover:bg-stone-200 transition-colors"
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        openNavigation(item.latitude, item.longitude, item.name);
+                                      }}
+                                      title="Get Directions"
+                                      className="p-1.5 rounded-lg bg-stone-100 dark:bg-obsidian-200 text-stone-700 dark:text-stone-300 hover:bg-stone-200 transition-colors cursor-pointer"
                                     >
                                       <ExternalLink className="w-3 h-3" />
-                                    </a>
+                                    </button>
                                   )}
                                 </div>
                               </div>

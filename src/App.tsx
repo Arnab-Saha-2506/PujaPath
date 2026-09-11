@@ -10,6 +10,7 @@ import { BengaliSideBorder } from './components/common/BengaliSideBorder';
 import { PageTransition } from './components/common/PageTransition';
 import { Link } from 'react-router-dom';
 import { ContactModal } from './components/common/ContactModal';
+import { FloatingContactButton } from './components/common/FloatingContactButton';
 
 function App() {
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
@@ -161,6 +162,9 @@ function App() {
 
           {/* Mobile Fixed Bottom Navigation Bar (< 768px) */}
           <BottomNavigation />
+
+          {/* Floating Contact Us Action Icon (Bottom-Right Corner) */}
+          <FloatingContactButton onClick={() => setIsContactModalOpen(true)} />
 
           {/* Global Contact Us Modal */}
           <ContactModal

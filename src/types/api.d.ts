@@ -83,7 +83,14 @@ export interface ApiErrorResponse {
   message: string;
 }
 
-export type NearbyPlaceType = 'police' | 'atm' | 'hospital' | 'cafe' | 'pharmacy';
+export type NearbyPlaceType =
+  | 'police'
+  | 'atm'
+  | 'hospital'
+  | 'cafe'
+  | 'pharmacy'
+  | 'restaurant'
+  | 'toilet';
 
 export interface NearbyPlaceDTO {
   placeId: string;

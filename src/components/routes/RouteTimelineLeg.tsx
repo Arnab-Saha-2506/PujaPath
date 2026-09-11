@@ -2,6 +2,7 @@ import React from 'react';
 import { RouteLegDTO } from '../../types/api';
 import { Train, MapPin, Footprints, ExternalLink } from 'lucide-react';
 import { getMetroLineMeta } from '../../utils/metroColors';
+import { openNavigation } from '../../utils/navigation';
 
 interface RouteTimelineLegProps {
   leg: RouteLegDTO;
@@ -12,10 +13,6 @@ interface RouteTimelineLegProps {
 export const RouteTimelineLeg: React.FC<RouteTimelineLegProps> = ({ leg, index, isLast }) => {
   const isMetro = leg.type === 'METRO';
   const metroMeta = leg.metroLine ? getMetroLineMeta(leg.metroLine) : null;
-
-  const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-    leg.name + ' Kolkata'
-  )}`;
 
   return (
     <div className="relative flex items-start space-x-3 sm:space-x-4 group">
@@ -109,16 +106,14 @@ export const RouteTimelineLeg: React.FC<RouteTimelineLegProps> = ({ leg, index, 
               </p>
             </div>
 
-            {/* Direct Google Maps Link */}
-            <a
-              href={mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center space-x-1 text-xs font-semibold text-terracotta dark:text-amber-300 hover:text-vermilion dark:hover:text-amber-200 transition-colors p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5"
-              title="Open location in Google Maps"
+            {/* Direct Navigation Button */}
+            <button
+              onClick={() => openNavigation(leg.latitude, leg.longitude, leg.name)}
+              className="inline-flex items-center space-x-1 text-xs font-semibold text-terracotta dark:text-amber-300 hover:text-vermilion dark:hover:text-amber-200 transition-colors p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer"
+              title="Navigate to location"
             >
               <ExternalLink className="w-4 h-4" />
-            </a>
+            </button>
           </div>
         </div>
       </div>
