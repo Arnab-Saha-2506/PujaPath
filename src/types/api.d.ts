@@ -83,3 +83,33 @@ export interface ApiErrorResponse {
   message: string;
 }
 
+export type NearbyPlaceType =
+  | 'police'
+  | 'atm'
+  | 'hospital'
+  | 'cafe'
+  | 'pharmacy'
+  | 'restaurant'
+  | 'toilet';
+
+export interface NearbyPlaceDTO {
+  placeId: string;
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  distanceInKm: number;
+  walkingTimeMinutes: number;
+  type?: NearbyPlaceType;
+}
+
+export interface NearbyPandalDTO {
+  id: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+  distanceInKm: number;
+  walkingTimeMinutes: number;
+  nearbyMetroName?: string;
+}
+

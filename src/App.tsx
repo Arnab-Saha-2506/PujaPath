@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LocationProvider } from './context/LocationContext';
 import { RouteProvider } from './context/RouteContext';
 import { Navbar } from './components/common/Navbar';
@@ -9,8 +9,11 @@ import { DurgaEyeIcon } from './components/common/DurgaEyeIcon';
 import { BengaliSideBorder } from './components/common/BengaliSideBorder';
 import { PageTransition } from './components/common/PageTransition';
 import { Link } from 'react-router-dom';
+import { ContactModal } from './components/common/ContactModal';
+import { FloatingContactButton } from './components/common/FloatingContactButton';
 
 function App() {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   return (
     <LocationProvider>
       <RouteProvider>
@@ -78,6 +81,17 @@ function App() {
                       <Link to="/nearby" className="hover:text-vermilion dark:hover:text-vermilion-light transition-colors">
                         Pandals Near You
                       </Link>
+                    </li>
+                    <li>
+                      <button
+                        onClick={() => setIsContactModalOpen(true)}
+                        className="hover:text-vermilion dark:hover:text-vermilion-light transition-colors text-left flex items-center space-x-1.5 cursor-pointer"
+                      >
+                        <span>Contact Us</span>
+                        <span className="text-[9px] font-semibold text-vermilion bg-vermilion/10 dark:bg-vermilion/20 px-1.5 py-0.5 rounded-full">
+                          Message
+                        </span>
+                      </button>
                     </li>
                   </ul>
                 </div>
@@ -148,6 +162,15 @@ function App() {
 
           {/* Mobile Fixed Bottom Navigation Bar (< 768px) */}
           <BottomNavigation />
+
+          {/* Floating Contact Us Action Icon (Bottom-Right Corner) */}
+          <FloatingContactButton onClick={() => setIsContactModalOpen(true)} />
+
+          {/* Global Contact Us Modal */}
+          <ContactModal
+            isOpen={isContactModalOpen}
+            onClose={() => setIsContactModalOpen(false)}
+          />
         </div>
       </RouteProvider>
     </LocationProvider>

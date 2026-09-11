@@ -148,8 +148,8 @@ export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = t
               onClick={handleToggleRoute}
               title={isSelectedInRoute ? 'Remove from Parikrama Route' : 'Add to Parikrama Route'}
               className={`inline-flex items-center space-x-1 text-xs font-semibold px-2 py-1 rounded-lg border transition-[colors,box-shadow] cursor-pointer ${isSelectedInRoute
-                  ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700/50'
-                  : 'bg-ivory-warm/70 dark:bg-obsidian-100 text-charcoal-soft dark:text-stone-300 border-ivory-border dark:border-obsidian-300 hover:border-vermilion/40'
+                ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700/50'
+                : 'bg-ivory-warm/70 dark:bg-obsidian-100 text-charcoal-soft dark:text-stone-300 border-ivory-border dark:border-obsidian-300 hover:border-vermilion/40'
                 }`}
             >
               {isSelectedInRoute ? (
@@ -160,7 +160,7 @@ export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = t
               ) : (
                 <>
                   <Plus className="w-3.5 h-3.5 text-charcoal-subtle dark:text-stone-400" />
-                  <span>+ Route</span>
+                  <span>route</span>
                 </>
               )}
             </button>

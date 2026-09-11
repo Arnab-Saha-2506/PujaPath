@@ -45,6 +45,14 @@ export const RoutePlanner: React.FC = () => {
     };
   }, []);
 
+  // Pre-calculate route on mount if default IDs exist and no routeResult yet
+  useEffect(() => {
+    if (!routeResult && selectedPandalIds.length > 0) {
+      calculateRoute(selectedPandalIds);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Presets definition
   const presets = [
     {
