@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { useRoutePlanner, DEFAULT_PRESET_CIRCUIT } from '../context/RouteContext';
 import { PandalResponseDTO } from '../types/api';
 import { getAllPandals } from '../services/areaService';
@@ -24,6 +24,7 @@ export const RoutePlanner: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [activeAreaFilter, setActiveAreaFilter] = useState<string>('all');
   const [mobileTab, setMobileTab] = useState<'select' | 'route'>('select');
+  const routeContainerRef = useRef<HTMLDivElement>(null);
 
   // Load all pandals across Kolkata
   useEffect(() => {
@@ -120,9 +121,13 @@ export const RoutePlanner: React.FC = () => {
   };
 
   const handleBuildRoute = async () => {
+    if (selectedPandalIds.length < 2) return;
     await calculateRoute();
     if (window.innerWidth < 1024) {
       setMobileTab('route');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      routeContainerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   };
 
@@ -401,7 +406,7 @@ export const RoutePlanner: React.FC = () => {
             {/* Build Route CTA Button */}
             <button
               type="button"
-              disabled={selectedPandalIds.length === 0 || isLoadingRoute}
+              disabled={selectedPandalIds.length < 2 || isLoadingRoute}
               onClick={handleBuildRoute}
               className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark disabled:opacity-50 text-white font-bold text-sm py-3.5 px-4 rounded-xl shadow-warm-md hover:shadow-warm-lg transition-[colors,box-shadow] active:scale-98 cursor-pointer disabled:cursor-not-allowed"
             >
@@ -410,11 +415,15 @@ export const RoutePlanner: React.FC = () => {
                   <RefreshCw className="w-4 h-4 animate-spin" />
                   <span>Calculating Metro-Optimized Route...</span>
                 </>
+              ) : selectedPandalIds.length === 0 ? (
+                <span>Select at least 2 pandals to build route</span>
+              ) : selectedPandalIds.length === 1 ? (
+                <span>Select 1 more pandal (Min 2 required)</span>
               ) : (
                 <>
                   <Sparkles className="w-4 h-4 text-amber-300" />
                   <span>
-                    Build Metro Route ({selectedPandalIds.length} {selectedPandalIds.length === 1 ? 'Pandal' : 'Pandals'})
+                    Build Metro Route ({selectedPandalIds.length} Pandals)
                   </span>
                   <ArrowRight className="w-4 h-4" />
                 </>
@@ -425,6 +434,7 @@ export const RoutePlanner: React.FC = () => {
 
         {/* Right Column: Route Itinerary (Hidden on mobile if viewing select tab) */}
         <div
+          ref={routeContainerRef}
           className={cn(
             'lg:col-span-7 space-y-6',
             mobileTab === 'select' ? 'hidden lg:block' : 'block'
@@ -510,6 +520,52 @@ export const RoutePlanner: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* Floating Bottom Generate Route Popup Bar (Appears when >= 2 pandals selected) */}
+      {selectedPandalIds.length >= 2 && (
+        <div className="fixed bottom-20 md:bottom-8 left-0 right-0 z-40 px-4 pointer-events-none animate-in slide-in-from-bottom-5 fade-in duration-300">
+          <div className="max-w-xl mx-auto bg-ivory-surface/95 dark:bg-obsidian-100/95 backdrop-blur-md rounded-2xl border-2 border-vermilion/40 dark:border-vermilion/50 shadow-2xl p-3 sm:p-4 flex items-center justify-between gap-3 pointer-events-auto ring-4 ring-vermilion/10">
+            <div className="flex items-center space-x-3 min-w-0">
+              <div className="w-10 h-10 rounded-xl bg-vermilion/10 dark:bg-vermilion/20 text-vermilion flex items-center justify-center shrink-0">
+                <Train className="w-5 h-5 text-vermilion" />
+              </div>
+              <div className="min-w-0">
+                <div className="flex items-center space-x-2">
+                  <span className="text-xs sm:text-sm font-bold text-charcoal dark:text-stone-100 whitespace-nowrap">
+                    {selectedPandalIds.length} Pandals Selected
+                  </span>
+                  <span className="text-[10px] bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">
+                    Ready
+                  </span>
+                </div>
+                <p className="text-[11px] text-charcoal-subtle dark:text-stone-400 truncate">
+                  Ready to calculate optimal metro circuit
+                </p>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              disabled={isLoadingRoute}
+              onClick={handleBuildRoute}
+              className="inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-vermilion to-vermilion-dark hover:from-vermilion-dark hover:to-vermilion text-white font-bold text-xs sm:text-sm py-2.5 sm:py-3 px-4 sm:px-6 rounded-xl shadow-warm-md hover:shadow-warm-lg transition-all active:scale-95 cursor-pointer shrink-0 disabled:opacity-60"
+            >
+              {isLoadingRoute ? (
+                <>
+                  <RefreshCw className="w-4 h-4 animate-spin" />
+                  <span className="hidden sm:inline">Generating...</span>
+                </>
+              ) : (
+                <>
+                  <Sparkles className="w-4 h-4 text-amber-300" />
+                  <span>Generate Route</span>
+                  <ArrowRight className="w-4 h-4" />
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
