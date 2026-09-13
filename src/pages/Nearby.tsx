@@ -153,6 +153,7 @@ export const Nearby: React.FC = () => {
   const {
     latitude,
     longitude,
+    locality,
     status,
     isLocating,
     error: geoError,
@@ -473,7 +474,7 @@ export const Nearby: React.FC = () => {
                   )}
                 </div>
                 <p className="text-xs text-charcoal-muted dark:text-stone-400">
-                  Radius: {radiusKm} km from your position
+                  Radius: {radiusKm} km from {locality ? `${locality}` : 'your position'}
                 </p>
               </div>
             </div>
