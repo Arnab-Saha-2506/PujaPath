@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
-import { RouteResponseDTO } from '../types/api';
+import { RouteResponseDTO, PandalResponseDTO } from '../types/api';
 import { getOptimizedRoute } from '../services/routeService';
 
 interface RouteContextType {
@@ -14,7 +14,7 @@ interface RouteContextType {
   routeResult: RouteResponseDTO | null;
   isLoadingRoute: boolean;
   routeError: string | null;
-  calculateRoute: (ids?: number[]) => Promise<RouteResponseDTO | null>;
+  calculateRoute: (ids?: number[], knownPandals?: PandalResponseDTO[]) => Promise<RouteResponseDTO | null>;
   resetRoute: () => void;
 }
 
@@ -31,7 +31,6 @@ export const RouteProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       const stored = localStorage.getItem(STORAGE_KEY);
       if (stored) {
         const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
         // Clean out previous default [10, 11, 12, 19] so user starts with 0 selected
         if (
           Array.isArray(parsed) &&
@@ -44,7 +43,7 @@ export const RouteProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           localStorage.removeItem(STORAGE_KEY);
           return [];
         }
-        if (Array.isArray(parsed)) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       }
     } catch {
       // ignore
@@ -95,7 +94,7 @@ export const RouteProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   }, []);
 
   const calculateRoute = useCallback(
-    async (ids?: number[]): Promise<RouteResponseDTO | null> => {
+    async (ids?: number[], knownPandals?: PandalResponseDTO[]): Promise<RouteResponseDTO | null> => {
       const targetIds = ids || selectedPandalIds;
       if (!targetIds || targetIds.length === 0) {
         setRouteError('Please select at least one pandal to build a route.');
@@ -105,7 +104,7 @@ export const RouteProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       try {
         setIsLoadingRoute(true);
         setRouteError(null);
-        const data = await getOptimizedRoute(targetIds);
+        const data = await getOptimizedRoute(targetIds, knownPandals);
         setRouteResult(data);
         return data;
       } catch (err: any) {
