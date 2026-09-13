@@ -5,7 +5,6 @@ import { PandalFallbackGraphic } from './PandalFallbackGraphic';
 import { DistanceBadge } from './DistanceBadge';
 import { BestTimeBadge } from './BestTimeBadge';
 import { MapPin, ArrowRight, Navigation, Train, Plus, Check } from 'lucide-react';
-import { getNearestMetroStation } from '../../utils/nearestMetro';
 import { useRoutePlanner } from '../../context/RouteContext';
 
 interface PandalCardProps {
@@ -19,11 +18,11 @@ export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = t
   const { isPandalSelected, togglePandalSelection } = useRoutePlanner();
   const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${pandal.latitude},${pandal.longitude}`;
 
-  // Use the backend-provided nearbyMetroStationName directly; fallback only if missing
+// Only show metro label if pandal is associated with a metro station
   const rawMetroName =
     pandal.nearbyMetroStationName?.trim() ||
     (pandal as any).nearbyMetros?.[0]?.name ||
-    getNearestMetroStation(pandal.latitude, pandal.longitude)?.name;
+    null;
 
   const metroLabel = rawMetroName
     ? rawMetroName.toLowerCase().endsWith('metro')
@@ -79,7 +78,7 @@ export const PandalCard: React.FC<PandalCardProps> = ({ pandal, showDistance = t
             {/* Tag 1: Which part of Kolkata */}
             <span className="bg-black/75 backdrop-blur-md text-white font-semibold text-[10.5px] sm:text-[11px] px-2.5 py-0.5 sm:py-1 rounded-full shadow-xs border border-white/20 flex items-center space-x-1 shrink-0">
               <MapPin className="w-3 h-3 text-vermilion-light shrink-0" />
-              <span>{pandal.areaName || 'South Kolkata'}</span>
+              <span>{pandal.areaName || 'Kolkata'}</span>
             </span>
 
             {/* Tag 2: Nearby Metro Station */}

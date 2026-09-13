@@ -134,7 +134,7 @@ function getPandalProTip(pandal: PandalDetailResponseDTO): string {
     return `Easiest access is via ${nearest.name} Metro (${nearest.line}), approximately ${walk} away. Best crowd hours: ${pandal.bestTimeToVisit || 'Evening'}.`;
   }
 
-  return `Optimal visiting slot: ${pandal.bestTimeToVisit || 'Evening'}. Use Kolkata Metro for direct walking access to bypass festive road diversions.`;
+  return `Optimal visiting slot: ${pandal.bestTimeToVisit || 'Evening'}. Use nearby public transit or walking access to bypass festive road diversions.`;
 }
 
 export const PandalDetail: React.FC = () => {
@@ -362,7 +362,7 @@ export const PandalDetail: React.FC = () => {
         <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 lg:p-8 text-white z-10">
           <div className="flex flex-wrap items-center gap-2 mb-2">
             <span className="bg-vermilion text-white font-semibold text-xs px-3 py-1 rounded-full shadow-xs">
-              {pandal.areaName || 'South Kolkata'}
+              {pandal.areaName || 'Kolkata'}
             </span>
             {/* <span className="text-white/90 text-xs font-mono bg-black/40 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/10">
               ID #{pandal.id}
@@ -566,25 +566,21 @@ export const PandalDetail: React.FC = () => {
         </div>
       )}
 
-      {/* Nearby Metro Stations */}
-      <div className="bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 p-6 shadow-warm-sm space-y-4">
-        <div className="flex items-center justify-between border-b border-ivory-muted dark:border-obsidian-400 pb-3">
-          <div className="flex items-center space-x-2">
-            <Train className="w-5 h-5 text-vermilion" />
-            <h2 className="text-lg sm:text-xl font-bold text-charcoal dark:text-stone-100">
-              Nearby Metro Stations
-            </h2>
+      {/* Nearby Metro Stations - only rendered if associated with metro stations */}
+      {pandal.nearbyMetros && pandal.nearbyMetros.length > 0 && (
+        <div className="bg-ivory-surface dark:bg-obsidian-50 rounded-2xl border border-ivory-border dark:border-obsidian-300 p-6 shadow-warm-sm space-y-4">
+          <div className="flex items-center justify-between border-b border-ivory-muted dark:border-obsidian-400 pb-3">
+            <div className="flex items-center space-x-2">
+              <Train className="w-5 h-5 text-vermilion" />
+              <h2 className="text-lg sm:text-xl font-bold text-charcoal dark:text-stone-100">
+                Nearby Metro Stations
+              </h2>
+            </div>
+            <span className="text-xs text-charcoal-subtle dark:text-stone-400">
+              {pandal.nearbyMetros.length} transit links
+            </span>
           </div>
-          <span className="text-xs text-charcoal-subtle dark:text-stone-400">
-            {pandal.nearbyMetros.length} transit links
-          </span>
-        </div>
 
-        {pandal.nearbyMetros.length === 0 ? (
-          <p className="text-xs text-charcoal-muted dark:text-stone-400 py-4">
-            No specific metro stations mapped for this pandal yet.
-          </p>
-        ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {pandal.nearbyMetros.map((metro) => {
               const lines = parseStationLines(metro.line);
@@ -641,8 +637,8 @@ export const PandalDetail: React.FC = () => {
               );
             })}
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Fixed Sticky Action Footer (Properly positioned above bottom navigation on mobile) */}
       <div className="fixed bottom-20 md:bottom-6 left-0 right-0 px-4 z-40 pointer-events-none">

@@ -58,3 +58,61 @@ export function formatWalkingTime(minutes: number | null | undefined): string {
   return `${minutes} min walk`;
 }
 
+/**
+ * Calculates exact distance between two coordinates in meters.
+ */
+export function calculateDistanceInMeters(
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+): number {
+  const R = 6371000; // Earth radius in meters
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+/**
+ * Filters out duplicate pandals that are closer than minDistanceMeters (default 50m).
+ * Keeps only one representative pandal per location cluster everywhere in the app.
+ */
+export function deduplicatePandalsByDistance<
+  T extends { latitude: number; longitude: number; name?: string; id?: number }
+>(pandals: T[], minDistanceMeters: number = 50): T[] {
+  if (!Array.isArray(pandals) || pandals.length <= 1) return pandals || [];
+
+  const result: T[] = [];
+
+  for (const pandal of pandals) {
+    if (pandal.latitude == null || pandal.longitude == null) {
+      result.push(pandal);
+      continue;
+    }
+
+    const isDuplicate = result.some((existing) => {
+      if (existing.latitude == null || existing.longitude == null) return false;
+      const distMeters = calculateDistanceInMeters(
+        existing.latitude,
+        existing.longitude,
+        pandal.latitude,
+        pandal.longitude
+      );
+      return distMeters < minDistanceMeters;
+    });
+
+    if (!isDuplicate) {
+      result.push(pandal);
+    }
+  }
+
+  return result;
+}
+

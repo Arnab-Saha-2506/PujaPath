@@ -1,5 +1,6 @@
 import apiClient from './api';
 import { NearbyPlaceDTO, NearbyPandalDTO, NearbyPlaceType } from '../types/api';
+import { deduplicatePandalsByDistance } from '../utils/distance';
 
 // In-memory cache to ensure zero lag and instant filter switching
 const pandalsCache = new Map<string, { timestamp: number; data: NearbyPandalDTO[] }>();
@@ -25,7 +26,7 @@ export async function getNearbyPandals(
     const response = await apiClient.get<NearbyPandalDTO[]>('/pandals/nearby', {
       params: { lat, lon, radiusKm },
     });
-    const data = response.data || [];
+    const data = deduplicatePandalsByDistance(response.data || []);
     pandalsCache.set(cacheKey, { timestamp: Date.now(), data });
     return data;
   } catch (error) {

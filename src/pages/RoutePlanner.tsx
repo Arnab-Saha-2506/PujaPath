@@ -6,6 +6,7 @@ import { RouteSummaryCard } from '../components/routes/RouteSummaryCard';
 import { RouteTimelineLeg } from '../components/routes/RouteTimelineLeg';
 import { Search, Train, Sparkles, RefreshCw, Check, Trash2, ArrowRight } from 'lucide-react';
 import { cn } from '../utils/cn';
+import { getNearestMetroStation } from '../utils/nearestMetro';
 
 export const RoutePlanner: React.FC = () => {
   const {
@@ -46,14 +47,6 @@ export const RoutePlanner: React.FC = () => {
     };
   }, []);
 
-  // Pre-calculate route on mount if default IDs exist and no routeResult yet
-  useEffect(() => {
-    if (!routeResult && selectedPandalIds.length > 0) {
-      calculateRoute(selectedPandalIds);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   // Presets definition
   const presets = [
     {
@@ -91,12 +84,15 @@ export const RoutePlanner: React.FC = () => {
   // Filtered pandals in selector
   const filteredPandals = useMemo(() => {
     return allPandals.filter((pandal) => {
+      const q = searchQuery.toLowerCase().trim();
+      const nearestMetroName = getNearestMetroStation(pandal.latitude, pandal.longitude)?.name;
       const matchesSearch =
-        !searchQuery.trim() ||
-        pandal.name.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
-        pandal.address.toLowerCase().includes(searchQuery.toLowerCase().trim()) ||
+        !q ||
+        pandal.name.toLowerCase().includes(q) ||
+        pandal.address.toLowerCase().includes(q) ||
         (pandal.nearbyMetroStationName &&
-          pandal.nearbyMetroStationName.toLowerCase().includes(searchQuery.toLowerCase().trim()));
+          pandal.nearbyMetroStationName.toLowerCase().includes(q)) ||
+        (nearestMetroName && nearestMetroName.toLowerCase().includes(q));
 
       const matchesArea =
         activeAreaFilter === 'all' || pandal.areaName === activeAreaFilter;
@@ -114,7 +110,7 @@ export const RoutePlanner: React.FC = () => {
 
   const handleApplyPreset = (ids: number[]) => {
     setSelectedPandalIds(ids);
-    calculateRoute(ids);
+    calculateRoute(ids, allPandals);
     if (window.innerWidth < 1024) {
       setMobileTab('route');
     }
@@ -122,7 +118,7 @@ export const RoutePlanner: React.FC = () => {
 
   const handleBuildRoute = async () => {
     if (selectedPandalIds.length < 2) return;
-    await calculateRoute();
+    await calculateRoute(selectedPandalIds, allPandals);
     if (window.innerWidth < 1024) {
       setMobileTab('route');
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -375,14 +371,19 @@ export const RoutePlanner: React.FC = () => {
                           </p>
                           <div className="flex items-center space-x-1.5 text-[11px] text-charcoal-subtle dark:text-stone-400 truncate">
                             <span>{pandal.areaName}</span>
-                            {pandal.nearbyMetroStationName && (
-                              <>
-                                <span>•</span>
-                                <span className="text-emerald-600 dark:text-emerald-400 font-medium">
-                                  🚇 {pandal.nearbyMetroStationName}
-                                </span>
-                              </>
-                            )}
+                            {(() => {
+                              const metroName =
+                                pandal.nearbyMetroStationName?.trim() ||
+                                getNearestMetroStation(pandal.latitude, pandal.longitude)?.name;
+                              return metroName ? (
+                                <>
+                                  <span>•</span>
+                                  <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+                                    🚇 {metroName}
+                                  </span>
+                                </>
+                              ) : null;
+                            })()}
                           </div>
                         </div>
                       </div>
@@ -455,7 +456,7 @@ export const RoutePlanner: React.FC = () => {
               <p className="text-sm font-semibold text-red-700 dark:text-red-300">{routeError}</p>
               <button
                 type="button"
-                onClick={() => calculateRoute()}
+                onClick={() => calculateRoute(selectedPandalIds, allPandals)}
                 className="inline-flex items-center space-x-1.5 bg-vermilion text-white text-xs font-semibold px-4 py-2 rounded-xl hover:bg-vermilion-dark transition-colors"
               >
                 <RefreshCw className="w-3.5 h-3.5" />

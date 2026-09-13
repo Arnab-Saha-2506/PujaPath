@@ -4,6 +4,7 @@ import {
   MetroStationResponseDTO,
   PandalResponseDTO,
 } from '../types/api';
+import { deduplicatePandalsByDistance } from '../utils/distance';
 
 export async function getMetroLines(): Promise<LineResponseDTO[]> {
   const response = await apiClient.get<LineResponseDTO[]>('/metro/lines');
@@ -77,5 +78,5 @@ export async function getPandalsByStation(stationId: number): Promise<PandalResp
   const response = await apiClient.get<PandalResponseDTO[]>(
     `/metro/stations/${stationId}/pandals`
   );
-  return response.data;
+  return deduplicatePandalsByDistance(response.data || []);
 }

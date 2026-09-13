@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { PandalResponseDTO } from '../types/api';
-import { getAllPandals } from '../services/areaService';
+import { PandalResponseDTO, AreaResponseDTO } from '../types/api';
+import { getAllPandals, getAreas } from '../services/areaService';
 import { useGeolocation } from '../hooks/useGeolocation';
 import { calculateHaversineDistance, estimateWalkingTime } from '../utils/distance';
 import { AlpanaCircle, AlpanaDivider } from '../components/common/AlpanaMotif';
@@ -17,12 +17,87 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { DurgaCountdown } from '../components/common/DurgaCountdown';
+import { cn } from '../utils/cn';
+
+interface AreaVisualMeta {
+  badge: string;
+  badgeClass: string;
+  countClass: string;
+  bengali: string;
+  description: string;
+  borderClass: string;
+  gradientClass: string;
+}
+
+const DEFAULT_AREA_METAS: Record<number, AreaVisualMeta> = {
+  1: {
+    badge: 'Theme Hub',
+    badgeClass: 'bg-vermilion text-white',
+    countClass: 'text-terracotta dark:text-amber-300',
+    bengali: 'দক্ষিণ কলকাতা • ঐতিহ্য ও মেগা থিম পুজো',
+    description: "Home to Kolkata's most iconic celebrations: Deshapriyo Park, Ballygunge Cultural, Tridhara, Suruchi Sangha, and Chetla Agrani.",
+    borderClass: 'border-2 border-terracotta/40 dark:border-terracotta/30',
+    gradientClass: 'from-terracotta-50 via-ivory-surface to-ivory-warm dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50',
+  },
+  2: {
+    badge: 'Heritage Hub',
+    badgeClass: 'bg-leaf text-white',
+    countClass: 'text-leaf-dark dark:text-emerald-400',
+    bengali: 'উত্তর কলকাতা • বনেদি বাড়ির সাবেকিয়ানা',
+    description: 'Centuries-old heritage pujas and clay artisans: Baghbazar Sarbojanin, Kumartuli Park, Sovabazar, Hatkhola, and Jagat Mukherjee Park.',
+    borderClass: 'border-2 border-terracotta/30 dark:border-leaf/30',
+    gradientClass: 'from-terracotta-50/50 via-ivory-surface to-ivory-warm dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50',
+  },
+  3: {
+    badge: 'Grand Lighting',
+    badgeClass: 'bg-brass text-white',
+    countClass: 'text-brass-dark dark:text-amber-300',
+    bengali: 'মধ্য কলকাতা • প্রাণকেন্দ্র ও আলোকসজ্জা',
+    description: 'Heart of the city famous for lake reflections and architectural replicas: College Square, Md. Ali Park, and Santosh Mitra Square.',
+    borderClass: 'border-2 border-amber-300/40 dark:border-brass/30',
+    gradientClass: 'from-amber-50/50 via-ivory-surface to-ivory-warm dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50',
+  },
+  4: {
+    badge: 'Salt Lake & Bypass',
+    badgeClass: 'bg-emerald-500 text-white',
+    countClass: 'text-emerald-800 dark:text-emerald-300',
+    bengali: 'পূর্ব কলকাতা • সল্টলেক ও ইএম বাইপাস',
+    description: 'Green Line East-West metro corridor connecting Salt Lake FD Block, BJ Block, and Sreebhumi Sporting Club.',
+    borderClass: 'border-2 border-emerald-200/70 dark:border-emerald-500/30',
+    gradientClass: 'from-emerald-50/60 via-ivory-surface to-teal-50/40 dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50',
+  },
+};
+
+const FALLBACK_PALETTES = [
+  {
+    badge: 'Popular Zone',
+    badgeClass: 'bg-rose-500 text-white',
+    countClass: 'text-rose-600 dark:text-rose-400',
+    borderClass: 'border-2 border-rose-300/40 dark:border-rose-500/30',
+    gradientClass: 'from-rose-50/60 via-ivory-surface to-amber-50/30 dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50',
+  },
+  {
+    badge: 'Cultural Circuit',
+    badgeClass: 'bg-indigo-500 text-white',
+    countClass: 'text-indigo-600 dark:text-indigo-400',
+    borderClass: 'border-2 border-indigo-300/40 dark:border-indigo-500/30',
+    gradientClass: 'from-indigo-50/60 via-ivory-surface to-purple-50/30 dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50',
+  },
+  {
+    badge: 'Festive Circle',
+    badgeClass: 'bg-teal-600 text-white',
+    countClass: 'text-teal-700 dark:text-teal-300',
+    borderClass: 'border-2 border-teal-300/40 dark:border-teal-500/30',
+    gradientClass: 'from-teal-50/60 via-ivory-surface to-emerald-50/30 dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50',
+  },
+];
 
 export const Home: React.FC = () => {
   const { latitude, longitude, locality, status, isLocating, requestLocation, refreshLocation, simulateKolkataLocation } =
     useGeolocation();
 
   const [pandals, setPandals] = useState<PandalResponseDTO[]>([]);
+  const [areas, setAreas] = useState<AreaResponseDTO[]>([]);
   const [areaCounts, setAreaCounts] = useState<Record<number, number>>({});
   const [loading, setLoading] = useState(true);
 
@@ -31,8 +106,13 @@ export const Home: React.FC = () => {
     async function loadData() {
       try {
         setLoading(true);
-        const allPandalsData = await getAllPandals();
+        const [areaList, allPandalsData] = await Promise.all([
+          getAreas().catch(() => []),
+          getAllPandals().catch(() => []),
+        ]);
+
         if (isMounted) {
+          setAreas(areaList);
           setPandals(allPandalsData);
 
           // Calculate counts by area
@@ -215,141 +295,60 @@ export const Home: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {/* South Kolkata - Featured Card */}
-          <div className="relative group bg-gradient-to-br from-terracotta-50 via-ivory-surface to-ivory-warm dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-terracotta/40 dark:border-terracotta/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-[colors,box-shadow] flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="bg-vermilion text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
-                  Theme Hub
-                </span>
-                <span className="text-xs font-bold text-terracotta dark:text-amber-300">{areaCounts[1] || 40}+ Pandals</span>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-charcoal dark:text-stone-100 group-hover:text-vermilion transition-colors">
-                  South Kolkata
-                </h3>
-                <p className="text-xs font-bengali text-charcoal-subtle dark:text-stone-400 mt-0.5">
-                  দক্ষিণ কলকাতা • ঐতিহ্য ও মেগা থিম পুজো
-                </p>
-              </div>
-              <p className="text-xs text-charcoal-muted dark:text-stone-300 leading-relaxed">
-                Home to Kolkata's most iconic celebrations: Deshapriyo Park, Ballygunge Cultural,
-                Tridhara, Suruchi Sangha, and Chetla Agrani.
-              </p>
-            </div>
+          {areas.map((area, idx) => {
+            const meta =
+              DEFAULT_AREA_METAS[area.id] || FALLBACK_PALETTES[idx % FALLBACK_PALETTES.length];
+            const count = areaCounts[area.id] || 0;
 
-            <div className="mt-5 pt-4 border-t border-terracotta-100 dark:border-obsidian-300">
-              <Link
-                to="/areas/1/pandals"
-                className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-colors"
+            return (
+              <div
+                key={area.id}
+                className={cn(
+                  'relative group bg-gradient-to-br rounded-2xl p-6 shadow-warm-sm hover:shadow-warm-md transition-[colors,box-shadow] flex flex-col justify-between',
+                  meta.gradientClass,
+                  meta.borderClass
+                )}
               >
-                <span>Explore South</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-          </div>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span
+                      className={cn(
+                        'text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs',
+                        meta.badgeClass
+                      )}
+                    >
+                      {meta.badge}
+                    </span>
+                    <span className={cn('text-xs font-bold', meta.countClass)}>
+                      {count > 0 ? `${count}+ Pandals` : 'Explore Zone'}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-charcoal dark:text-stone-100 group-hover:text-vermilion transition-colors">
+                      {area.name}
+                    </h3>
+                    <p className="text-xs font-bengali text-charcoal-subtle dark:text-stone-400 mt-0.5">
+                      {meta.bengali || `${area.name} • শারদোৎসব পরিক্রমা`}
+                    </p>
+                  </div>
+                  <p className="text-xs text-charcoal-muted dark:text-stone-300 leading-relaxed">
+                    {meta.description ||
+                      `Discover magnificent pandals, neighborhood celebrations, and cultural festivities across ${area.name}.`}
+                  </p>
+                </div>
 
-          {/* North Kolkata - Active Card */}
-          <div className="relative group bg-gradient-to-br from-terracotta-50/50 via-ivory-surface to-ivory-warm dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-terracotta/30 dark:border-leaf/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-[colors,box-shadow] flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="bg-leaf text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
-                  Heritage Hub
-                </span>
-                <span className="text-xs font-bold text-leaf-dark dark:text-emerald-400">{areaCounts[2] || 70}+ Pandals</span>
+                <div className="mt-5 pt-4 border-t border-ivory-muted dark:border-obsidian-300">
+                  <Link
+                    to={`/areas/${area.id}/pandals`}
+                    className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-colors"
+                  >
+                    <span>Explore {area.name.replace(' Kolkata', '')}</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-charcoal dark:text-stone-100 group-hover:text-vermilion transition-colors">
-                  North Kolkata
-                </h3>
-                <p className="text-xs font-bengali text-charcoal-subtle dark:text-stone-400 mt-0.5">
-                  উত্তর কলকাতা • বনেদি বাড়ির সাবেকিয়ানা
-                </p>
-              </div>
-              <p className="text-xs text-charcoal-muted dark:text-stone-300 leading-relaxed">
-                Centuries-old heritage pujas and clay artisans: Baghbazar Sarbojanin, Kumartuli Park,
-                Sovabazar, Hatkhola, and Jagat Mukherjee Park.
-              </p>
-            </div>
-
-            <div className="mt-5 pt-4 border-t border-ivory-muted dark:border-obsidian-300">
-              <Link
-                to="/areas/2/pandals"
-                className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-colors"
-              >
-                <span>Explore North</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-          </div>
-
-          {/* Central Kolkata - Active Card */}
-          <div className="relative group bg-gradient-to-br from-amber-50/50 via-ivory-surface to-ivory-warm dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-amber-300/40 dark:border-brass/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-[colors,box-shadow] flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="bg-brass text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
-                  Grand Lighting
-                </span>
-                <span className="text-xs font-bold text-brass-dark dark:text-amber-300">{areaCounts[3] || 23}+ Pandals</span>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-charcoal dark:text-stone-100 group-hover:text-vermilion transition-colors">
-                  Central Kolkata
-                </h3>
-                <p className="text-xs font-bengali text-charcoal-subtle dark:text-stone-400 mt-0.5">
-                  মধ্য কলকাতা • প্রাণকেন্দ্র ও আলোকসজ্জা
-                </p>
-              </div>
-              <p className="text-xs text-charcoal-muted dark:text-stone-300 leading-relaxed">
-                Heart of the city famous for lake reflections and architectural replicas: College Square,
-                Md. Ali Park, and Santosh Mitra Square.
-              </p>
-            </div>
-
-            <div className="mt-5 pt-4 border-t border-ivory-muted dark:border-obsidian-300">
-              <Link
-                to="/areas/3/pandals"
-                className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-colors"
-              >
-                <span>Explore Central</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-          </div>
-
-          {/* East Kolkata - Active Card */}
-          <div className="relative group bg-gradient-to-br from-emerald-50/60 via-ivory-surface to-teal-50/40 dark:from-obsidian-50 dark:via-obsidian-100/90 dark:to-obsidian-50 rounded-2xl border-2 border-emerald-200/70 dark:border-emerald-500/30 p-6 shadow-warm-sm hover:shadow-warm-md transition-[colors,box-shadow] flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="bg-emerald-500 text-white text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-1 rounded-full shadow-xs">
-                  Salt Lake & Bypass
-                </span>
-                <span className="text-xs font-bold text-emerald-800 dark:text-emerald-300">{areaCounts[4] || 47}+ Pandals</span>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-charcoal dark:text-stone-100 group-hover:text-vermilion transition-colors">
-                  East Kolkata
-                </h3>
-                <p className="text-xs font-bengali text-charcoal-subtle dark:text-stone-400 mt-0.5">
-                  পূর্ব কলকাতা • সল্টলেক ও ইএম বাইপাস
-                </p>
-              </div>
-              <p className="text-xs text-charcoal-muted dark:text-stone-300 leading-relaxed">
-                Green Line East-West metro corridor connecting Salt Lake FD Block, BJ Block, and
-                Sreebhumi Sporting Club.
-              </p>
-            </div>
-
-            <div className="mt-5 pt-4 border-t border-ivory-muted dark:border-obsidian-300">
-              <Link
-                to="/areas/4/pandals"
-                className="w-full inline-flex items-center justify-center space-x-2 bg-vermilion hover:bg-vermilion-dark text-white text-xs font-semibold py-2.5 px-4 rounded-xl shadow-warm-sm transition-colors"
-              >
-                <span>Explore East</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </section>
 
