@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { DurgaEyeIcon } from './DurgaEyeIcon';
 import { useGeolocation } from '../../hooks/useGeolocation';
@@ -9,9 +9,21 @@ import { useRoutePlanner } from '../../context/RouteContext';
 
 export const Navbar: React.FC = () => {
   const location = useLocation();
-  const { status, isLocating, requestLocation, refreshLocation, simulateKolkataLocation } =
+  const { locality, status, isLocating, requestLocation, refreshLocation, simulateKolkataLocation } =
     useGeolocation();
   const { selectedPandalIds } = useRoutePlanner();
+  const [isVisualSpinning, setIsVisualSpinning] = useState(false);
+
+  const handleRefreshLocation = async () => {
+    setIsVisualSpinning(true);
+    try {
+      await refreshLocation();
+    } finally {
+      setTimeout(() => {
+        setIsVisualSpinning(false);
+      }, 1000);
+    }
+  };
 
   const navLinks = [
     { name: 'Home', path: '/', labelBengali: 'হোম' },
@@ -95,25 +107,34 @@ export const Navbar: React.FC = () => {
           {/* Location Action Pill + Theme Toggle */}
           <div className="flex items-center space-x-2">
             {status === 'granted' ? (
-              <div className="flex items-center bg-ivory-surface dark:bg-obsidian-50 border border-leaf/30 rounded-full px-3 py-1.5 shadow-sm">
-                <span className="relative flex h-2.5 w-2.5 mr-2">
+              <div className="flex items-center bg-ivory-surface dark:bg-obsidian-50 border border-leaf/30 rounded-full px-2.5 sm:px-3 py-1.5 shadow-sm max-w-[170px] sm:max-w-[210px]">
+                <span className="relative flex h-2.5 w-2.5 mr-1.5 sm:mr-2 shrink-0">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-leaf opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-leaf"></span>
                 </span>
-                <span className="text-xs font-medium text-charcoal dark:text-stone-100 hidden sm:inline">
-                  Location Active
-                </span>
-                <span className="text-xs font-medium text-charcoal dark:text-stone-100 sm:hidden">Active</span>
-                <button
-                  onClick={refreshLocation}
-                  disabled={isLocating}
-                  title="Refresh GPS location"
-                  className="ml-2 text-charcoal-subtle dark:text-stone-400 hover:text-vermilion disabled:opacity-50 transition-colors p-0.5"
+                <span
+                  className="text-xs font-semibold text-charcoal dark:text-stone-100 truncate"
+                  title={locality ? `Current Location: ${locality}` : 'Location Active'}
                 >
-                  <RefreshCw className={cn('w-3.5 h-3.5', isLocating && 'animate-spin')} />
+                  {locality || 'Location Active'}
+                </span>
+                <button
+                  onClick={handleRefreshLocation}
+                  disabled={isLocating || isVisualSpinning}
+                  title={locality ? `Current: ${locality}. Click to refresh GPS location` : 'Refresh GPS location'}
+                  className="ml-1.5 sm:ml-2 text-charcoal-subtle dark:text-stone-400 hover:text-vermilion disabled:cursor-not-allowed transition-colors p-0.5 shrink-0"
+                  aria-label="Refresh location"
+                >
+                  <RefreshCw
+                    className={cn(
+                      'w-3.5 h-3.5 transition-transform',
+                      (isLocating || isVisualSpinning) && 'animate-spin text-vermilion dark:text-amber-300'
+                    )}
+                  />
                 </button>
               </div>
             ) : (
+
               <div className="flex items-center space-x-1.5">
                 <button
                   onClick={requestLocation}

@@ -39,15 +39,24 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const cachedTime = sessionStorage.getItem(STORAGE_TIMESTAMP_KEY);
       const cachedLocality = sessionStorage.getItem(STORAGE_LOCALITY_KEY);
 
-
       if (cachedLat && cachedLon && cachedTime) {
         const timeDiff = Date.now() - parseInt(cachedTime, 10);
         if (timeDiff < CACHE_DURATION_MS) {
-          setLatitude(parseFloat(cachedLat));
-          setLongitude(parseFloat(cachedLon));
+          const lat = parseFloat(cachedLat);
+          const lon = parseFloat(cachedLon);
+          setLatitude(lat);
+          setLongitude(lon);
           setStatus('granted');
           if (cachedLocality) {
             setLocality(cachedLocality);
+          } else {
+            // Automatically resolve locality for existing cached coordinates
+            reverseGeocode(lat, lon).then((loc) => {
+              if (loc) {
+                setLocality(loc);
+                sessionStorage.setItem(STORAGE_LOCALITY_KEY, loc);
+              }
+            });
           }
         }
       }
@@ -70,23 +79,26 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       const data = await response.json();
 
       const address = data.address || {};
-      const locality =
+      const loc =
         address.suburb ||
         address.neighbourhood ||
-        address.quarter ||
-        address.hamlet ||
-        address.village ||
+        address.residential ||
         address.town ||
+        address.village ||
+        address.hamlet ||
+        address.quarter ||
+        address.municipality ||
+        address.city_district ||
         address.city ||
-        data.display_name?.split(',')[0] ||
-        null;
+        address.county ||
+        data.name ||
+        (data.display_name ? data.display_name.split(',')[0].trim() : null);
 
-      return locality;
+      return loc;
     } catch {
       return null;
     }
   }, []);
-
 
   const fetchPosition = useCallback((): Promise<{ lat: number; lon: number }> => {
     return new Promise((resolve, reject) => {
@@ -115,7 +127,6 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, []);
 
   const requestLocation = useCallback(async () => {
-    // Debounce check
     const now = Date.now();
     if (now - lastRefreshed < 3000 && latitude !== null) {
       return;
@@ -146,15 +157,12 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
     } catch (err: any) {
       if (err.code === 1) {
-        // PERMISSION_DENIED
         setStatus('denied');
         setError('Location permission denied. You can still search pandals or choose a simulated Kolkata location.');
       } else if (err.code === 2) {
-        // POSITION_UNAVAILABLE
         setStatus('unavailable');
         setError('Position unavailable. Please ensure your device GPS is enabled.');
       } else if (err.code === 3) {
-        // TIMEOUT
         setStatus('unavailable');
         setError('Location request timed out. Please try again.');
       } else {
@@ -166,9 +174,49 @@ export const LocationProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }
   }, [fetchPosition, lastRefreshed, latitude, reverseGeocode]);
 
+  /**
+   * Refreshes the user's location with guaranteed visual spinning feedback
+   * to confirm the action is being processed without perceived unresponsiveness.
+   */
   const refreshLocation = useCallback(async () => {
-    await requestLocation();
-  }, [requestLocation]);
+    setIsLocating(true);
+    const start = Date.now();
+
+    try {
+      const { lat, lon } = await fetchPosition();
+      const now = Date.now();
+      setLatitude(lat);
+      setLongitude(lon);
+      setStatus('granted');
+      setLastRefreshed(now);
+
+      const loc = await reverseGeocode(lat, lon);
+      if (loc) setLocality(loc);
+
+      try {
+        sessionStorage.setItem(STORAGE_LAT_KEY, lat.toString());
+        sessionStorage.setItem(STORAGE_LON_KEY, lon.toString());
+        sessionStorage.setItem(STORAGE_TIMESTAMP_KEY, now.toString());
+        if (loc) {
+          sessionStorage.setItem(STORAGE_LOCALITY_KEY, loc);
+        }
+      } catch {
+        // ignore
+      }
+    } catch (err: any) {
+      // If GPS fetch failed (e.g. rate limit, stationary), ensure existing locality remains intact
+      console.warn('Geolocation refresh warning:', err);
+    } finally {
+      // Enforce a minimum spinning duration of 1000ms for reassuring visual feedback
+      const elapsed = Date.now() - start;
+      const remainingTime = Math.max(0, 1000 - elapsed);
+      if (remainingTime > 0) {
+        await new Promise((resolve) => setTimeout(resolve, remainingTime));
+      }
+      setIsLocating(false);
+    }
+  }, [fetchPosition, reverseGeocode]);
+
 
   // Convenience helper for testing outdoors / desktop without real Kolkata GPS
   const simulateKolkataLocation = useCallback(() => {
