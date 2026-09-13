@@ -49,7 +49,7 @@ export const RouteProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     } catch {
       // ignore
     }
-    return DEFAULT_PRESET_CIRCUIT;
+    // return DEFAULT_PRESET_CIRCUIT;
     return [];
   });
 
