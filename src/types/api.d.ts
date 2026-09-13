@@ -55,10 +55,61 @@ export interface DistanceResponseDTO {
   walkingTimeMinutes: number;
 }
 
+export interface RouteLegDTO {
+  type: 'METRO' | 'PUJA';
+  name: string;
+  metroLine: string | null;
+  distanceFromPrevKm: number;
+  walkingMinutes: number;
+  latitude: number;
+  longitude: number;
+}
+
+export interface RouteResponseDTO {
+  route: RouteLegDTO[];
+  totalDistanceKm: number;
+  totalWalkingMinutes: number;
+  totalEstimatedMinutes: number;
+}
+
+export interface RouteRequestDTO {
+  pandalIds: number[];
+}
+
 export interface ApiErrorResponse {
   timestamp: string;
   status: number;
   error: string;
   message: string;
+}
+
+export type NearbyPlaceType =
+  | 'police'
+  | 'atm'
+  | 'hospital'
+  | 'cafe'
+  | 'pharmacy'
+  | 'restaurant'
+  | 'toilet';
+
+export interface NearbyPlaceDTO {
+  placeId: string;
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  distanceInKm: number;
+  walkingTimeMinutes: number;
+  type?: NearbyPlaceType;
+}
+
+export interface NearbyPandalDTO {
+  id: number;
+  name: string;
+  latitude: number;
+  longitude: number;
+  distanceInKm: number;
+  walkingTimeMinutes: number;
+  nearbyMetroName?: string;
 }
 
