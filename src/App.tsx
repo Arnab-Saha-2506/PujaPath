@@ -151,7 +151,7 @@ function App() {
                   <span>Designed with authentic Bengali aesthetics for Sharadotsav 2026</span>
                 </div>
                 <div className="text-[11px]">
-                  Kolkata Durga Puja &copy; 2026 • UNESCO Intangible Cultural Heritage
+                  Kolkata Durga Puja &copy; 2026 • Developed by <span className="font-bold text-vermilion dark:text-vermilion-light">Arnab Saha</span>
                 </div>
               </div>
             </div>
