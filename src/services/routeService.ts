@@ -5,6 +5,8 @@ import { getNearestMetroStation } from '../utils/nearestMetro';
 import { calculateHaversineDistance, estimateWalkingTime } from '../utils/distance';
 import { getAllPandals } from './areaService';
 
+// Default preset pandal IDs (South Kolkata iconic loop)
+export const DEFAULT_PRESET_CIRCUIT = [10, 11, 12, 19];
 /**
  * Merges any pandals dropped by the backend (because they lack DB metro stations)
  * into the turn-by-turn route itinerary using coordinate-based nearest metro routing.

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import { RouteResponseDTO, PandalResponseDTO } from '../types/api';
-import { getOptimizedRoute } from '../services/routeService';
+import { getOptimizedRoute, DEFAULT_PRESET_CIRCUIT } from '../services/routeService';
+export { DEFAULT_PRESET_CIRCUIT };
 
 interface RouteContextType {
   selectedPandalIds: number[];
@@ -21,9 +22,6 @@ interface RouteContextType {
 const RouteContext = createContext<RouteContextType | undefined>(undefined);
 
 const STORAGE_KEY = 'pujapath_selected_pandal_ids';
-
-// Default starter pandals (South Kolkata iconic loop)
-export const DEFAULT_PRESET_CIRCUIT = [10, 11, 12, 19];
 
 export const RouteProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [selectedPandalIds, setSelectedPandalIdsState] = useState<number[]>(() => {
